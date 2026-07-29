@@ -10,11 +10,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
-<body class="galaxy-body">
+<body class="dark-celestial-body">
 
-  <!-- CANVAS BẦU TRỜI SAO & DẢI THIÊN HÀ LẤP LÁNH -->
+  <!-- CANVAS BẦU TRỜI SAO ĐÊM HIỆN ĐẠI & LẤP LÁNH -->
   <canvas id="space-canvas"></canvas>
-  <div class="galaxy-nebula-glow"></div>
 
   <!-- NAVIGATION BAR -->
   <nav class="navbar">
@@ -25,6 +24,7 @@
       <a href="#timeline">Năm học</a>
       <a href="#event">Sự kiện</a>
       <a href="#rsvp" class="btn-nav">Tham dự</a>
+      <button id="open-link-gen-btn" class="btn-admin-link">⚙️ Tạo Thiệp Riêng</button>
     </div>
   </nav>
 
@@ -33,51 +33,80 @@
 
     <!-- HERO SECTION -->
     <section id="hero" class="hero-section">
+      <div class="doctor-badge">
+        <span class="icon">🩺</span> BÁC SĨ Y KHOA · CLASS OF 2026
+      </div>
       <div class="orbit-logo shimmer-glow">
         <div class="ring"></div>
         <span class="logo-text">V</span>
       </div>
       <h1 class="main-title">HÀNH TRÌNH<br><span class="highlight shimmer-text">chạm tới vì sao</span></h1>
-      <p class="subtitle">Xin chào, Việt rất mong được gặp bạn trong ngày đặc biệt này.</p>
+      <p class="subtitle">Xin chào, Việt rất mong được gặp bạn trong ngày tốt nghiệp đặc biệt này.</p>
     </section>
 
-    <!-- BƯỚC 1: WELCOME CARD (CHỌN DANH XƯNG & MỞ THIỆP) -->
-    <section class="welcome-card card glow-border">
-      <div class="card-header">
-        <span class="step-tag">✦ KHỞI ĐẦU HÀNH TRÌNH ✦</span>
-        <h2>Thân gửi Khách Mời</h2>
-        <p>Hãy chọn danh xưng và để lại tên để Việt gửi lời mời trân trọng nhất nhé.</p>
-      </div>
-      
-      <div class="salutation-selector">
-        <button class="salt-btn active" data-salt="Anh">Anh</button>
-        <button class="salt-btn" data-salt="Chị">Chị</button>
-        <button class="salt-btn" data-salt="Bạn">Bạn</button>
-        <button class="salt-btn" data-salt="Em">Em</button>
+    <!-- TRANG ĐẦU: LỜI NHẮN NHỦ RIÊNG CHO TỪNG KHÁCH MỜI (PERSONALIZED CARD) -->
+    <section id="personal-card" class="welcome-card card glow-border">
+      <div id="personalized-view" class="personal-grid">
+        <!-- Khung ảnh riêng bên trái -->
+        <div class="guest-photo-wrapper">
+          <div class="photo-frame glow-border">
+            <img id="guest-photo-img" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80" alt="Ảnh kỷ niệm">
+          </div>
+        </div>
+
+        <!-- Lời nhắn nhủ riêng bên phải -->
+        <div class="personal-text-content">
+          <span class="step-tag">✦ LỜI NHẮN TỪ BÁC SĨ CAO VIỆT ✦</span>
+          <h2 class="personal-heading">Thân gửi <span id="personal-salutation" class="gold-text">Anh</span> <span id="personal-guest-name" class="gold-text">Khách Mời</span>,</h2>
+          <div class="personal-msg-box">
+            <p id="personal-message-text">Cảm ơn bạn đã luôn đồng hành, chia sẻ và cổ vũ Việt trong suốt hành trình 6 năm học Y Khoa đầy thử thách này. Sự hiện diện của bạn trong ngày tốt nghiệp là món quà tuyệt vời nhất đối với Việt!</p>
+          </div>
+          <div class="signature-line">— Bác sĩ Cao Việt —</div>
+
+          <button id="btn-continue" class="btn-gold shimmer-btn full-width margin-top-15">
+            <span>KHÁM PHÁ HÀNH TRÌNH TỐT NGHIỆP</span> ✨
+          </button>
+        </div>
       </div>
 
-      <div class="input-group">
-        <input type="text" id="guest-name-input" placeholder="Tên của bạn là gì? (Ví dụ: Minh Tú)" autocomplete="off">
-      </div>
+      <!-- Khung mặc định nhập tên nếu mở link chung không tham số -->
+      <div id="default-input-view" class="hidden">
+        <div class="card-header">
+          <span class="step-tag">✦ KHỞI ĐẦU HÀNH TRÌNH ✦</span>
+          <h2>Thân gửi Khách Mời</h2>
+          <p>Hãy chọn danh xưng và nhập tên để Việt gửi lời chào trân trọng nhất nhé.</p>
+        </div>
+        
+        <div class="salutation-selector">
+          <button class="salt-btn active" data-salt="Anh">Anh</button>
+          <button class="salt-btn" data-salt="Chị">Chị</button>
+          <button class="salt-btn" data-salt="Bạn">Bạn</button>
+          <button class="salt-btn" data-salt="Em">Em</button>
+        </div>
 
-      <button id="btn-continue" class="btn-gold shimmer-btn">
-        <span>TIẾP TỤC HÀNH TRÌNH</span> ✨
-      </button>
+        <div class="input-group">
+          <input type="text" id="guest-name-input" placeholder="Tên của bạn là gì? (Ví dụ: Minh Tú)" autocomplete="off">
+        </div>
+
+        <button id="btn-continue-default" class="btn-gold shimmer-btn">
+          <span>TIẾP TỤC HÀNH TRÌNH</span> ✨
+        </button>
+      </div>
     </section>
 
-    <!-- DYNAMIC GREETING DISPLAY (Hidden initially) -->
+    <!-- DYNAMIC GREETING DISPLAY -->
     <div id="personalized-greeting" class="personalized-box hidden glow-box">
       <span class="sparkle-icon">✨</span> Chào mừng <span id="disp-salutation">Anh</span> <span id="disp-name">Khách Mời</span> đến với Hành Trình Y Khoa của Cao Việt!
     </div>
 
-    <!-- CÁC PHẦN DƯỚI ĐÂY ĐƯỢC MỞ KHÓA KHI BẤM "TIẾP TỤC HÀNH TRÌNH" -->
+    <!-- CÁC PHẦN DƯỚI ĐÂY ĐƯỢC MỞ KHÓA KHI BẤM "KHÁM PHÁ HÀNH TRÌNH" -->
     <div id="locked-content" class="locked-content hidden">
 
       <!-- CHAPTERS SECTION -->
       <section id="chapters" class="chapters-section reveal-on-scroll">
         <div class="section-title-box">
           <span class="step-tag">✦ CHẶNG ĐƯỜNG KỶ NIỆM ✦</span>
-          <h2 class="gold-heading">4 Chương Ký Ức</h2>
+          <h2 class="gold-heading">4 Chương Ký Ức Y Khoa</h2>
           <p class="section-desc">Bấm vào từng chương để mở chi tiết kỷ niệm đẹp nhất:</p>
         </div>
 
@@ -128,9 +157,9 @@
         </div>
       </section>
 
-      <!-- YEARS TIMELINE SLIDER (DRAGGABLE / CLICKABLE) -->
+      <!-- YEARS TIMELINE SLIDER -->
       <section id="timeline" class="timeline-section card reveal-on-scroll glow-border">
-        <span class="step-tag">✦ 6 NĂM MIỆT MÀI ✦</span>
+        <span class="step-tag">✦ 6 NĂM MIỆT MÀI Y KHOA ✦</span>
         <h2>Hành Trình Trưởng Thành</h2>
         <p class="section-desc">Bấm chọn từng mốc năm học để xem lại khoảnh khắc đáng nhớ của Việt:</p>
 
@@ -178,7 +207,7 @@
             <p id="event-location">Hội Trường A - Đại học Y Hà Nội</p>
           </div>
           <div class="info-card">
-            <span class="icon">👔</span>
+            <span class="icon">🩺</span>
             <h4>Trang Phục</h4>
             <p id="event-dresscode">Lịch sự / Áo Cử nhân / Blouse</p>
           </div>
@@ -239,11 +268,51 @@
     </div>
   </div>
 
+  <!-- ADMIN: MODAL TẠO LINK THIỆP GỬI RIÊNG (LINK GENERATOR) -->
+  <div id="link-gen-modal" class="modal-overlay hidden">
+    <div class="modal-card glow-border admin-modal">
+      <button id="link-gen-close" class="modal-close-btn">&times;</button>
+      <span class="chapter-badge">✦ CÔNG CỤ CHO CAO VIỆT ✦</span>
+      <h3 class="chapter-title" style="font-size: 1.6rem; color: var(--gold);">Tạo Link Thiệp Riêng Cho Bạn Bè</h3>
+      <p class="modal-desc" style="margin-bottom: 15px; font-size: 0.85rem;">Điền thông tin người nhận bên dưới để tạo đường link cá nhân hóa riêng:</p>
+      
+      <div class="gen-form-group">
+        <label>Danh xưng:</label>
+        <select id="gen-salutation">
+          <option value="Anh">Anh</option>
+          <option value="Chị">Chị</option>
+          <option value="Bạn" selected>Bạn</option>
+          <option value="Em">Em</option>
+        </select>
+      </div>
+
+      <div class="gen-form-group">
+        <label>Tên người nhận:</label>
+        <input type="text" id="gen-guest-name" placeholder="Ví dụ: Minh Tú" autocomplete="off">
+      </div>
+
+      <div class="gen-form-group">
+        <label>Lời nhắn nhủ riêng của Việt:</label>
+        <textarea id="gen-message" rows="3" placeholder="Nhập lời nhắn nhủ tâm sự riêng dành cho bạn này..."></textarea>
+      </div>
+
+      <div class="gen-form-group">
+        <label>Link ảnh kỷ niệm riêng (không bắt buộc):</label>
+        <input type="text" id="gen-photo-url" placeholder="https://danh-sach-anh.com/anh.jpg" autocomplete="off">
+      </div>
+
+      <button id="btn-generate-link" class="btn-gold shimmer-btn full-width margin-top-15">
+        🔗 SAO CHÉP LINK THIỆP RIÊNG
+      </button>
+      <p id="gen-status-text" class="gen-status-msg hidden">✅ Đã sao chép link thiệp vào bộ nhớ tạm!</p>
+    </div>
+  </div>
+
   <!-- FLOATING MUSIC PLAYER: DIE WITH A SMILE - BRUNO MARS & LADY GAGA -->
   <div class="music-player shimmer-glow" id="music-toggle" title="🎵 Die With A Smile - Bruno Mars & Lady Gaga">
     <div class="disc">🎵</div>
   </div>
-  <audio id="bg-music" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3"></audio>
+  <audio id="bg-music" loop src="die_with_a_smile.mp3"></audio>
 
   <script src="script.js"></script>
 </body>
