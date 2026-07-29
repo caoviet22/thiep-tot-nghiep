@@ -6,25 +6,47 @@
   <title>Hành Trình Chạm Tới Vì Sao | Bác Sĩ Cao Việt</title>
   <meta name="description" content="Thiệp mời tốt nghiệp Bác Sĩ Y Khoa 2026 của Cao Việt – Hội trường Nguyễn Văn Đạo, ĐHQGHN.">
   <link rel="stylesheet" href="style.css">
-  <!-- Luxury Fonts: Cormorant Garamond + Cinzel + Playfair Display -->
+  
+  <!-- High Quality Luxury Fonts with 100% Full Vietnamese Accent Support -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600&display=swap&subset=vietnamese" rel="stylesheet">
 </head>
 <body class="dark-celestial-body">
 
-  <!-- CANVAS BẦU TRỜI SAO ĐÊM HIỆN ĐẠI & LẤP LÁNH -->
+  <!-- CANVAS BẦU TRỜI SAO & HẠT TÂM LINH LẤP LÁNH HIỆN ĐẠI -->
   <canvas id="space-canvas"></canvas>
 
-  <!-- HEARTBEAT / ECG DECORATION LINE (Y KHOA) -->
+  <!-- MODERN NEON 3D ECG PULSE MONITOR (SÓNG TIM HOLOGRAPHIC) -->
   <div class="ecg-line-wrapper" id="ecg-wrapper">
-    <svg id="ecg-svg" viewBox="0 0 400 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <polyline id="ecg-poly" points="0,30 40,30 55,30 60,10 65,50 70,30 100,30 115,30 120,5 125,55 130,30 160,30 175,30 180,12 185,48 190,30 220,30 235,30 240,8 245,52 250,30 280,30 295,30 300,10 305,50 310,30 340,30 355,30 360,12 365,48 370,30 400,30"
-            fill="none" stroke="#d4af37" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <div class="ecg-glow-overlay"></div>
+    <svg id="ecg-svg" viewBox="0 0 1000 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="ecgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#d4af37" stop-opacity="0" />
+          <stop offset="15%" stop-color="#d4af37" stop-opacity="0.4" />
+          <stop offset="50%" stop-color="#fff5c0" stop-opacity="1" />
+          <stop offset="85%" stop-color="#d4af37" stop-opacity="0.4" />
+          <stop offset="100%" stop-color="#d4af37" stop-opacity="0" />
+        </linearGradient>
+        <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      <!-- Background static faint line -->
+      <path class="ecg-bg-line" d="M 0 35 L 200 35 L 215 35 L 222 15 L 230 55 L 238 35 L 255 35 L 450 35 L 465 35 L 472 10 L 480 60 L 488 35 L 505 35 L 700 35 L 715 35 L 722 15 L 730 55 L 738 35 L 755 35 L 1000 35"
+            fill="none" stroke="rgba(212,175,55,0.15)" stroke-width="1.5" />
+      <!-- Animated glowing neon pulse line -->
+      <path class="ecg-pulse-line" filter="url(#neonGlow)" d="M 0 35 L 200 35 L 215 35 L 222 15 L 230 55 L 238 35 L 255 35 L 450 35 L 465 35 L 472 10 L 480 60 L 488 35 L 505 35 L 700 35 L 715 35 L 722 15 L 730 55 L 738 35 L 755 35 L 1000 35"
+            fill="none" stroke="url(#ecgGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </div>
 
-  <!-- NAVIGATION BAR (ẢN KHI Ở TRANG ĐẦU, HIỆN KHI MỞ THIỆP) -->
+  <!-- NAVIGATION BAR -->
   <nav class="navbar hidden-nav" id="main-navbar">
     <div class="nav-brand">VIỆT · <span id="admin-phone">0886 356 222</span></div>
     <div class="nav-links">
@@ -40,7 +62,7 @@
   <main class="container">
 
     <!-- ============================================================================== -->
-    <!-- TRANG 1: ĐẬP VÀO MẮT LÀ TRANG BÌA CÁ NHÂN HÓA ĐỘC LẬP (COVER LANDING SCREEN) -->
+    <!-- TRANG 1: TRANG BÌA CÁ NHÂN HÓA ĐỘC LẬP (COVER LANDING SCREEN) -->
     <!-- ============================================================================== -->
     <div id="cover-landing" class="cover-landing-screen">
       
@@ -59,9 +81,9 @@
 
         <!-- MEDICAL OATH QUOTE -->
         <div class="medical-quote">
-          <span class="quote-mark">"</span>
-          Wherever the art of Medicine is loved, there is also a love of Humanity.
-          <span class="quote-attr">— Hippocrates</span>
+          <span class="quote-mark">“</span>
+          Ở đâu nghệ thuật Y Học được trân trọng, ở đó tình yêu Thương Con Người cũng tỏa sáng.
+          <span class="quote-attr">— Lời thề Hippocrates</span>
         </div>
       </section>
 
@@ -91,7 +113,7 @@
           </div>
         </div>
 
-        <!-- Khung mặc định nếu mở thiệp chung chưa có tên -->
+        <!-- Khung mặc định nếu mở thiệp chung chưa chọn tên -->
         <div id="default-input-view" class="hidden">
           <div class="card-header">
             <span class="step-tag">✦ KHỞI ĐẦU HÀNH TRÌNH ✦</span>
@@ -124,7 +146,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- TRANG 2: NỘI DUNG CHI TIẾT (CHỈ XUẤT HIỆN KHI BẤM "KHÁM PHÁ HÀNH TRÌNH") -->
+    <!-- TRANG 2: NỘI DUNG CHI TIẾT (XUẤT HIỆN KHI BẤM "KHÁM PHÁ HÀNH TRÌNH") -->
     <!-- ============================================================================== -->
     <div id="locked-content" class="locked-content hidden">
 
@@ -174,7 +196,7 @@
           <article class="chapter-card card highlight-card click-reveal-card" data-chapter="ch4">
             <div class="chapter-badge">Chương Cuối</div>
             <h3 class="chapter-title">AMONG THE STARS</h3>
-            <p class="chapter-sub">Lễ Tốt Nghiệp Bác Sĩ / Cử Nhân Y Khoa 2026</p>
+            <p class="chapter-sub">Lễ Tốt Nghiệp Bác Sĩ Y Khoa 2026</p>
             <div class="img-wrapper">
               <img id="img-ch4" src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80" alt="Graduation Among Stars">
               <div class="img-overlay"><span>BẤM XEM KỶ NIỆM ✨</span></div>
@@ -183,13 +205,11 @@
         </div>
       </section>
 
-      <!-- ============================================================ -->
-      <!-- TIMELINE SECTION - MULTI-PHOTO CAROUSEL (NÂNG CẤP MỚI) -->
-      <!-- ============================================================ -->
+      <!-- TIMELINE SECTION WITH MULTI-PHOTO CAROUSEL -->
       <section id="timeline" class="timeline-section card reveal-on-scroll glow-border">
         <span class="step-tag">✦ 6 NĂM MIỆT MÀI Y KHOA ✦</span>
         <h2 class="luxury-heading">Hành Trình Trưởng Thành</h2>
-        <p class="section-desc">Bấm chọn từng mốc năm học — kéo ảnh để xem thêm kỷ niệm:</p>
+        <p class="section-desc">Bấm chọn từng năm học — vuốt hoặc bấm mũi tên để xem kỷ niệm:</p>
 
         <!-- YEAR STEPPER NODES -->
         <div class="year-stepper">
@@ -211,7 +231,7 @@
             <!-- Medical tags -->
             <div class="year-tags" id="yd-tags">
               <span class="med-tag">🔬 Sinh hóa</span>
-              <span class="med-tag">🦷 Giải phẫu</span>
+              <span class="med-tag">🦴 Giải phẫu</span>
               <span class="med-tag">📚 Lý thuyết</span>
             </div>
           </div>
@@ -219,7 +239,7 @@
           <!-- PHOTO CAROUSEL -->
           <div class="photo-carousel-wrapper">
             <div class="photo-carousel-track" id="carousel-track">
-              <!-- Ảnh sẽ được render bởi JS -->
+              <!-- Rendered via JS -->
             </div>
             <!-- Navigation -->
             <button class="carousel-btn carousel-prev" id="carousel-prev" aria-label="Previous photo">&#8249;</button>
@@ -232,14 +252,12 @@
         </div>
       </section>
 
-      <!-- ============================================================ -->
-      <!-- 🅿️ THÔNG TIN GỬI XE (MỚI) -->
-      <!-- ============================================================ -->
+      <!-- 🅿️ THÔNG TIN GỬI XE -->
       <section id="parking" class="parking-section card reveal-on-scroll glow-border">
         <div class="parking-header">
           <span class="step-tag">✦ THÔNG TIN THỰC TIỄN ✦</span>
           <h2 class="luxury-heading">Thông Tin Quan Trọng</h2>
-          <p class="section-desc">Các thông tin hữu ích để bạn chuẩn bị tốt nhất cho buổi lễ.</p>
+          <p class="section-desc">Các thông tin hữu ích giúp bạn sắp xếp thời gian đến dự lễ tốt nghiệp thuận tiện nhất.</p>
         </div>
 
         <!-- PARKING CARD -->
@@ -250,90 +268,53 @@
               <h3 class="info-block-title">Thông tin gửi xe</h3>
               <p class="info-block-sub">Bãi xe Hội trường Nguyễn Văn Đạo, ĐHQGHN – 144 Xuân Thủy, Cầu Giấy</p>
             </div>
-            <span class="info-block-badge">Miễn phí</span>
+            <span class="info-block-badge">Ưu tiên</span>
           </div>
 
           <ul class="parking-list">
             <li class="parking-item">
               <span class="parking-pin">📍</span>
               <div class="parking-item-text">
-                <strong>Bãi xe trong khuôn viên ĐHQGHN</strong>
-                <span class="parking-note">(Cổng chính 144 Xuân Thủy – Ưu tiên khách mời lễ tốt nghiệp)</span>
+                <strong>Bãi xe khuôn viên ĐHQGHN (Cổng chính 144 Xuân Thủy)</strong>
+                <span class="parking-note">(Dành riêng cho khách mời dự Lễ Tốt Nghiệp, số lượng có hạn)</span>
               </div>
             </li>
             <li class="parking-item">
               <span class="parking-pin">📍</span>
               <div class="parking-item-text">
-                <strong>Bãi xe Vincom Trần Duy Hưng</strong>
-                <span class="parking-note">(Đi bộ ~10 phút, tầng B1–B2, tính phí theo giờ)</span>
+                <strong>Bãi giữ xe Trường Đại học Sư Phạm Hà Nội (Liền kề)</strong>
+                <span class="parking-note">(Đi bộ 3 phút sang Hội trường Nguyễn Văn Đạo)</span>
               </div>
             </li>
             <li class="parking-item">
               <span class="parking-pin">📍</span>
               <div class="parking-item-text">
-                <strong>Bãi xe tự quản – Đường Xuân Thủy</strong>
-                <span class="parking-note">(Gần cổng trường, 5,000đ/lượt xe máy)</span>
-              </div>
-            </li>
-            <li class="parking-item">
-              <span class="parking-pin">📍</span>
-              <div class="parking-item-text">
-                <strong>Bãi xe Lotte Mall West Lake</strong>
-                <span class="parking-note">(~15 phút đi bộ, xe ô tô tiện lợi, có thang máy)</span>
+                <strong>Bãi xe Tòa nhà HITC / Indochina Plaza Cầu Giấy</strong>
+                <span class="parking-note">(Đối diện cổng trường, hầm giữ xe rộng rãi, có tính phí)</span>
               </div>
             </li>
             <li class="parking-item">
               <span class="parking-pin">💡</span>
               <div class="parking-item-text">
-                <strong>Khuyến nghị: Đặt Grab / xe công nghệ</strong>
-                <span class="parking-note">(Tiết kiệm nhất vì bãi xe khá đông vào giờ lễ)</span>
+                <strong>Khuyến nghị: Đặt xe Grab / Taxi công nghệ</strong>
+                <span class="parking-note">(Thuận tiện nhất để không lo tìm bãi đỗ xe vào giờ cao điểm)</span>
               </div>
             </li>
           </ul>
 
           <div class="parking-note-box">
             <span>⏰</span>
-            <p>Việt khuyến khích bạn đến trước <strong>11:00 AM</strong> để có chỗ gửi xe thuận tiện và cùng nhau chụp ảnh trước buổi lễ nhé!</p>
+            <p>Việt rất mong bạn có thể đến trước <strong>11:00 AM</strong> để thong thả gửi xe và cùng nhau chụp thật nhiều ảnh kỷ niệm đẹp trước khi lễ bắt đầu nhé!</p>
           </div>
         </div>
-
-        <!-- DRESS CODE CARD -->
-        <div class="info-block dresscode-block glow-box">
-          <div class="info-block-header">
-            <div class="parking-icon-circle">👔</div>
-            <div>
-              <h3 class="info-block-title">Trang phục & Lưu ý</h3>
-              <p class="info-block-sub">Hãy ăn mặc lịch sự để cùng Việt ghi lại những khoảnh khắc đẹp nhất!</p>
-            </div>
-          </div>
-          <div class="dresscode-grid">
-            <div class="dresscode-item active">
-              <span>🩺</span>
-              <p>Áo Blouse trắng (Bác sĩ / Y tá)</p>
-            </div>
-            <div class="dresscode-item active">
-              <span>🎓</span>
-              <p>Áo Cử nhân tốt nghiệp</p>
-            </div>
-            <div class="dresscode-item">
-              <span>👗</span>
-              <p>Lịch sự / Vest / Đầm dạ hội</p>
-            </div>
-            <div class="dresscode-item">
-              <span>🌸</span>
-              <p>Áo dài truyền thống</p>
-            </div>
-          </div>
-        </div>
-
       </section>
 
-      <!-- COUNTDOWN & EVENT INFO (CẬP NHẬT NGÀY 28/08/2026 TẠI ĐHQGHN) -->
+      <!-- COUNTDOWN & EVENT INFO -->
       <section id="event" class="event-section card reveal-on-scroll">
         <span class="step-tag">✦ THỜI GIAN & ĐỊA ĐIỂM ✦</span>
         <h2 class="gold-heading shimmer-text">GRAD. CEREMONY OF VIỆT</h2>
 
-        <!-- Hippocratic Oath Decoration -->
+        <!-- Hippocratic Banner -->
         <div class="oath-banner">
           <span class="oath-cross">✚</span>
           <span>Primum non nocere — Trước tiên, không gây hại</span>
@@ -359,15 +340,10 @@
             <h4>Địa Điểm</h4>
             <p id="event-location">Hội trường Nguyễn Văn Đạo - Đại học Quốc gia Hà Nội</p>
           </div>
-          <div class="info-card">
-            <span class="icon">🩺</span>
-            <h4>Trang Phục</h4>
-            <p id="event-dresscode">Lịch sự / Áo Cử nhân / Blouse</p>
-          </div>
         </div>
 
         <div class="map-container glow-border">
-          <iframe id="google-map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8639811020087!2d105.78013231533227!3d21.03712779283416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab3b5c3e76ad%3A0xe54d86a4f132e4d0!2zSOG7mWkgdHLGsOG7nW5nIE5ndXnhu4VuIFbEg24gxJDhuqFvIC0gxJDhuqFpIGjhu41jIFF14buRYyBnaWEgSMOgIE7hu5lp!5e0!3m2!1svi!2s!4v1710000000000!5m2!1svi!2s" width="100%" height="260" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy"></iframe>
+          <iframe id="google-map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8639811020087!2d105.78013231533227!3d21.03712779283416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab3b5c3e76ad%3A0xe54d86a4f132e4d0!2zSOG7mWkgdHHLGsOG7nW5nIE5ndXnhu4VuIFbEg24gxJDhuqFvIC0gxJDhuqFpIGjhu41jIFF14buRYyBnaWEgSMOgIE7hu5lp!5e0!3m2!1svi!2s!4v1710000000000!5m2!1svi!2s" width="100%" height="260" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy"></iframe>
         </div>
       </section>
 
@@ -408,17 +384,16 @@
 
   </main>
 
-  <!-- CHAPTER LIGHTBOX MODAL (NÂNG CẤP: CÓ NHIỀU ẢNH TRONG MODAL) -->
+  <!-- CHAPTER LIGHTBOX MODAL -->
   <div id="chapter-modal" class="modal-overlay hidden">
     <div class="modal-card glow-border">
       <button id="modal-close" class="modal-close-btn">&times;</button>
       <span id="modal-badge" class="chapter-badge">Chương 1</span>
       <h3 id="modal-title" class="chapter-title">AWAKEN</h3>
       <p id="modal-desc" class="modal-desc">Nội dung chi tiết chương...</p>
-      <!-- Mini carousel trong modal -->
       <div class="modal-carousel">
         <div class="modal-carousel-track" id="modal-carousel-track">
-          <!-- Ảnh render bởi JS -->
+          <!-- Rendered via JS -->
         </div>
         <button class="carousel-btn carousel-prev" id="modal-prev">&#8249;</button>
         <button class="carousel-btn carousel-next" id="modal-next">&#8250;</button>
@@ -427,11 +402,15 @@
     </div>
   </div>
 
-  <!-- FLOATING MUSIC PLAYER: DIE WITH A SMILE - BRUNO MARS & LADY GAGA -->
+  <!-- FLOATING MUSIC PLAYER WITH RELIABLE FALLBACK -->
   <div class="music-player shimmer-glow" id="music-toggle" title="🎵 Die With A Smile - Bruno Mars & Lady Gaga">
     <div class="disc">🎵</div>
   </div>
-  <audio id="bg-music" loop src="die_with_a_smile.mp3"></audio>
+  
+  <audio id="bg-music" loop preload="auto">
+    <source src="die_with_a_smile.mp3" type="audio/mpeg">
+    <source src="https://raw.githubusercontent.com/antigravity-assets/music/main/die_with_a_smile.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="script.js"></script>
 </body>
