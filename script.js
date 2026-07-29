@@ -9,9 +9,6 @@ const APP_STATE = {
   // ⚡ URL DEPLOY GOOGLE APPS SCRIPT CỦA CAO VIỆT ⚡
   webhookUrl: "https://script.google.com/macros/s/AKfycbw68P2n9HLXFDchJRNHVP-hiQ8m1KPQxMlCqhjZ74IB_X1Lf5JWTvNx6oo76XS-RZgS/exec",
 
-  // -----------------------------------------------------------------------
-  // DỮ LIỆU 4 CHƯƠNG — mỗi chương có nhiều ảnh (carousel trong modal)
-  // -----------------------------------------------------------------------
   chaptersData: {
     "ch1": {
       title: "Chương 1: AWAKEN (Thức Tỉnh)",
@@ -46,7 +43,7 @@ const APP_STATE = {
     "ch4": {
       title: "Chương Cuối: AMONG THE STARS (Vì Sao Rực Rỡ)",
       badge: "Chương Cuối",
-      desc: "Chính thức chạm tới cột mốc Tốt Nghiệp Bác Sĩ / Y Khoa 2026. Một khởi đầu mới trên hành trình cứu người cao quý!",
+      desc: "Chính thức chạm tới cột mốc Tốt Nghiệp Bác Sĩ Y Khoa 2026. Một khởi đầu mới trên hành trình cứu người cao quý!",
       photos: [
         { url: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80", caption: "Lễ nhận bằng tốt nghiệp 🎓" },
         { url: "https://images.unsplash.com/photo-1627556704283-8e7dd77abf48?auto=format&fit=crop&w=800&q=80", caption: "Cùng gia đình trong ngày đặc biệt ❤️" },
@@ -55,9 +52,6 @@ const APP_STATE = {
     }
   },
 
-  // -----------------------------------------------------------------------
-  // DỮ LIỆU 6 NĂM Y KHOA — mỗi năm có nhiều ảnh + medical tags
-  // -----------------------------------------------------------------------
   yearsData: {
     "1": {
       title: "Năm 1: Đặt Chân Vào Cổng Trường Y",
@@ -65,7 +59,7 @@ const APP_STATE = {
       tags: ["🔬 Sinh hóa", "🦴 Giải phẫu", "🧬 Tế bào học", "📚 Lý thuyết"],
       photos: [
         { url: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=800&q=80", caption: "Ngày đầu tiên tại trường Y ✨" },
-        { url: "https://images.unsplash.com/photo-1606206873764-fd15e242b815?auto=format&fit=crop&w=800&q=80", caption: "Phòng thí nghiệm giải phẫu 🔬" },
+        { url: "https://images.unsplash.com/photo-1606206873764-fd15e242b815?auto=format&fit=crop&w=800&q=80", caption: "Phòng thí nghiệm sinh hóa 🔬" },
         { url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80", caption: "Những trang sách Y khoa đầu tiên 📖" }
       ]
     },
@@ -132,13 +126,9 @@ const APP_STATE = {
   }
 };
 
-// Carousel state
 const carouselState = { current: 0, total: 0 };
 const modalCarouselState = { current: 0, total: 0 };
 
-// =========================================================================
-// INIT
-// =========================================================================
 document.addEventListener("DOMContentLoaded", () => {
   initSpaceCanvas();
   checkUrlPersonalParameters();
@@ -153,9 +143,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // =========================================================================
-// 1. CANVAS BẦU TRỜI SAO & PHÁO HOA 3D
+// 1. CANVAS BẦU TRỜI SAO & HẠT KIM CƯƠNG LẤP LÁNH NHẸ NHÀNG (CELESTIAL STARDUST)
 // =========================================================================
-let fireworkParticles = [];
+let stardustParticles = [];
 
 function initSpaceCanvas() {
   const canvas = document.getElementById('space-canvas');
@@ -170,17 +160,17 @@ function initSpaceCanvas() {
     height = canvas.height = window.innerHeight;
   });
 
-  const starColors = ["#ffffff", "#f8fafc", "#e2e8f0", "#c9a84c", "#fef08a", "#b8c7d8", "#d4e0ed"];
+  const starColors = ["#ffffff", "#f8fafc", "#e2e8f0", "#d4af37", "#fef08a", "#cbd5e1"];
   const stars = [];
-  const starCount = Math.min(Math.floor((width * height) / 2200), 400);
+  const starCount = Math.min(Math.floor((width * height) / 2200), 380);
 
   for (let i = 0; i < starCount; i++) {
     stars.push({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: Math.random() * 1.7 + 0.3,
+      size: Math.random() * 1.6 + 0.3,
       alpha: Math.random(),
-      speed: Math.random() * 0.012 + 0.004,
+      speed: Math.random() * 0.01 + 0.003,
       color: starColors[Math.floor(Math.random() * starColors.length)]
     });
   }
@@ -190,8 +180,8 @@ function initSpaceCanvas() {
     shootingStar = {
       x: Math.random() * width * 0.8,
       y: Math.random() * height * 0.4,
-      length: Math.random() * 110 + 60,
-      speed: Math.random() * 10 + 6,
+      length: Math.random() * 100 + 50,
+      speed: Math.random() * 8 + 5,
       angle: Math.PI / 4,
       alpha: 1
     };
@@ -199,19 +189,7 @@ function initSpaceCanvas() {
 
   setInterval(() => {
     if (!shootingStar && Math.random() > 0.35) resetShootingStar();
-  }, 3800);
-
-  const mouseParticles = [];
-  window.addEventListener('mousemove', (e) => {
-    if (Math.random() > 0.38) return;
-    mouseParticles.push({
-      x: e.clientX, y: e.clientY,
-      size: Math.random() * 2.5 + 0.8,
-      color: `hsl(${Math.random() * 20 + 38}, 90%, 72%)`,
-      vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5,
-      alpha: 1, decay: Math.random() * 0.03 + 0.015
-    });
-  });
+  }, 4000);
 
   function render() {
     ctx.clearRect(0, 0, width, height);
@@ -238,7 +216,7 @@ function initSpaceCanvas() {
       grad.addColorStop(0, `rgba(255,248,220,0)`);
       grad.addColorStop(1, `rgba(255,248,220,${shootingStar.alpha})`);
       ctx.strokeStyle = grad;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 1.8;
       ctx.beginPath();
       ctx.moveTo(shootingStar.x, shootingStar.y);
       ctx.lineTo(
@@ -248,37 +226,28 @@ function initSpaceCanvas() {
       ctx.stroke();
       shootingStar.x += Math.cos(shootingStar.angle) * shootingStar.speed;
       shootingStar.y += Math.sin(shootingStar.angle) * shootingStar.speed;
-      shootingStar.alpha -= 0.015;
+      shootingStar.alpha -= 0.014;
       if (shootingStar.alpha <= 0) shootingStar = null;
     }
 
-    // Mouse particles
-    for (let i = mouseParticles.length - 1; i >= 0; i--) {
-      let p = mouseParticles[i];
-      p.x += p.vx; p.y += p.vy; p.alpha -= p.decay;
-      if (p.alpha <= 0) { mouseParticles.splice(i, 1); continue; }
+    // 🌟 CELESTIAL STARDUST PARTICLES (Hiệu ứng tinh vân nhẹ nhàng sang trọng)
+    for (let i = stardustParticles.length - 1; i >= 0; i--) {
+      let p = stardustParticles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy -= 0.012; // Nhẹ nhàng bay lên như làn khói ánh kim
+      p.alpha -= p.decay;
+
+      if (p.alpha <= 0) {
+        stardustParticles.splice(i, 1);
+        continue;
+      }
+
       ctx.fillStyle = p.color;
       ctx.globalAlpha = p.alpha;
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
       ctx.fill();
-      ctx.globalAlpha = 1;
-    }
-
-    // Fireworks
-    for (let i = fireworkParticles.length - 1; i >= 0; i--) {
-      let fp = fireworkParticles[i];
-      fp.x += fp.vx; fp.y += fp.vy;
-      fp.vy += 0.045; // gravity
-      fp.alpha -= fp.decay;
-      if (fp.alpha <= 0) { fireworkParticles.splice(i, 1); continue; }
-      if (fp.size > 2.5) { ctx.shadowBlur = 12; ctx.shadowColor = fp.color; }
-      ctx.fillStyle = fp.color;
-      ctx.globalAlpha = fp.alpha;
-      ctx.beginPath();
-      ctx.arc(fp.x, fp.y, fp.size, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.shadowBlur = 0;
     }
     ctx.globalAlpha = 1;
 
@@ -287,36 +256,24 @@ function initSpaceCanvas() {
   render();
 }
 
-// Grand Fireworks
+// 🌟 HIỆU ỨNG ÁNH KIM THIÊN HÀ NHẸ NHÀNG (CELESTIAL CELEBRATION SHIMMER)
 function triggerGrandFireworks() {
   const width = window.innerWidth;
   const height = window.innerHeight;
-  const centers = [
-    { x: width * 0.5, y: height * 0.28 },
-    { x: width * 0.22, y: height * 0.38 },
-    { x: width * 0.78, y: height * 0.38 },
-    { x: width * 0.5, y: height * 0.5 },
-    { x: width * 0.35, y: height * 0.22 },
-    { x: width * 0.65, y: height * 0.22 }
-  ];
-  const colors = ["#c9a84c", "#fef08a", "#ffffff", "#e8c97e", "#38bdf8", "#fbbf24", "#f9a8d4"];
 
-  centers.forEach((center, index) => {
-    setTimeout(() => {
-      for (let i = 0; i < 100; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 12 + 3;
-        fireworkParticles.push({
-          x: center.x, y: center.y,
-          vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed - 2,
-          size: Math.random() * 4.5 + 1.5,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          alpha: 1,
-          decay: Math.random() * 0.015 + 0.007
-        });
-      }
-    }, index * 180);
-  });
+  for (let i = 0; i < 70; i++) {
+    const colors = ["#d4af37", "#fef08a", "#ffffff", "#f3e5ab", "#cbd5e1"];
+    stardustParticles.push({
+      x: Math.random() * width,
+      y: height * 0.6 + Math.random() * (height * 0.3),
+      vx: (Math.random() - 0.5) * 1.8,
+      vy: -Math.random() * 2.5 - 1.2,
+      size: Math.random() * 3 + 1,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: 1,
+      decay: Math.random() * 0.008 + 0.005
+    });
+  }
 }
 
 // =========================================================================
@@ -346,7 +303,6 @@ async function checkUrlPersonalParameters() {
     if (personalView) personalView.classList.remove('hidden');
     if (defaultView) defaultView.classList.add('hidden');
 
-    // Tải thêm từ Google Sheet
     if (APP_STATE.webhookUrl && !APP_STATE.webhookUrl.includes("EXAMPLE_REPLACE")) {
       try {
         const res = await fetch(`${APP_STATE.webhookUrl}?action=getGuest&id=${encodeURIComponent(guestId)}`);
@@ -360,7 +316,7 @@ async function checkUrlPersonalParameters() {
           }
         }
       } catch (err) {
-        console.log("Lưu ý: Không tìm thấy khách trên Google Sheet, dùng dữ liệu mặc định.");
+        console.log("Dùng thông tin từ URL.");
       }
     }
   } else {
@@ -397,33 +353,24 @@ function initSalutation() {
     const greetingBox = document.getElementById('personalized-greeting');
     if (greetingBox) greetingBox.classList.remove('hidden');
 
-    // 🎆 Bắn pháo hoa
     triggerGrandFireworks();
 
-    // 🔓 Mở nội dung bên dưới
     const lockedContent = document.getElementById('locked-content');
     if (lockedContent) {
       lockedContent.classList.remove('hidden');
       lockedContent.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('is-visible'));
     }
 
-    // 🎵 Phát nhạc
-    const audio = document.getElementById('bg-music');
-    const musicBtn = document.getElementById('music-toggle');
-    if (audio) {
-      audio.play().then(() => {
-        if (musicBtn) musicBtn.style.transform = 'scale(1.2)';
-      }).catch(err => console.log("Audio:", err));
-    }
+    // 🎵 Phát nhạc khi tương tác người dùng
+    playAudioMusic();
 
-    // 📜 Hiện navbar
     const navbar = document.getElementById('main-navbar');
     if (navbar) navbar.classList.remove('hidden-nav');
 
-    // 📜 Cuộn chậm mượt
+    // 📜 Cuộn trang siêu mượt & êm ái (1800ms)
     setTimeout(() => {
       const target = document.getElementById('chapters') || document.getElementById('personalized-greeting');
-      if (target) scrollToElementSlowly(target, 1600);
+      if (target) scrollToElementSlowly(target, 1800);
     }, 450);
   };
 
@@ -431,9 +378,9 @@ function initSalutation() {
   if (continueDefaultBtn) continueDefaultBtn.addEventListener('click', handleUnlock);
 }
 
-// Custom slow smooth scroll
-function scrollToElementSlowly(element, duration = 1500) {
-  const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - 70;
+// Hàm cuộn trang siêu mượt với Cubic-Bezier Easing 60FPS
+function scrollToElementSlowly(element, duration = 1800) {
+  const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - 75;
   const startPosition = window.pageYOffset;
   const distance = targetPosition - startPosition;
   let startTime = null;
@@ -441,18 +388,24 @@ function scrollToElementSlowly(element, duration = 1500) {
   function easeInOutCubic(t) {
     return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
   }
+
   function animation(currentTime) {
     if (startTime === null) startTime = currentTime;
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / duration, 1);
+
     window.scrollTo(0, startPosition + distance * easeInOutCubic(progress));
-    if (elapsed < duration) requestAnimationFrame(animation);
+
+    if (elapsed < duration) {
+      requestAnimationFrame(animation);
+    }
   }
+
   requestAnimationFrame(animation);
 }
 
 // =========================================================================
-// 4. PHOTO CAROUSEL (cho timeline và modal)
+// 4. PHOTO CAROUSEL LOGIC
 // =========================================================================
 function buildCarousel(trackEl, dotsEl, captionEl, photos, stateObj) {
   trackEl.innerHTML = '';
@@ -466,7 +419,6 @@ function buildCarousel(trackEl, dotsEl, captionEl, photos, stateObj) {
     const img = document.createElement('img');
     img.src = photo.url;
     img.alt = photo.caption || '';
-    img.loading = idx === 0 ? 'eager' : 'lazy';
     slide.appendChild(img);
     trackEl.appendChild(slide);
 
@@ -504,14 +456,13 @@ function prevSlide(trackEl, dotsEl, captionEl, photos, stateObj) {
   goToSlide(trackEl, dotsEl, captionEl, photos, stateObj, prev);
 }
 
-// Setup swipe on carousel
 function initSwipe(wrapper, onNext, onPrev) {
   let startX = null;
   wrapper.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
   wrapper.addEventListener('touchend', e => {
     if (startX === null) return;
     const dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 40) { dx < 0 ? onNext() : onPrev(); }
+    if (Math.abs(dx) > 35) { dx < 0 ? onNext() : onPrev(); }
     startX = null;
   }, { passive: true });
 }
@@ -526,7 +477,6 @@ function initYearStepper() {
   const prevBtn = document.getElementById('carousel-prev');
   const nextBtn = document.getElementById('carousel-next');
 
-  // Load Năm 1 by default
   loadYearData('1', trackEl, dotsEl, captionEl);
 
   if (prevBtn) prevBtn.addEventListener('click', () => {
@@ -560,35 +510,34 @@ function loadYearData(yr, trackEl, dotsEl, captionEl) {
   if (!data) return;
   currentYear = yr;
 
-  // Fade out text
   const titleEl = document.getElementById('yd-title');
   const descEl = document.getElementById('yd-desc');
   const tagsEl = document.getElementById('yd-tags');
-  if (titleEl) { titleEl.style.opacity = '0'; titleEl.style.transform = 'translateY(8px)'; }
+
+  if (titleEl) { titleEl.style.opacity = '0'; titleEl.style.transform = 'translateY(6px)'; }
   if (descEl) { descEl.style.opacity = '0'; }
 
   setTimeout(() => {
     if (titleEl) {
       titleEl.innerText = data.title;
-      titleEl.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      titleEl.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
       titleEl.style.opacity = '1'; titleEl.style.transform = 'translateY(0)';
     }
     if (descEl) {
       descEl.innerText = data.desc;
-      descEl.style.transition = 'opacity 0.5s ease';
+      descEl.style.transition = 'opacity 0.4s ease';
       descEl.style.opacity = '1';
     }
     if (tagsEl && data.tags) {
       tagsEl.innerHTML = data.tags.map(t => `<span class="med-tag">${t}</span>`).join('');
     }
-  }, 180);
+  }, 160);
 
-  // Build carousel
   buildCarousel(trackEl, dotsEl, captionEl, data.photos, carouselState);
 }
 
 // =========================================================================
-// 6. CHAPTER MODAL (nâng cấp: có carousel ảnh trong modal)
+// 6. CHAPTER MODAL
 // =========================================================================
 function initChapterModal() {
   const modal = document.getElementById('chapter-modal');
@@ -611,7 +560,6 @@ function initChapterModal() {
       document.getElementById('modal-title').innerText = data.title;
       document.getElementById('modal-desc').innerText = data.desc;
 
-      // Build modal carousel
       buildCarousel(modalTrack, modalDots, null, data.photos, modalCarouselState);
 
       modal.classList.remove('hidden');
@@ -633,14 +581,6 @@ function initChapterModal() {
     const photos = yr ? APP_STATE.chaptersData[yr].photos : [];
     nextSlide(modalTrack, modalDots, null, photos, modalCarouselState);
   });
-
-  const modalCarousel = document.querySelector('.modal-carousel');
-  if (modalCarousel) {
-    initSwipe(modalCarousel,
-      () => modalNext && modalNext.click(),
-      () => modalPrev && modalPrev.click()
-    );
-  }
 
   if (closeBtn) closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
   modal.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
@@ -676,8 +616,21 @@ function initCountdown() {
 }
 
 // =========================================================================
-// 9. MUSIC PLAYER
+// 9. MUSIC PLAYER & AUDIO FALLBACK
 // =========================================================================
+function playAudioMusic() {
+  const audio = document.getElementById('bg-music');
+  const toggleBtn = document.getElementById('music-toggle');
+
+  if (audio) {
+    audio.play().then(() => {
+      if (toggleBtn) toggleBtn.style.transform = 'scale(1.2)';
+    }).catch(err => {
+      console.log("Audio play attempt:", err);
+    });
+  }
+}
+
 function initMusicPlayer() {
   const audio = document.getElementById('bg-music');
   const toggleBtn = document.getElementById('music-toggle');
@@ -691,7 +644,7 @@ function initMusicPlayer() {
       } else {
         audio.play().then(() => {
           toggleBtn.style.transform = 'scale(1.2)';
-        }).catch(e => console.log("Audio:", e));
+        }).catch(e => console.log("Audio play error:", e));
       }
       isPlaying = !isPlaying;
     });
