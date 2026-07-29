@@ -10,10 +10,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="galaxy-body">
 
-  <!-- CANVAS BẦU TRỜI SAO & HẠT LẤP LÁNH ĐỘNG -->
+  <!-- CANVAS BẦU TRỜI SAO & DẢI THIÊN HÀ LẤP LÁNH -->
   <canvas id="space-canvas"></canvas>
+  <div class="galaxy-nebula-glow"></div>
 
   <!-- NAVIGATION BAR -->
   <nav class="navbar">
@@ -70,7 +71,7 @@
     </div>
 
     <!-- CÁC PHẦN DƯỚI ĐÂY ĐƯỢC MỞ KHÓA KHI BẤM "TIẾP TỤC HÀNH TRÌNH" -->
-    <div id="locked-content" class="locked-content hidden-content">
+    <div id="locked-content" class="locked-content hidden">
 
       <!-- CHAPTERS SECTION -->
       <section id="chapters" class="chapters-section reveal-on-scroll">
@@ -238,8 +239,8 @@
     </div>
   </div>
 
-  <!-- FLOATING MUSIC PLAYER -->
-  <div class="music-player shimmer-glow" id="music-toggle" title="Bật / Tắt Nhạc nền">
+  <!-- FLOATING MUSIC PLAYER: DIE WITH A SMILE - BRUNO MARS & LADY GAGA -->
+  <div class="music-player shimmer-glow" id="music-toggle" title="🎵 Die With A Smile - Bruno Mars & Lady Gaga">
     <div class="disc">🎵</div>
   </div>
   <audio id="bg-music" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3"></audio>
