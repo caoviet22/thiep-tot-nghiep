@@ -1,9 +1,10 @@
 :root {
-  --bg-dark: #050711;
-  --card-bg: rgba(18, 22, 38, 0.78);
+  --bg-dark: #07090e;
+  --card-bg: rgba(12, 16, 26, 0.82);
   --gold: #d4af37;
   --gold-hover: #f3e5ab;
-  --gold-glow: rgba(212, 175, 55, 0.45);
+  --gold-glow: rgba(212, 175, 55, 0.35);
+  --silver-glow: rgba(226, 232, 240, 0.25);
   --text-main: #e2e8f0;
   --text-muted: #94a3b8;
   --font-serif: 'Cormorant Garamond', serif;
@@ -16,13 +17,9 @@ html {
   scroll-behavior: smooth;
 }
 
-/* DEEP MILKY WAY GALAXY BACKGROUND */
-body.galaxy-body {
-  background: radial-gradient(ellipse at 15% 20%, #220938 0%, transparent 45%),
-              radial-gradient(ellipse at 85% 75%, #082d47 0%, transparent 50%),
-              radial-gradient(ellipse at 50% 45%, #1c0b30 0%, transparent 55%),
-              radial-gradient(ellipse at 70% 15%, #3d2204 0%, transparent 40%),
-              #050711;
+/* MODERN DARK CELESTIAL BACKGROUND */
+body.dark-celestial-body {
+  background: radial-gradient(circle at 50% 15%, #0f1526 0%, #080a12 60%, #040509 100%);
   background-attachment: fixed;
   color: var(--text-main);
   font-family: var(--font-sans);
@@ -31,24 +28,7 @@ body.galaxy-body {
   position: relative;
 }
 
-/* LỚP MÂY THIÊN HÀ NỀN CHUYỂN ĐỘNG MỀM MẠI */
-.galaxy-nebula-glow {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(circle at 40% 30%, rgba(147, 51, 234, 0.18), rgba(14, 165, 233, 0.12) 35%, rgba(234, 179, 8, 0.08) 65%, transparent 90%);
-  filter: blur(50px);
-  animation: nebulaDrift 22s ease-in-out infinite alternate;
-}
-
-@keyframes nebulaDrift {
-  0% { transform: scale(1) translate(0, 0) rotate(0deg); opacity: 0.7; }
-  50% { transform: scale(1.15) translate(-15px, 15px) rotate(4deg); opacity: 0.95; }
-  100% { transform: scale(1.05) translate(15px, -10px) rotate(-4deg); opacity: 0.8; }
-}
-
-/* CANVAS BẦU TRỜI SAO */
+/* CANVAS BẦU TRỜI SAO LẤP LÁNH HIỆN ĐẠI */
 #space-canvas {
   position: fixed;
   top: 0;
@@ -63,42 +43,102 @@ body.galaxy-body {
 .navbar {
   position: fixed; top: 0; width: 100%;
   display: flex; justify-content: space-between; align-items: center;
-  padding: 15px 30px; background: rgba(5, 7, 17, 0.88);
+  padding: 12px 25px; background: rgba(7, 9, 14, 0.92);
   backdrop-filter: blur(16px); z-index: 100;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
-  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.7);
 }
 .nav-brand { font-family: var(--font-serif); font-size: 1.2rem; letter-spacing: 2px; color: var(--gold); }
-.nav-links a { color: var(--text-muted); text-decoration: none; margin-left: 20px; font-size: 0.85rem; transition: 0.3s; }
+.nav-links { display: flex; align-items: center; }
+.nav-links a { color: var(--text-muted); text-decoration: none; margin-left: 18px; font-size: 0.85rem; transition: 0.3s; }
 .nav-links a:hover { color: var(--gold); text-shadow: 0 0 10px var(--gold-glow); }
+
+.btn-admin-link {
+  margin-left: 18px; padding: 6px 12px; background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 8px;
+  color: var(--gold); font-size: 0.75rem; cursor: pointer; transition: 0.3s;
+}
+.btn-admin-link:hover { background: var(--gold); color: #000; font-weight: bold; }
 
 /* LAYOUT & CARDS */
 .container {
-  max-width: 680px; margin: 0 auto; padding: 100px 20px 60px 20px;
+  max-width: 720px; margin: 0 auto; padding: 95px 20px 60px 20px;
   position: relative; z-index: 1;
 }
 .card {
   background: var(--card-bg); border-radius: 20px; padding: 30px;
   margin-bottom: 30px; backdrop-filter: blur(18px);
-  border: 1px solid rgba(212, 175, 55, 0.25);
+  border: 1px solid rgba(212, 175, 55, 0.22);
   box-shadow: 0 12px 40px rgba(0,0,0,0.7);
   transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
 }
 .card:hover {
   border-color: rgba(212, 175, 55, 0.45);
-  box-shadow: 0 14px 45px rgba(212, 175, 55, 0.2);
+  box-shadow: 0 14px 45px rgba(212, 175, 55, 0.18);
+}
+
+/* DOCTOR BADGE IN HERO */
+.doctor-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 18px; background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 30px;
+  color: var(--gold); font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 1.5px; margin-bottom: 20px;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+/* 2-COLUMN PERSONALIZED GUEST CARD */
+.personal-grid {
+  display: grid; grid-template-columns: 200px 1fr; gap: 25px; align-items: center;
+}
+@media (max-width: 640px) {
+  .personal-grid { grid-template-columns: 1fr; text-align: center; }
+  .guest-photo-wrapper { margin: 0 auto; width: 180px; }
+}
+
+.guest-photo-wrapper {
+  position: relative;
+}
+.photo-frame {
+  width: 100%; height: 230px; border-radius: 16px; overflow: hidden;
+  border: 1px solid var(--gold); box-shadow: 0 0 25px var(--gold-glow);
+}
+.photo-frame img {
+  width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;
+}
+.photo-frame:hover img { transform: scale(1.06); }
+
+.personal-text-content {
+  display: flex; flex-direction: column; justify-content: center;
+}
+.personal-heading {
+  font-family: var(--font-serif); font-size: 1.9rem; margin: 8px 0 12px 0; color: #fff; font-weight: 400;
+}
+.gold-text { color: var(--gold); font-style: italic; }
+
+.personal-msg-box {
+  background: rgba(0, 0, 0, 0.4); border-left: 3px solid var(--gold);
+  padding: 14px 18px; border-radius: 0 12px 12px 0; margin-bottom: 12px;
+}
+.personal-msg-box p {
+  font-size: 0.92rem; color: #cbd5e1; line-height: 1.6; font-style: italic;
+}
+
+.signature-line {
+  font-family: var(--font-serif); font-size: 1.1rem; color: var(--gold);
+  text-align: right; margin-bottom: 15px; letter-spacing: 1px;
 }
 
 /* GLOW BORDERS & SHIMMER */
 .glow-border {
-  box-shadow: 0 0 30px rgba(212, 175, 55, 0.15), inset 0 0 20px rgba(212, 175, 55, 0.08);
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.12), inset 0 0 20px rgba(212, 175, 55, 0.05);
 }
 .glow-box {
-  box-shadow: 0 0 22px rgba(212, 175, 55, 0.25);
+  box-shadow: 0 0 22px rgba(212, 175, 55, 0.2);
 }
 
 .shimmer-text {
-  background: linear-gradient(90deg, #d4af37 0%, #fff 50%, #d4af37 100%);
+  background: linear-gradient(90deg, #d4af37 0%, #ffffff 50%, #d4af37 100%);
   background-size: 200% auto;
   color: transparent;
   -webkit-background-clip: text;
@@ -130,7 +170,7 @@ body.galaxy-body {
 }
 
 /* HERO SECTION */
-.hero-section { text-align: center; padding: 40px 0; }
+.hero-section { text-align: center; padding: 30px 0 40px 0; }
 .orbit-logo {
   width: 75px; height: 75px; margin: 0 auto 20px auto;
   border-radius: 50%; border: 1px solid var(--gold);
@@ -140,7 +180,7 @@ body.galaxy-body {
 }
 @keyframes pulseLogo {
   0% { box-shadow: 0 0 15px var(--gold-glow); transform: scale(1); }
-  100% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.7); transform: scale(1.05); }
+  100% { box-shadow: 0 0 35px rgba(212, 175, 55, 0.6); transform: scale(1.04); }
 }
 .logo-text { font-family: var(--font-serif); font-size: 2.2rem; color: var(--gold); }
 .main-title { font-family: var(--font-serif); font-size: 3rem; line-height: 1.15; font-weight: 400; }
@@ -151,8 +191,8 @@ body.galaxy-body {
 .step-tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); display: block; margin-bottom: 8px; }
 .salutation-selector { display: flex; gap: 10px; margin: 20px 0; }
 .salt-btn {
-  flex: 1; padding: 12px; background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.12); color: var(--text-main);
+  flex: 1; padding: 12px; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1); color: var(--text-main);
   border-radius: 10px; cursor: pointer; transition: all 0.3s;
 }
 .salt-btn.active, .salt-btn:hover {
@@ -161,7 +201,7 @@ body.galaxy-body {
 }
 
 input[type="text"], textarea, select {
-  width: 100%; padding: 14px; background: rgba(0,0,0,0.4);
+  width: 100%; padding: 14px; background: rgba(0,0,0,0.45);
   border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 10px;
   color: #fff; font-family: inherit; font-size: 0.9rem; margin-bottom: 15px;
   transition: border-color 0.3s, box-shadow 0.3s;
@@ -179,10 +219,12 @@ input[type="text"]:focus, textarea:focus, select:focus {
 }
 .btn-gold:hover { opacity: 0.95; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5); }
 .btn-gold:disabled { cursor: not-allowed; transform: none; opacity: 0.7; }
+.full-width { width: 100%; }
+.margin-top-15 { margin-top: 15px; }
 
 /* PERSONALIZED BOX */
 .personalized-box {
-  background: rgba(212, 175, 55, 0.15); border: 1px solid var(--gold);
+  background: rgba(212, 175, 55, 0.14); border: 1px solid var(--gold);
   border-radius: 15px; padding: 18px 22px; text-align: center;
   margin-bottom: 30px; font-size: 1.05rem; color: var(--gold-hover);
   animation: fadeIn 0.8s ease;
@@ -225,7 +267,7 @@ input[type="text"]:focus, textarea:focus, select:focus {
 .click-reveal-card:hover .img-wrapper img { transform: scale(1.1); filter: brightness(1.1); }
 
 .img-overlay {
-  position: absolute; inset: 0; background: rgba(8, 10, 17, 0.4);
+  position: absolute; inset: 0; background: rgba(8, 10, 17, 0.45);
   display: flex; justify-content: center; align-items: center;
   opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(2px);
 }
@@ -240,7 +282,7 @@ input[type="text"]:focus, textarea:focus, select:focus {
 /* YEARS STEPPER */
 .year-stepper { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin: 20px 0; }
 .year-node {
-  padding: 10px 18px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+  padding: 10px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
   border-radius: 20px; color: var(--text-muted); cursor: pointer; white-space: nowrap; font-size: 0.85rem;
   transition: all 0.3s;
 }
@@ -252,7 +294,7 @@ input[type="text"]:focus, textarea:focus, select:focus {
   100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); }
 }
 
-.year-detail-box { background: rgba(0,0,0,0.5); padding: 25px; border-radius: 14px; border: 1px solid rgba(212, 175, 55, 0.2); }
+.year-detail-box { background: rgba(0,0,0,0.55); padding: 25px; border-radius: 14px; border: 1px solid rgba(212, 175, 55, 0.2); }
 .yd-img-container { height: 200px; margin-top: 15px; border-radius: 10px; overflow: hidden; }
 .yd-img-container img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s ease; }
 
@@ -270,7 +312,7 @@ input[type="text"]:focus, textarea:focus, select:focus {
   gap: 15px; margin: 20px 0;
 }
 .info-card {
-  background: rgba(0,0,0,0.3); padding: 16px; border-radius: 12px;
+  background: rgba(0,0,0,0.35); padding: 16px; border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.08); text-align: center;
 }
 .info-card .icon { font-size: 1.6rem; display: block; margin-bottom: 8px; }
@@ -285,9 +327,9 @@ input[type="text"]:focus, textarea:focus, select:focus {
 }
 .success-box h3 { font-size: 1.3rem; margin-bottom: 8px; font-family: var(--font-serif); }
 
-/* LIGHTBOX MODAL */
+/* LIGHTBOX & ADMIN MODAL */
 .modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+  position: fixed; inset: 0; background: rgba(0,0,0,0.88); backdrop-filter: blur(12px);
   display: flex; justify-content: center; align-items: center; z-index: 1000;
   opacity: 1; transition: opacity 0.4s ease; padding: 20px;
 }
@@ -306,9 +348,13 @@ input[type="text"]:focus, textarea:focus, select:focus {
   color: var(--gold); font-size: 2rem; cursor: pointer; transition: 0.3s;
 }
 .modal-close-btn:hover { transform: rotate(90deg); color: #fff; }
-.modal-desc { margin: 10px 0 20px 0; color: var(--text-main); font-size: 0.95rem; line-height: 1.5; }
-.modal-img-container { height: 260px; border-radius: 12px; overflow: hidden; }
-.modal-img-container img { width: 100%; height: 100%; object-fit: cover; }
+
+.gen-form-group { margin-bottom: 12px; text-align: left; }
+.gen-form-group label { display: block; font-size: 0.8rem; color: var(--gold); margin-bottom: 5px; }
+.gen-status-msg {
+  margin-top: 12px; color: #4ade80; font-size: 0.85rem; text-align: center;
+  padding: 8px; background: rgba(34, 197, 94, 0.15); border-radius: 8px;
+}
 
 /* MUSIC PLAYER FLOATING */
 .music-player {
