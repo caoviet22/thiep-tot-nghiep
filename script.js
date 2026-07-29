@@ -7,7 +7,7 @@ const APP_STATE = {
   personalMessage: "",
   guestPhoto: "",
   // ⚡ URL DEPLOY GOOGLE APPS SCRIPT CỦA CAO VIỆT ⚡
-  webhookUrl: "https://script.google.com/macros/s/AKfycbw68P2n9HLXFDchJRNHVP-hiQ8m1KPQxMlCqhjZ74IB_X1Lf5JWTvNx6oo76XS-RZgS/exec",
+  webhookUrl: "https://script.google.com/macros/s/AKfycbzZvio1tnh9Tb1dlBwCb5pZ6Y3MQcFoL6rfxayJVAN1UcPAfjl1In4SC-7hJfabaK5P/exec",
 
   chaptersData: {
     "ch1": {
