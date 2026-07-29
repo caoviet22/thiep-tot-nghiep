@@ -2,7 +2,9 @@
 const APP_STATE = {
   salutation: "Anh",
   guestName: "Khách Mời",
-  // ⚡ DÁST THAY URL DEPLOY GOOGLE APPS SCRIPT CỦA BẠN VÀO ĐÂY ⚡
+  personalMessage: "",
+  guestPhoto: "",
+  // ⚡ URL DEPLOY GOOGLE APPS SCRIPT THỰC TẾ CỦA CAO VIỆT ⚡
   webhookUrl: "https://script.google.com/macros/s/AKfycbw68P2n9HLXFDchJRNHVP-hiQ8m1KPQxMlCqhjZ74IB_X1Lf5JWTvNx6oo76XS-RZgS/exec",
   chaptersData: {
     "ch1": {
@@ -43,6 +45,7 @@ const APP_STATE = {
 
 document.addEventListener("DOMContentLoaded", () => {
   initSpaceCanvas();
+  checkUrlPersonalParameters();
   initSalutation();
   initYearStepper();
   initCountdown();
@@ -50,11 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
   initRSVPForm();
   initChapterModal();
   initScrollObserver();
+  initLinkGeneratorModal();
   fetchWebConfig();
 });
 
 // ==============================================================================
-// 1. CANVAS BẦU TRỜI SAO, MÂY THIÊN HÀ & HẠT LẤP LÁNH CHUỘT
+// 1. CANVAS BẦU TRỜI SAO ĐÊM HIỆN ĐẠI & HẠT LẤP LÁNH SANG TRỌNG
 // ==============================================================================
 let fireworkParticles = [];
 
@@ -71,31 +75,28 @@ function initSpaceCanvas() {
     height = canvas.height = window.innerHeight;
   });
 
-  // Khởi tạo các vì sao lấp lánh đa màu sắc (Thiên hà)
+  const starColors = ["#ffffff", "#f8fafc", "#e2e8f0", "#d4af37", "#fef08a", "#cbd5e1"];
   const stars = [];
-  const starCount = Math.floor((width * height) / 2200);
-
-  const colors = ["#ffffff", "#d4af37", "#a7f3d0", "#bae6fd", "#fbcfe8", "#e9d5ff"];
+  const starCount = Math.floor((width * height) / 2000);
 
   for (let i = 0; i < starCount; i++) {
     stars.push({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: Math.random() * 2 + 0.3,
+      size: Math.random() * 1.8 + 0.3,
       alpha: Math.random(),
-      speed: Math.random() * 0.02 + 0.006,
-      color: colors[Math.floor(Math.random() * colors.length)]
+      speed: Math.random() * 0.015 + 0.005,
+      color: starColors[Math.floor(Math.random() * starColors.length)]
     });
   }
 
-  // Khởi tạo sao băng (shooting star)
   let shootingStar = null;
   function resetShootingStar() {
     shootingStar = {
       x: Math.random() * width * 0.8,
       y: Math.random() * height * 0.4,
-      length: Math.random() * 100 + 50,
-      speed: Math.random() * 12 + 7,
+      length: Math.random() * 110 + 60,
+      speed: Math.random() * 11 + 6,
       angle: Math.PI / 4,
       alpha: 1
     };
@@ -105,40 +106,29 @@ function initSpaceCanvas() {
     if (!shootingStar && Math.random() > 0.3) {
       resetShootingStar();
     }
-  }, 3500);
+  }, 4000);
 
-  // Hiệu ứng kim tuyến lấp lánh chạy theo con trỏ chuột
   const mouseParticles = [];
   window.addEventListener('mousemove', (e) => {
     if (Math.random() > 0.4) return;
     mouseParticles.push({
       x: e.clientX,
       y: e.clientY,
-      size: Math.random() * 3.5 + 1,
-      color: `hsl(${Math.random() * 50 + 35}, 100%, 75%)`,
-      vx: (Math.random() - 0.5) * 1.8,
-      vy: (Math.random() - 0.5) * 1.8,
+      size: Math.random() * 3 + 1,
+      color: `hsl(${Math.random() * 15 + 40}, 100%, 75%)`,
+      vx: (Math.random() - 0.5) * 1.5,
+      vy: (Math.random() - 0.5) * 1.5,
       alpha: 1,
       decay: Math.random() * 0.03 + 0.015
     });
   });
 
-  // Render Loop
   function render() {
     ctx.clearRect(0, 0, width, height);
 
-    // 🌌 Vẽ mây dải Thiên Hà mềm mại trên Canvas
-    const galaxyGrad = ctx.createRadialGradient(width * 0.5, height * 0.4, 50, width * 0.5, height * 0.4, width * 0.6);
-    galaxyGrad.addColorStop(0, 'rgba(147, 51, 234, 0.08)');
-    galaxyGrad.addColorStop(0.5, 'rgba(14, 165, 233, 0.05)');
-    galaxyGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = galaxyGrad;
-    ctx.fillRect(0, 0, width, height);
-
-    // Vẽ vì sao lấp lánh
     for (let s of stars) {
       s.alpha += s.speed;
-      if (s.alpha > 1 || s.alpha < 0.2) s.speed = -s.speed;
+      if (s.alpha > 1 || s.alpha < 0.15) s.speed = -s.speed;
 
       ctx.fillStyle = s.color;
       ctx.globalAlpha = s.alpha;
@@ -148,10 +138,9 @@ function initSpaceCanvas() {
     }
     ctx.globalAlpha = 1;
 
-    // Vẽ sao băng
     if (shootingStar) {
-      ctx.strokeStyle = `rgba(255, 245, 200, ${shootingStar.alpha})`;
-      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = `rgba(255, 248, 220, ${shootingStar.alpha})`;
+      ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(shootingStar.x, shootingStar.y);
       ctx.lineTo(
@@ -162,12 +151,11 @@ function initSpaceCanvas() {
 
       shootingStar.x += Math.cos(shootingStar.angle) * shootingStar.speed;
       shootingStar.y += Math.sin(shootingStar.angle) * shootingStar.speed;
-      shootingStar.alpha -= 0.018;
+      shootingStar.alpha -= 0.016;
 
       if (shootingStar.alpha <= 0) shootingStar = null;
     }
 
-    // Vẽ hạt kim tuyến chuột
     for (let i = mouseParticles.length - 1; i >= 0; i--) {
       let p = mouseParticles[i];
       p.x += p.vx;
@@ -187,7 +175,6 @@ function initSpaceCanvas() {
       ctx.globalAlpha = 1;
     }
 
-    // Vẽ hiệu ứng pháo hoa sao nổ khi mở phần
     for (let i = fireworkParticles.length - 1; i >= 0; i--) {
       let fp = fireworkParticles[i];
       fp.x += fp.vx;
@@ -214,7 +201,6 @@ function initSpaceCanvas() {
   render();
 }
 
-// Bắn hiệu ứng pháo hoa hạt vàng lấp lánh khi mở phần
 function triggerSparkleBurst(originX, originY) {
   const x = originX || window.innerWidth / 2;
   const y = originY || window.innerHeight / 3;
@@ -228,7 +214,7 @@ function triggerSparkleBurst(originX, originY) {
       vx: Math.cos(angle) * speed,
       vy: Math.sin(angle) * speed,
       size: Math.random() * 4 + 1.5,
-      color: `hsl(${Math.random() * 50 + 35}, 100%, ${Math.random() * 30 + 60}%)`,
+      color: `hsl(${Math.random() * 40 + 35}, 100%, ${Math.random() * 25 + 65}%)`,
       alpha: 1,
       decay: Math.random() * 0.02 + 0.01
     });
@@ -236,7 +222,47 @@ function triggerSparkleBurst(originX, originY) {
 }
 
 // ==============================================================================
-// 2. CHỌN DANH XƯNG & MỞ BẤM TỪNG PHẦN HÀNH TRÌNH (SỬA LỖI CHUYỂN TRANG)
+// 2. ĐỌC THÔNG TIN THIỆP RIÊNG TỪ URL PARAMETERS (?name=...&salt=...&msg=...&img=...)
+// ==============================================================================
+function checkUrlPersonalParameters() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const nameParam = urlParams.get('name') || urlParams.get('to');
+  const saltParam = urlParams.get('salt') || urlParams.get('salutation');
+  const msgParam = urlParams.get('msg') || urlParams.get('message');
+  const imgParam = urlParams.get('img') || urlParams.get('photo');
+
+  const personalView = document.getElementById('personalized-view');
+  const defaultView = document.getElementById('default-input-view');
+
+  if (nameParam) {
+    APP_STATE.guestName = nameParam;
+    if (saltParam) APP_STATE.salutation = saltParam;
+    if (msgParam) APP_STATE.personalMessage = msgParam;
+    if (imgParam) APP_STATE.guestPhoto = imgParam;
+
+    document.getElementById('personal-salutation').innerText = APP_STATE.salutation;
+    document.getElementById('personal-guest-name').innerText = APP_STATE.guestName;
+
+    if (msgParam) {
+      document.getElementById('personal-message-text').innerText = msgParam;
+    }
+
+    if (imgParam) {
+      document.getElementById('guest-photo-img').src = imgParam;
+    }
+
+    if (personalView) personalView.classList.remove('hidden');
+    if (defaultView) defaultView.classList.add('hidden');
+
+  } else {
+    // Nếu không có tham số URL -> Mở khung nhập tên thông thường
+    if (personalView) personalView.classList.remove('hidden'); // Vẫn giữ trang đầu đẹp mắt
+    if (defaultView) defaultView.classList.add('hidden');
+  }
+}
+
+// ==============================================================================
+// 3. CHỌN DANH XƯNG & MỞ BẤM TỪNG PHẦN HÀNH TRÌNH
 // ==============================================================================
 function initSalutation() {
   const btns = document.querySelectorAll('.salt-btn');
@@ -249,52 +275,109 @@ function initSalutation() {
   });
 
   const continueBtn = document.getElementById('btn-continue');
-  if (continueBtn) {
-    continueBtn.addEventListener('click', (e) => {
-      const nameVal = document.getElementById('guest-name-input').value.trim();
-      if(nameVal) APP_STATE.guestName = nameVal;
+  const continueDefaultBtn = document.getElementById('btn-continue-default');
 
-      document.getElementById('disp-salutation').innerText = APP_STATE.salutation;
-      document.getElementById('disp-name').innerText = APP_STATE.guestName;
-      
-      const greetingBox = document.getElementById('personalized-greeting');
-      if (greetingBox) greetingBox.classList.remove('hidden');
+  const handleUnlock = (targetBtn) => {
+    const nameInput = document.getElementById('guest-name-input');
+    if (nameInput && nameInput.value.trim()) {
+      APP_STATE.guestName = nameInput.value.trim();
+    }
 
-      // 🎆 1. Bắn pháo hoa lấp lánh!
-      const rect = continueBtn.getBoundingClientRect();
-      triggerSparkleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    document.getElementById('disp-salutation').innerText = APP_STATE.salutation;
+    document.getElementById('disp-name').innerText = APP_STATE.guestName;
+    
+    const greetingBox = document.getElementById('personalized-greeting');
+    if (greetingBox) greetingBox.classList.remove('hidden');
 
-      // 🔓 2. Mở khóa toàn bộ phần nội dung bên dưới
-      const lockedContent = document.getElementById('locked-content');
-      if (lockedContent) {
-        lockedContent.classList.remove('hidden');
-        lockedContent.classList.add('unlocked');
+    // 🎆 1. Bắn pháo hoa lấp lánh!
+    const rect = targetBtn.getBoundingClientRect();
+    triggerSparkleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
 
-        // Hiển thị ngay lập tức toàn bộ các card nội dung
-        const reveals = lockedContent.querySelectorAll('.reveal-on-scroll');
-        reveals.forEach(el => el.classList.add('is-visible'));
-      }
+    // 🔓 2. Mở khóa toàn bộ phần nội dung bên dưới
+    const lockedContent = document.getElementById('locked-content');
+    if (lockedContent) {
+      lockedContent.classList.remove('hidden');
 
-      // 🎵 3. Tự động phát nhạc "Die With A Smile"
-      const audio = document.getElementById('bg-music');
-      const musicBtn = document.getElementById('music-toggle');
-      if (audio) {
-        audio.play().then(() => {
-          if (musicBtn) musicBtn.style.transform = 'scale(1.2)';
-        }).catch(err => console.log("Auto-play ready upon click:", err));
-      }
+      const reveals = lockedContent.querySelectorAll('.reveal-on-scroll');
+      reveals.forEach(el => el.classList.add('is-visible'));
+    }
 
-      // 📜 4. Cuộn mượt xuống phần Kỷ niệm
-      setTimeout(() => {
-        const target = document.getElementById('personalized-greeting') || document.getElementById('chapters');
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+    // 🎵 3. Tự động phát nhạc nền "Die With A Smile"
+    const audio = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-toggle');
+    if (audio) {
+      audio.play().then(() => {
+        if (musicBtn) musicBtn.style.transform = 'scale(1.2)';
+      }).catch(err => console.log("Audio playback error:", err));
+    }
+
+    // 📜 4. Cuộn mượt xuống phần Kỷ niệm
+    setTimeout(() => {
+      const target = document.getElementById('personalized-greeting') || document.getElementById('chapters');
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
+
+  if (continueBtn) continueBtn.addEventListener('click', () => handleUnlock(continueBtn));
+  if (continueDefaultBtn) continueDefaultBtn.addEventListener('click', () => handleUnlock(continueDefaultBtn));
+}
+
+// ==============================================================================
+// 4. ADMIN MODAL: TẠO LINK THIỆP GỬI RIÊNG CHO CAO VIỆT (LINK GENERATOR)
+// ==============================================================================
+function initLinkGeneratorModal() {
+  const openBtn = document.getElementById('open-link-gen-btn');
+  const modal = document.getElementById('link-gen-modal');
+  const closeBtn = document.getElementById('link-gen-close');
+  const generateBtn = document.getElementById('btn-generate-link');
+  const statusMsg = document.getElementById('gen-status-text');
+
+  if (!modal) return;
+
+  if (openBtn) {
+    openBtn.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+      if (statusMsg) statusMsg.classList.add('hidden');
+    });
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.add('hidden');
+  });
+
+  if (generateBtn) {
+    generateBtn.addEventListener('click', () => {
+      const salutation = document.getElementById('gen-salutation').value;
+      const guestName = document.getElementById('gen-guest-name').value.trim() || "Bạn";
+      const message = document.getElementById('gen-message').value.trim();
+      const photoUrl = document.getElementById('gen-photo-url').value.trim();
+
+      const baseUrl = window.location.origin + window.location.pathname;
+      const params = new URLSearchParams();
+
+      params.set('salt', salutation);
+      params.set('name', guestName);
+      if (message) params.set('msg', message);
+      if (photoUrl) params.set('img', photoUrl);
+
+      const generatedUrl = `${baseUrl}?${params.toString()}`;
+
+      // Sao chép link vào Clipboard
+      navigator.clipboard.writeText(generatedUrl).then(() => {
+        if (statusMsg) {
+          statusMsg.innerText = `✅ Đã sao chép link thiệp cho ${salutation} ${guestName}!`;
+          statusMsg.classList.remove('hidden');
+        }
+      }).catch(err => {
+        alert("Link thiệp của bạn: " + generatedUrl);
+      });
     });
   }
 }
 
 // ==============================================================================
-// 3. CHI TIẾT TỪNG CHƯƠNG (LIGHTBOX MODAL KHI BẤM VÀO TỪNG CHƯƠNG)
+// 5. CHI TIẾT TỪNG CHƯƠNG (LIGHTBOX MODAL KHI BẤM VÀO TỪNG CHƯƠNG)
 // ==============================================================================
 function initChapterModal() {
   const modal = document.getElementById('chapter-modal');
@@ -320,16 +403,14 @@ function initChapterModal() {
     });
   });
 
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
-  }
+  if (closeBtn) closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
   modal.addEventListener('click', (e) => {
     if (e.target === modal) modal.classList.add('hidden');
   });
 }
 
 // ==============================================================================
-// 4. CHUYỂN ĐỔI MỐC NĂM HỌC (TIMELINE STEPPER)
+// 6. CHUYỂN ĐỔI MỐC NĂM HỌC (TIMELINE STEPPER)
 // ==============================================================================
 function initYearStepper() {
   const nodes = document.querySelectorAll('.year-node');
@@ -358,7 +439,7 @@ function initYearStepper() {
 }
 
 // ==============================================================================
-// 5. HIỆU ỨNG HIỆN MƯỢT KHI CUỘN (SCROLL REVEAL OBSERVER)
+// 7. HIỆU ỨNG HIỆN MƯỢT KHI CUỘN (SCROLL REVEAL OBSERVER)
 // ==============================================================================
 function initScrollObserver() {
   const observer = new IntersectionObserver((entries) => {
@@ -373,7 +454,7 @@ function initScrollObserver() {
 }
 
 // ==============================================================================
-// 6. ĐẾM NGƯỢC THỜI GIAN
+// 8. ĐẾM NGƯỢC THỜI GIAN
 // ==============================================================================
 function initCountdown() {
   const eventDate = new Date("July 23, 2026 11:45:00").getTime();
@@ -392,7 +473,7 @@ function initCountdown() {
 }
 
 // ==============================================================================
-// 7. TRÌNH PHÁT NHẠC FLOATING
+// 9. TRÌNH PHÁT NHẠC FLOATING
 // ==============================================================================
 function initMusicPlayer() {
   const audio = document.getElementById('bg-music');
@@ -407,7 +488,7 @@ function initMusicPlayer() {
       } else {
         audio.play().then(() => {
           toggleBtn.style.transform = 'scale(1.2)';
-        }).catch(e => console.log("Auto-play blocked:", e));
+        }).catch(e => console.log("Audio playback error:", e));
       }
       isPlaying = !isPlaying;
     });
@@ -415,7 +496,7 @@ function initMusicPlayer() {
 }
 
 // ==============================================================================
-// 8. KẾT NỐI FORM RSVP VỚI GOOGLE APPS SCRIPT WEBHOOK (POST)
+// 10. KẾT NỐI FORM RSVP VỚI GOOGLE APPS SCRIPT WEBHOOK (POST THỰC TẾ CAO VIỆT)
 // ==============================================================================
 function initRSVPForm() {
   const form = document.getElementById('rsvp-form');
@@ -434,29 +515,21 @@ function initRSVPForm() {
       timestamp: new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })
     };
 
-    // 🔄 Trạng thái 1: Bật Loading trên Button
     const originalBtnText = submitBtn.innerHTML;
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<span class="spinner"></span> Đang gửi lời chúc...`;
 
     try {
-      if (!APP_STATE.webhookUrl || APP_STATE.webhookUrl.includes("EXAMPLE_REPLACE")) {
-        console.warn("⚠️ Đang chạy chế độ Demo (chưa dán Webhook URL thật).");
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      } else {
-        const response = await fetch(APP_STATE.webhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(payload)
-        });
+      const response = await fetch(APP_STATE.webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
 
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-      // 🎆 Bắn pháo hoa lấp lánh ăn mừng khi gửi lời chúc thành công!
       triggerSparkleBurst(window.innerWidth / 2, window.innerHeight / 2);
 
-      // 🔄 Trạng thái 2: Hiển thị màn hình Cảm ơn
       document.getElementById('thanks-name').innerText = `${APP_STATE.salutation} ${APP_STATE.guestName}`;
       form.classList.add('hidden');
       document.getElementById('rsvp-success').classList.remove('hidden');
@@ -471,7 +544,7 @@ function initRSVPForm() {
 }
 
 // ==============================================================================
-// 9. ĐỌC CẤU HÌNH WEB TỪ GOOGLE SHEET (GET)
+// 11. ĐỌC CẤU HÌNH WEB TỪ GOOGLE SHEET (GET)
 // ==============================================================================
 async function fetchWebConfig() {
   if (!APP_STATE.webhookUrl || APP_STATE.webhookUrl.includes("EXAMPLE_REPLACE")) {
