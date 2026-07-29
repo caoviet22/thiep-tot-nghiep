@@ -2,8 +2,8 @@
 const APP_STATE = {
   salutation: "Anh",
   guestName: "Khách Mời",
-  // ⚡ DÁtransaction: THAY URL DEPLOY GOOGLE APPS SCRIPT CỦA BẠN VÀO ĐÂY ⚡
-  webhookUrl: "https://script.google.com/macros/s/AKfycbw68P2n9HLXFDchJRNHVP-hiQ8m1KPQxMlCqhjZ74IB_X1Lf5JWTvNx6oo76XS-RZgS/exec",
+  // ⚡ DÁST THAY URL DEPLOY GOOGLE APPS SCRIPT CỦA BẠN VÀO ĐÂY ⚡
+  webhookUrl: "https://script.google.com/macros/s/AKfycbx_EXAMPLE_REPLACE_WITH_YOUR_DEPLOYMENT_ID/exec",
   chaptersData: {
     "ch1": {
       title: "Chương 1: AWAKEN (Thức Tỉnh)",
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ==============================================================================
-// 1. CANVAS BẦU TRỜI SAO, SAO BĂNG & HẠT LẤP LÁNH CHUỘT (DYNAMIC SPARKLE CANVAS)
+// 1. CANVAS BẦU TRỜI SAO, MÂY THIÊN HÀ & HẠT LẤP LÁNH CHUỘT
 // ==============================================================================
 let fireworkParticles = [];
 
@@ -71,18 +71,20 @@ function initSpaceCanvas() {
     height = canvas.height = window.innerHeight;
   });
 
-  // Khởi tạo các vì sao tĩnh & nhấp nháy
+  // Khởi tạo các vì sao lấp lánh đa màu sắc (Thiên hà)
   const stars = [];
-  const starCount = Math.floor((width * height) / 3000);
+  const starCount = Math.floor((width * height) / 2200);
+
+  const colors = ["#ffffff", "#d4af37", "#a7f3d0", "#bae6fd", "#fbcfe8", "#e9d5ff"];
 
   for (let i = 0; i < starCount; i++) {
     stars.push({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: Math.random() * 1.8 + 0.2,
+      size: Math.random() * 2 + 0.3,
       alpha: Math.random(),
-      speed: Math.random() * 0.02 + 0.005,
-      gold: Math.random() > 0.75
+      speed: Math.random() * 0.02 + 0.006,
+      color: colors[Math.floor(Math.random() * colors.length)]
     });
   }
 
@@ -92,54 +94,64 @@ function initSpaceCanvas() {
     shootingStar = {
       x: Math.random() * width * 0.8,
       y: Math.random() * height * 0.4,
-      length: Math.random() * 80 + 40,
-      speed: Math.random() * 10 + 6,
+      length: Math.random() * 100 + 50,
+      speed: Math.random() * 12 + 7,
       angle: Math.PI / 4,
       alpha: 1
     };
   }
 
   setInterval(() => {
-    if (!shootingStar && Math.random() > 0.4) {
+    if (!shootingStar && Math.random() > 0.3) {
       resetShootingStar();
     }
-  }, 4000);
+  }, 3500);
 
   // Hiệu ứng kim tuyến lấp lánh chạy theo con trỏ chuột
   const mouseParticles = [];
   window.addEventListener('mousemove', (e) => {
-    if (Math.random() > 0.5) return;
+    if (Math.random() > 0.4) return;
     mouseParticles.push({
       x: e.clientX,
       y: e.clientY,
-      size: Math.random() * 3 + 1,
-      color: `hsl(${Math.random() * 30 + 40}, 100%, 75%)`,
-      vx: (Math.random() - 0.5) * 1.5,
-      vy: (Math.random() - 0.5) * 1.5,
+      size: Math.random() * 3.5 + 1,
+      color: `hsl(${Math.random() * 50 + 35}, 100%, 75%)`,
+      vx: (Math.random() - 0.5) * 1.8,
+      vy: (Math.random() - 0.5) * 1.8,
       alpha: 1,
       decay: Math.random() * 0.03 + 0.015
     });
   });
 
-  // Vòng lặp Animation Render
+  // Render Loop
   function render() {
     ctx.clearRect(0, 0, width, height);
 
-    // Vẽ vì sao
+    // 🌌 Vẽ mây dải Thiên Hà mềm mại trên Canvas
+    const galaxyGrad = ctx.createRadialGradient(width * 0.5, height * 0.4, 50, width * 0.5, height * 0.4, width * 0.6);
+    galaxyGrad.addColorStop(0, 'rgba(147, 51, 234, 0.08)');
+    galaxyGrad.addColorStop(0.5, 'rgba(14, 165, 233, 0.05)');
+    galaxyGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = galaxyGrad;
+    ctx.fillRect(0, 0, width, height);
+
+    // Vẽ vì sao lấp lánh
     for (let s of stars) {
       s.alpha += s.speed;
       if (s.alpha > 1 || s.alpha < 0.2) s.speed = -s.speed;
 
-      ctx.fillStyle = s.gold ? `rgba(212, 175, 55, ${s.alpha})` : `rgba(255, 255, 255, ${s.alpha})`;
+      ctx.fillStyle = s.color;
+      ctx.globalAlpha = s.alpha;
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
       ctx.fill();
     }
+    ctx.globalAlpha = 1;
 
     // Vẽ sao băng
     if (shootingStar) {
-      ctx.strokeStyle = `rgba(255, 240, 180, ${shootingStar.alpha})`;
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = `rgba(255, 245, 200, ${shootingStar.alpha})`;
+      ctx.lineWidth = 2.5;
       ctx.beginPath();
       ctx.moveTo(shootingStar.x, shootingStar.y);
       ctx.lineTo(
@@ -150,7 +162,7 @@ function initSpaceCanvas() {
 
       shootingStar.x += Math.cos(shootingStar.angle) * shootingStar.speed;
       shootingStar.y += Math.sin(shootingStar.angle) * shootingStar.speed;
-      shootingStar.alpha -= 0.015;
+      shootingStar.alpha -= 0.018;
 
       if (shootingStar.alpha <= 0) shootingStar = null;
     }
@@ -180,7 +192,7 @@ function initSpaceCanvas() {
       let fp = fireworkParticles[i];
       fp.x += fp.vx;
       fp.y += fp.vy;
-      fp.vy += 0.05; // gravity
+      fp.vy += 0.06;
       fp.alpha -= fp.decay;
 
       if (fp.alpha <= 0) {
@@ -207,16 +219,16 @@ function triggerSparkleBurst(originX, originY) {
   const x = originX || window.innerWidth / 2;
   const y = originY || window.innerHeight / 3;
 
-  for (let i = 0; i < 70; i++) {
+  for (let i = 0; i < 80; i++) {
     const angle = Math.random() * Math.PI * 2;
-    const speed = Math.random() * 8 + 2;
+    const speed = Math.random() * 9 + 2;
     fireworkParticles.push({
       x: x,
       y: y,
       vx: Math.cos(angle) * speed,
       vy: Math.sin(angle) * speed,
-      size: Math.random() * 3.5 + 1.5,
-      color: `hsl(${Math.random() * 45 + 35}, 100%, ${Math.random() * 30 + 60}%)`,
+      size: Math.random() * 4 + 1.5,
+      color: `hsl(${Math.random() * 50 + 35}, 100%, ${Math.random() * 30 + 60}%)`,
       alpha: 1,
       decay: Math.random() * 0.02 + 0.01
     });
@@ -224,7 +236,7 @@ function triggerSparkleBurst(originX, originY) {
 }
 
 // ==============================================================================
-// 2. CHỌN DANH XƯNG & MỞ BẤM TỪNG PHẦN HÀNH TRÌNH
+// 2. CHỌN DANH XƯNG & MỞ BẤM TỪNG PHẦN HÀNH TRÌNH (SỬA LỖI CHUYỂN TRANG)
 // ==============================================================================
 function initSalutation() {
   const btns = document.querySelectorAll('.salt-btn');
@@ -246,23 +258,37 @@ function initSalutation() {
       document.getElementById('disp-name').innerText = APP_STATE.guestName;
       
       const greetingBox = document.getElementById('personalized-greeting');
-      greetingBox.classList.remove('hidden');
+      if (greetingBox) greetingBox.classList.remove('hidden');
 
-      // 🎆 Bắn pháo hoa lấp lánh!
+      // 🎆 1. Bắn pháo hoa lấp lánh!
       const rect = continueBtn.getBoundingClientRect();
       triggerSparkleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
 
-      // 🔓 Mở khóa các phần bên dưới
+      // 🔓 2. Mở khóa toàn bộ phần nội dung bên dưới
       const lockedContent = document.getElementById('locked-content');
       if (lockedContent) {
-        lockedContent.classList.remove('hidden-content');
+        lockedContent.classList.remove('hidden');
         lockedContent.classList.add('unlocked');
+
+        // Hiển thị ngay lập tức toàn bộ các card nội dung
+        const reveals = lockedContent.querySelectorAll('.reveal-on-scroll');
+        reveals.forEach(el => el.classList.add('is-visible'));
       }
 
-      // Cuộn mượt xuống phần Kỷ niệm
+      // 🎵 3. Tự động phát nhạc "Die With A Smile"
+      const audio = document.getElementById('bg-music');
+      const musicBtn = document.getElementById('music-toggle');
+      if (audio) {
+        audio.play().then(() => {
+          if (musicBtn) musicBtn.style.transform = 'scale(1.2)';
+        }).catch(err => console.log("Auto-play ready upon click:", err));
+      }
+
+      // 📜 4. Cuộn mượt xuống phần Kỷ niệm
       setTimeout(() => {
-        document.getElementById('chapters').scrollIntoView({ behavior: 'smooth' });
-      }, 300);
+        const target = document.getElementById('personalized-greeting') || document.getElementById('chapters');
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     });
   }
 }
@@ -294,7 +320,9 @@ function initChapterModal() {
     });
   });
 
-  closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+  }
   modal.addEventListener('click', (e) => {
     if (e.target === modal) modal.classList.add('hidden');
   });
@@ -339,7 +367,7 @@ function initScrollObserver() {
         entry.target.classList.add('is-visible');
       }
     });
-  }, { threshold: 0.15 });
+  }, { threshold: 0.1 });
 
   document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 }
@@ -364,7 +392,7 @@ function initCountdown() {
 }
 
 // ==============================================================================
-// 7. PHÁT NHẠC NỀN FLOATING
+// 7. TRÌNH PHÁT NHẠC FLOATING
 // ==============================================================================
 function initMusicPlayer() {
   const audio = document.getElementById('bg-music');
@@ -377,8 +405,9 @@ function initMusicPlayer() {
         audio.pause();
         toggleBtn.style.transform = 'scale(1)';
       } else {
-        audio.play().catch(e => console.log("Auto-play blocked:", e));
-        toggleBtn.style.transform = 'scale(1.2)';
+        audio.play().then(() => {
+          toggleBtn.style.transform = 'scale(1.2)';
+        }).catch(e => console.log("Auto-play blocked:", e));
       }
       isPlaying = !isPlaying;
     });
