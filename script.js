@@ -3,7 +3,7 @@ const APP_STATE = {
   salutation: "Anh",
   guestName: "Khách Mời",
   // ⚡ DÁST THAY URL DEPLOY GOOGLE APPS SCRIPT CỦA BẠN VÀO ĐÂY ⚡
-  webhookUrl: "https://script.google.com/macros/s/AKfycbx_EXAMPLE_REPLACE_WITH_YOUR_DEPLOYMENT_ID/exec",
+  webhookUrl: "https://script.google.com/macros/s/AKfycbw68P2n9HLXFDchJRNHVP-hiQ8m1KPQxMlCqhjZ74IB_X1Lf5JWTvNx6oo76XS-RZgS/exec",
   chaptersData: {
     "ch1": {
       title: "Chương 1: AWAKEN (Thức Tỉnh)",
