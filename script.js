@@ -7,7 +7,7 @@ const APP_STATE = {
   personalMessage: "",
   guestPhoto: "",
   // ⚡ URL DEPLOY GOOGLE APPS SCRIPT CỦA CAO VIỆT ⚡
-  webhookUrl: "https://script.google.com/macros/s/AKfycbwaWrp2iI0V-PAnoKzk4uKV54fSsZK6JZLSIlZ30J_5HPJ4bqCDZfJa9TEyRpbBPfVC/exec",
+  webhookUrl: "https://script.google.com/macros/s/AKfycbzA-cNXSBbDr5mvTN0H-Lwk3xXXpUVpiPuQlmDMbC7-WUY7srJJHCSe-1SKR6mb2PY/exec",
 
   chaptersData: {
     "ch1": {
@@ -277,52 +277,121 @@ function triggerGrandFireworks() {
 }
 
 // =========================================================================
-// 2. ĐỌC THÔNG TIN KHÁCH MỜI TỪ GOOGLE SHEET HOẶC URL
+// =========================================================================
+// HELPER: Chuyển link Google Drive bất kỳ sang URL ảnh trực tiếp (bypass CORS)
+// =========================================================================
+function fixDriveImageUrl(url) {
+  if (!url || !url.trim()) return url;
+  const u = url.trim();
+  if (!u.includes('drive.google.com')) return u; // Không phải Drive link → giữ nguyên
+
+  // Tách FILE_ID từ tất cả các định dạng Drive link phổ biến
+  let fileId = null;
+  const patterns = [
+    /\/file\/d\/([a-zA-Z0-9_-]+)/,  // /file/d/ID/view
+    /[?&]id=([a-zA-Z0-9_-]+)/,       // ?id=ID hoặc &id=ID
+    /\/d\/([a-zA-Z0-9_-]+)/,          // /d/ID
+    /open\?id=([a-zA-Z0-9_-]+)/       // open?id=ID
+  ];
+  for (const p of patterns) {
+    const m = u.match(p);
+    if (m) { fileId = m[1]; break; }
+  }
+
+  if (fileId) {
+    // Dùng thumbnail API của Google — vượt qua CORS, không cần đăng nhập
+    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`;
+  }
+  return u;
+}
+
+// =========================================================================
+// 2. ĐỌC THÔNG TIN KHÁCH MỜI TỪ GOOGLE SHEET HOẶC URL (HỖ TRỢ VERCEL 100%)
 // =========================================================================
 async function checkUrlPersonalParameters() {
   const urlParams = new URLSearchParams(window.location.search);
-  const guestId = urlParams.get('id') || urlParams.get('to') || urlParams.get('name');
+
+  const guestId   = urlParams.get('id');
   const saltParam = urlParams.get('salt') || urlParams.get('salutation');
-  const msgParam = urlParams.get('msg') || urlParams.get('message');
-  const imgParam = urlParams.get('img') || urlParams.get('photo');
+  const nameParam = urlParams.get('name');
+  const toParam   = urlParams.get('to');
+  const msgParam  = urlParams.get('msg') || urlParams.get('message');
+  const imgParam  = urlParams.get('img') || urlParams.get('photo');
 
-  const personalView = document.getElementById('personalized-view');
-  const defaultView = document.getElementById('default-input-view');
+  const personalView   = document.getElementById('personalized-view');
+  const defaultView    = document.getElementById('default-input-view');
+  const salutationElem = document.getElementById('personal-salutation');
+  const guestNameElem  = document.getElementById('personal-guest-name');
+  const msgElem        = document.getElementById('personal-message-text');
+  const photoElem      = document.getElementById('guest-photo-img');
 
-  if (guestId) {
-    APP_STATE.guestName = guestId;
-    if (saltParam) APP_STATE.salutation = saltParam;
-    if (msgParam) APP_STATE.personalMessage = msgParam;
-    if (imgParam) APP_STATE.guestPhoto = imgParam;
-
-    document.getElementById('personal-salutation').innerText = APP_STATE.salutation;
-    document.getElementById('personal-guest-name').innerText = APP_STATE.guestName;
-    if (msgParam) document.getElementById('personal-message-text').innerText = msgParam;
-    if (imgParam) document.getElementById('guest-photo-img').src = imgParam;
-
-    if (personalView) personalView.classList.remove('hidden');
-    if (defaultView) defaultView.classList.add('hidden');
-
-    if (APP_STATE.webhookUrl && !APP_STATE.webhookUrl.includes("EXAMPLE_REPLACE")) {
-      try {
-        const res = await fetch(`${APP_STATE.webhookUrl}?action=getGuest&id=${encodeURIComponent(guestId)}`);
-        if (res.ok) {
-          const data = await res.json();
-          if (data.status === "success" && data.guest) {
-            if (data.guest.salutation) document.getElementById('personal-salutation').innerText = data.guest.salutation;
-            if (data.guest.guestName) document.getElementById('personal-guest-name').innerText = data.guest.guestName;
-            if (data.guest.message) document.getElementById('personal-message-text').innerText = data.guest.message;
-            if (data.guest.photo) document.getElementById('guest-photo-img').src = data.guest.photo;
-          }
-        }
-      } catch (err) {
-        console.log("Dùng thông tin từ URL.");
-      }
+  // ── BƯỚC 1: Xử lý tham số URL (0ms, không cần mạng) ──
+  if (toParam) {
+    const parts = toParam.trim().split(" ");
+    const knownSalutations = ["Anh", "Chị", "Bạn", "Em", "Bác", "Chú", "Cô", "Thầy"];
+    if (parts.length > 1 && knownSalutations.includes(parts[0])) {
+      APP_STATE.salutation = parts[0];
+      APP_STATE.guestName  = parts.slice(1).join(" ");
+    } else {
+      APP_STATE.guestName = toParam;
     }
-  } else {
-    if (personalView) personalView.classList.remove('hidden');
-    if (defaultView) defaultView.classList.add('hidden');
   }
+  if (nameParam) APP_STATE.guestName      = nameParam;
+  if (saltParam) APP_STATE.salutation     = saltParam;
+  if (msgParam)  APP_STATE.personalMessage = msgParam;
+  if (imgParam)  APP_STATE.guestPhoto     = fixDriveImageUrl(imgParam);
+
+  if (nameParam || toParam || saltParam || msgParam || imgParam) {
+    if (salutationElem) salutationElem.innerText = APP_STATE.salutation;
+    if (guestNameElem)  guestNameElem.innerText  = APP_STATE.guestName;
+    if (msgParam  && msgElem)   msgElem.innerText   = APP_STATE.personalMessage;
+    if (imgParam  && photoElem) photoElem.src        = APP_STATE.guestPhoto;
+    if (personalView) personalView.classList.remove('hidden');
+    if (defaultView)  defaultView.classList.add('hidden');
+  }
+
+  // ── BƯỚC 2: Tra cứu Google Sheet theo ?id= (có cache sessionStorage) ──
+  if (guestId && APP_STATE.webhookUrl && !APP_STATE.webhookUrl.includes("EXAMPLE_REPLACE")) {
+    if (personalView) personalView.classList.remove('hidden');
+    if (defaultView)  defaultView.classList.add('hidden');
+
+    // Kiểm tra cache trước — tránh gọi mạng lần 2 nếu đã tải rồi
+    const cacheKey = `guest_${guestId}`;
+    const cached   = sessionStorage.getItem(cacheKey);
+    if (cached) {
+      try {
+        const guest = JSON.parse(cached);
+        applyGuestData(guest, salutationElem, guestNameElem, msgElem, photoElem);
+        return;
+      } catch (_) {}
+    }
+
+    try {
+      const res = await fetch(`${APP_STATE.webhookUrl}?action=getGuest&id=${encodeURIComponent(guestId)}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.status === "success" && data.guest) {
+          // Lưu cache
+          sessionStorage.setItem(cacheKey, JSON.stringify(data.guest));
+          applyGuestData(data.guest, salutationElem, guestNameElem, msgElem, photoElem);
+        }
+      }
+    } catch (err) {
+      console.log("⚠️ Không thể đọc Google Sheet:", err);
+    }
+  }
+}
+
+function applyGuestData(guest, salutationElem, guestNameElem, msgElem, photoElem) {
+  if (guest.salutation) { APP_STATE.salutation      = guest.salutation; }
+  if (guest.guestName)  { APP_STATE.guestName       = guest.guestName; }
+  if (guest.message)    { APP_STATE.personalMessage = guest.message; }
+  if (guest.photo)      { APP_STATE.guestPhoto      = fixDriveImageUrl(guest.photo); }
+
+  if (salutationElem) salutationElem.innerText = APP_STATE.salutation;
+  if (guestNameElem)  guestNameElem.innerText  = APP_STATE.guestName;
+  if (guest.message  && msgElem)   msgElem.innerText = guest.message;
+  if (guest.photo    && photoElem) photoElem.src     = fixDriveImageUrl(guest.photo);
 }
 
 // =========================================================================
@@ -342,13 +411,25 @@ function initSalutation() {
   const continueDefaultBtn = document.getElementById('btn-continue-default');
 
   const handleUnlock = () => {
+    // Lấy tên từ ô nhập (nếu dùng form mặc định)
     const nameInput = document.getElementById('guest-name-input');
     if (nameInput && nameInput.value.trim()) {
       APP_STATE.guestName = nameInput.value.trim();
     }
 
-    document.getElementById('disp-salutation').innerText = APP_STATE.salutation;
-    document.getElementById('disp-name').innerText = APP_STATE.guestName;
+    // ✅ FIX: Đọc lại từ DOM (đã được checkUrlPersonalParameters cập nhật)
+    // thay vì chỉ đọc APP_STATE — tránh race condition khi fetch async chưa xong
+    const displaySalt = document.getElementById('personal-salutation')?.innerText || APP_STATE.salutation;
+    const displayName = document.getElementById('personal-guest-name')?.innerText || APP_STATE.guestName;
+
+    const dispSaltEl = document.getElementById('disp-salutation');
+    const dispNameEl = document.getElementById('disp-name');
+    if (dispSaltEl) dispSaltEl.innerText = displaySalt;
+    if (dispNameEl) dispNameEl.innerText = displayName;
+
+    // Cập nhật lại APP_STATE để RSVP form dùng đúng tên
+    APP_STATE.salutation = displaySalt;
+    APP_STATE.guestName  = displayName;
 
     const greetingBox = document.getElementById('personalized-greeting');
     if (greetingBox) greetingBox.classList.remove('hidden');
@@ -361,13 +442,11 @@ function initSalutation() {
       lockedContent.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('is-visible'));
     }
 
-    // 🎵 Phát nhạc khi tương tác người dùng
     playAudioMusic();
 
     const navbar = document.getElementById('main-navbar');
     if (navbar) navbar.classList.remove('hidden-nav');
 
-    // 📜 Cuộn trang siêu mượt & êm ái (1800ms)
     setTimeout(() => {
       const target = document.getElementById('chapters') || document.getElementById('personalized-greeting');
       if (target) scrollToElementSlowly(target, 1800);
@@ -616,39 +695,55 @@ function initCountdown() {
 }
 
 // =========================================================================
-// 9. MUSIC PLAYER & AUDIO FALLBACK
+// 9. MUSIC PLAYER & GLOBAL AUDIO UNLOCK
 // =========================================================================
+let audioIsPlaying = false;
+
 function playAudioMusic() {
   const audio = document.getElementById('bg-music');
   const toggleBtn = document.getElementById('music-toggle');
+  if (!audio) return;
 
-  if (audio) {
-    audio.play().then(() => {
-      if (toggleBtn) toggleBtn.style.transform = 'scale(1.2)';
-    }).catch(err => {
-      console.log("Audio play attempt:", err);
-    });
-  }
+  audio.play().then(() => {
+    audioIsPlaying = true;
+    if (toggleBtn) {
+      toggleBtn.style.transform = 'scale(1.15)';
+      toggleBtn.style.boxShadow = '0 0 35px rgba(212, 175, 55, 0.8)';
+    }
+  }).catch(err => {
+    console.log("Trình duyệt tạm giữ phát nhạc tự động, cần bấm nút 🎵 để phát:", err);
+  });
 }
 
 function initMusicPlayer() {
   const audio = document.getElementById('bg-music');
   const toggleBtn = document.getElementById('music-toggle');
-  let isPlaying = false;
+  if (!toggleBtn || !audio) return;
 
-  if (toggleBtn && audio) {
-    toggleBtn.addEventListener('click', () => {
-      if (isPlaying) {
-        audio.pause();
-        toggleBtn.style.transform = 'scale(1)';
-      } else {
-        audio.play().then(() => {
-          toggleBtn.style.transform = 'scale(1.2)';
-        }).catch(e => console.log("Audio play error:", e));
-      }
-      isPlaying = !isPlaying;
-    });
-  }
+  // 1. Bấm nút 🎵 để bật/tắt nhạc
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (audioIsPlaying) {
+      audio.pause();
+      audioIsPlaying = false;
+      toggleBtn.style.transform = 'scale(1)';
+      toggleBtn.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.35)';
+    } else {
+      playAudioMusic();
+    }
+  });
+
+  // 2. Tự động mở nhạc ngay ở LẦN CHẠM/BẤM ĐẦU TIÊN trên bất kỳ chỗ nào trang web
+  const unlockAudioOnFirstTouch = () => {
+    if (!audioIsPlaying) {
+      playAudioMusic();
+    }
+    document.removeEventListener('click', unlockAudioOnFirstTouch);
+    document.removeEventListener('touchstart', unlockAudioOnFirstTouch);
+  };
+
+  document.addEventListener('click', unlockAudioOnFirstTouch, { once: true });
+  document.addEventListener('touchstart', unlockAudioOnFirstTouch, { once: true });
 }
 
 // =========================================================================
@@ -695,29 +790,52 @@ function initRSVPForm() {
 }
 
 // =========================================================================
-// 11. FETCH WEB CONFIG TỪ GOOGLE SHEET
+// 11. FETCH WEB CONFIG TỪ GOOGLE SHEET (Mở rộng đầy đủ)
 // =========================================================================
 async function fetchWebConfig() {
   if (!APP_STATE.webhookUrl || APP_STATE.webhookUrl.includes("EXAMPLE_REPLACE")) return;
+
+  // Kiểm tra cache để không load chậm mỗi lần mở trang
+  const configCache = sessionStorage.getItem('web_config');
+  if (configCache) {
+    try { applyWebConfig(JSON.parse(configCache)); return; } catch (_) {}
+  }
+
   try {
     const res = await fetch(APP_STATE.webhookUrl + "?action=getConfig");
     if (!res.ok) return;
     const data = await res.json();
     if (data.status === "success" && data.config) {
-      if (data.config["SĐT_Admin"]) {
-        const el = document.getElementById("admin-phone");
-        if (el) el.innerText = data.config["SĐT_Admin"];
-      }
-      if (data.config["Ngày_Giờ"]) {
-        const el = document.getElementById("event-date-time");
-        if (el) el.innerText = data.config["Ngày_Giờ"];
-      }
-      if (data.config["Địa_Điểm"]) {
-        const el = document.getElementById("event-location");
-        if (el) el.innerText = data.config["Địa_Điểm"];
-      }
+      sessionStorage.setItem('web_config', JSON.stringify(data.config));
+      applyWebConfig(data.config);
     }
   } catch (err) {
     console.log("Lưu ý: Không thể tải Cấu Hình Web:", err);
+  }
+}
+
+function applyWebConfig(cfg) {
+  const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.innerText = val; };
+  const setSrc = (id, val) => { const el = document.getElementById(id); if (el && val) el.src = fixDriveImageUrl(val); };
+
+  set("admin-phone",     cfg["SĐT_Admin"]);
+  set("event-date-time", cfg["Ngày_Giờ"]);
+  set("event-location",  cfg["Địa_Điểm"]);
+
+  // Ảnh bìa trang 1 (ảnh khách mời mặc định)
+  if (cfg["Ảnh_Bìa"]) {
+    setSrc("guest-photo-img", cfg["Ảnh_Bìa"]);
+  }
+  // Lời nhắn mặc định (khi không có ?msg= trên URL)
+  if (cfg["Lời_Nhắn_Mặc_Định"]) {
+    const msgEl = document.getElementById("personal-message-text");
+    if (msgEl && msgEl.innerText.includes("Cảm ơn bạn đã luôn")) {
+      msgEl.innerText = cfg["Lời_Nhắn_Mặc_Định"];
+    }
+  }
+  // Tên chủ nhân thiệp (trong navbar và header)
+  if (cfg["Tên_Chủ_Nhân"]) {
+    const brandEl = document.querySelector('.nav-brand');
+    if (brandEl) brandEl.innerHTML = `${cfg["Tên_Chủ_Nhân"]} · <span id="admin-phone">${cfg["SĐT_Admin"] || ""}</span>`;
   }
 }
