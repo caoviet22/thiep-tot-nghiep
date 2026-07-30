@@ -7,14 +7,14 @@
   <meta name="description" content="Thiệp mời tốt nghiệp Bác Sĩ Y Khoa 2026 của Cao Việt – Hội trường Nguyễn Văn Đạo, ĐHQGHN.">
   <link rel="stylesheet" href="style.css">
   
-  <!-- High Quality Luxury Fonts with 100% Full Vietnamese Accent Support -->
+  <!-- High Quality Luxury Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600&display=swap&subset=vietnamese" rel="stylesheet">
 </head>
 <body class="dark-celestial-body">
 
-  <!-- CANVAS BẦU TRỜI SAO & HẠT TÂM LINH LẤP LÁNH HIỆN ĐẠI -->
+  <!-- CANVAS BẦU TRỜI SAO 3D DEEP & HẠT TÂM LINH LẤP LÁNH HIỆN ĐẠI -->
   <canvas id="space-canvas"></canvas>
 
   <!-- MODERN NEON 3D ECG PULSE MONITOR (SÓNG TIM HOLOGRAPHIC) -->
@@ -37,10 +37,8 @@
           </feMerge>
         </filter>
       </defs>
-      <!-- Background static faint line -->
       <path class="ecg-bg-line" d="M 0 35 L 200 35 L 215 35 L 222 15 L 230 55 L 238 35 L 255 35 L 450 35 L 465 35 L 472 10 L 480 60 L 488 35 L 505 35 L 700 35 L 715 35 L 722 15 L 730 55 L 738 35 L 755 35 L 1000 35"
             fill="none" stroke="rgba(212,175,55,0.15)" stroke-width="1.5" />
-      <!-- Animated glowing neon pulse line -->
       <path class="ecg-pulse-line" filter="url(#neonGlow)" d="M 0 35 L 200 35 L 215 35 L 222 15 L 230 55 L 238 35 L 255 35 L 450 35 L 465 35 L 472 10 L 480 60 L 488 35 L 505 35 L 700 35 L 715 35 L 722 15 L 730 55 L 738 35 L 755 35 L 1000 35"
             fill="none" stroke="url(#ecgGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
@@ -48,13 +46,12 @@
 
   <!-- NAVIGATION BAR -->
   <nav class="navbar hidden-nav" id="main-navbar">
-    <div class="nav-brand">VIỆT · <span id="admin-phone">0886 356 222</span></div>
+    <div class="nav-brand">VIỆT - <span id="admin-phone">0886 356 222</span></div>
     <div class="nav-links">
-      <a href="#chapters">Hành trình</a>
-      <a href="#timeline">Năm học</a>
-      <a href="#parking">Gửi xe</a>
-      <a href="#event">Sự kiện</a>
-      <a href="#rsvp" class="btn-nav">Tham dự</a>
+      <a href="#chapters">HÀNH TRÌNH</a>
+      <a href="#timeline">DẤU ẤN</a>
+      <a href="#event">SỰ KIỆN</a>
+      <a href="#rsvp" class="btn-nav">THAM DỰ</a>
     </div>
   </nav>
 
@@ -150,68 +147,86 @@
     <!-- ============================================================================== -->
     <div id="locked-content" class="locked-content hidden">
 
-      <!-- CHAPTERS SECTION -->
+      <!-- CHAPTERS SECTION (THIẾT KẾ GIỐNG MẪU 100%) -->
       <section id="chapters" class="chapters-section reveal-on-scroll">
-        <div class="section-title-box">
-          <span class="step-tag">✦ CHẶNG ĐƯỜNG KỶ NIỆM ✦</span>
-          <h2 class="gold-heading">4 Chương Ký Ức Y Khoa</h2>
-          <p class="section-desc">Bấm vào từng chương để mở chi tiết kỷ niệm đẹp nhất:</p>
+        
+        <!-- CHAPTER 1: AWAKEN -->
+        <div class="chapter-block chapter-left" data-chapter="ch1">
+          <div class="chapter-media">
+            <div class="chapter-photo-frame glow-border-3d">
+              <img id="img-ch1" src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=800&q=80" alt="Chương 1 AWAKEN">
+            </div>
+          </div>
+          <div class="chapter-info">
+            <span class="chapter-sub-badge">✦ Chương 1 ✦</span>
+            <h2 class="chapter-big-title">AWAKEN</h2>
+            <p class="chapter-quote">“Mọi hành trình đều bắt đầu từ một giấc mơ.”</p>
+            <div class="chapter-divider"></div>
+            <p class="chapter-text">Trước khi bước vào giảng đường, mỗi chúng ta chỉ mang theo một điều rất nhỏ: sự tò mò và những ước mơ chưa định hình. Đó là lúc hành trình bắt đầu — khi ta bước vào một vũ trụ mới mang tên Y Khoa.</p>
+          </div>
         </div>
 
-        <div class="chapters-grid">
-          <!-- Chapter 1 -->
-          <article class="chapter-card card click-reveal-card" data-chapter="ch1">
-            <div class="chapter-badge">Chương 1</div>
-            <h3 class="chapter-title">AWAKEN</h3>
-            <p class="chapter-sub">Khởi đầu với chiếc áo Blouse trắng & Giấc mơ Y Khoa</p>
-            <div class="img-wrapper">
-              <img id="img-ch1" src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=800&q=80" alt="Y Khoa Awaken">
-              <div class="img-overlay"><span>BẤM XEM KỶ NIỆM ✨</span></div>
+        <!-- CHAPTER 2: EXPLORE -->
+        <div class="chapter-block chapter-right" data-chapter="ch2">
+          <div class="chapter-info">
+            <span class="chapter-sub-badge">✦ Chương 2 ✦</span>
+            <h2 class="chapter-big-title">EXPLORE</h2>
+            <p class="chapter-quote">“Cả một vũ trụ đang chờ được khám phá.”</p>
+            <div class="chapter-divider"></div>
+            <p class="chapter-text">Hành trình lớn lên là chuỗi những trải nghiệm mới.. Chúng ta bước ra khỏi vùng an toàn, gặp gỡ những con người khác nhau, và bắt đầu khám phá thế giới Y Học theo cách của riêng mình.</p>
+          </div>
+          <div class="chapter-media">
+            <div class="chapter-photo-frame glow-border-3d">
+              <img id="img-ch2" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80" alt="Chương 2 EXPLORE">
             </div>
-          </article>
-
-          <!-- Chapter 2 -->
-          <article class="chapter-card card click-reveal-card" data-chapter="ch2">
-            <div class="chapter-badge">Chương 2</div>
-            <h3 class="chapter-title">EXPLORE</h3>
-            <p class="chapter-sub">Những đêm trực miệt mài & Những bài học lâm sàng</p>
-            <div class="img-wrapper">
-              <img id="img-ch2" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80" alt="Y Khoa Explore">
-              <div class="img-overlay"><span>BẤM XEM KỶ NIỆM ✨</span></div>
-            </div>
-          </article>
-
-          <!-- Chapter 3 -->
-          <article class="chapter-card card click-reveal-card" data-chapter="ch3">
-            <div class="chapter-badge">Chương 3</div>
-            <h3 class="chapter-title">IGNITE</h3>
-            <p class="chapter-sub">Bứt phá giới hạn, rèn luyện bản lĩnh Bác sĩ</p>
-            <div class="img-wrapper">
-              <img id="img-ch3" src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=800&q=80" alt="Y Khoa Ignite">
-              <div class="img-overlay"><span>BẤM XEM KỶ NIỆM ✨</span></div>
-            </div>
-          </article>
-
-          <!-- Chapter 4 -->
-          <article class="chapter-card card highlight-card click-reveal-card" data-chapter="ch4">
-            <div class="chapter-badge">Chương Cuối</div>
-            <h3 class="chapter-title">AMONG THE STARS</h3>
-            <p class="chapter-sub">Lễ Tốt Nghiệp Bác Sĩ Y Khoa 2026</p>
-            <div class="img-wrapper">
-              <img id="img-ch4" src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80" alt="Graduation Among Stars">
-              <div class="img-overlay"><span>BẤM XEM KỶ NIỆM ✨</span></div>
-            </div>
-          </article>
+          </div>
         </div>
+
+        <!-- CHAPTER 3: IGNITE -->
+        <div class="chapter-block chapter-left" data-chapter="ch3">
+          <div class="chapter-media">
+            <div class="chapter-photo-frame glow-border-3d">
+              <img id="img-ch3" src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=800&q=80" alt="Chương 3 IGNITE">
+            </div>
+          </div>
+          <div class="chapter-info">
+            <span class="chapter-sub-badge">✦ Chương 3 ✦</span>
+            <h2 class="chapter-big-title">IGNITE</h2>
+            <p class="chapter-quote">“Bứt phá giới hạn, rèn luyện bản lĩnh Bác sĩ.”</p>
+            <div class="chapter-divider"></div>
+            <p class="chapter-text">Vượt qua thử thách, tích lũy kiến thức qua từng ca lâm sàng thực tế, tôi luyện bản lĩnh và y đức của người thầy thuốc tương lai.</p>
+          </div>
+        </div>
+
+        <!-- CHAPTER 4: AMONG THE STARS -->
+        <div class="chapter-block chapter-center" data-chapter="ch4">
+          <div class="chapter-header-center">
+            <span class="chapter-sub-badge">✦ Chương cuối ✦</span>
+            <h2 class="chapter-huge-title">AMONG THE STARS</h2>
+            <p class="chapter-quote-center">“Mọi hành trình đều khởi đầu từ một tia sáng nhỏ. Còn hành trình này, được dẫn lối đến những vì sao.”</p>
+          </div>
+          
+          <div class="chapter-divider-center"></div>
+          <p class="chapter-text-center">Hôm nay, chúng ta cùng nhau ăn mừng khoảnh khắc này. Điểm kết thúc của một hành trình tuyệt đẹp và là điểm khởi đầu cho vô vàn những cuộc phiêu lưu mới giữa các vì sao.</p>
+
+          <!-- KHUNG THIỆP MỜI MẪU CHÚC MỪNG TÂN CỬ NHÂN / BÁC SĨ (GIỐNG ẢNH 1) -->
+          <div class="invitation-banner-card glow-border-3d">
+            <img id="img-ch4" src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80" alt="Thiệp Mời Bác Sĩ Cao Việt">
+            <div class="banner-caption">✦ Khung Thiệp Mời Chính Thức của Bác Sĩ Cao Việt ✦</div>
+          </div>
+        </div>
+
       </section>
 
-      <!-- TIMELINE SECTION WITH MULTI-PHOTO CAROUSEL -->
-      <section id="timeline" class="timeline-section card reveal-on-scroll glow-border">
-        <span class="step-tag">✦ 6 NĂM MIỆT MÀI Y KHOA ✦</span>
-        <h2 class="luxury-heading">Hành Trình Trưởng Thành</h2>
-        <p class="section-desc">Bấm chọn từng năm học — vuốt hoặc bấm mũi tên để xem kỷ niệm:</p>
+      <!-- TIMELINE SECTION (6 NĂM HÀNH TRÌNH TRƯỞNG THÀNH GIỐNG ẢNH 5) -->
+      <section id="timeline" class="timeline-section card reveal-on-scroll glow-border-3d">
+        <div class="timeline-header-center">
+          <span class="space-time-orbit-badge">SPACE-TIME ORBIT</span>
+          <h2 class="orbit-main-heading">6 Năm, Một Hành Trình Trưởng Thành</h2>
+          <p class="orbit-sub-desc">Kéo thanh trượt để nhìn lại những vòng quay thời gian của Việt cùng bạn nhé.</p>
+        </div>
 
-        <!-- YEAR STEPPER NODES -->
+        <!-- YEAR STEPPER NODES (6 NĂM + GRADUATION) -->
         <div class="year-stepper">
           <button class="year-node active" data-year="1">Năm 1</button>
           <button class="year-node" data-year="2">Năm 2</button>
@@ -223,20 +238,8 @@
         </div>
 
         <!-- YEAR DETAIL CARD WITH PHOTO CAROUSEL -->
-        <div class="year-detail-box glow-box" id="year-detail">
-          <!-- Text info -->
-          <div class="year-text-info">
-            <h4 id="yd-title">Năm 1: Đặt Chân Vào Cổng Trường Y</h4>
-            <p id="yd-desc">Bắt đầu làm quen với Giải phẫu, Sinh hóa và những trang giáo trình dày cộp. Ngọn lửa ước mơ bắt đầu bùng cháy.</p>
-            <!-- Medical tags -->
-            <div class="year-tags" id="yd-tags">
-              <span class="med-tag">🔬 Sinh hóa</span>
-              <span class="med-tag">🦴 Giải phẫu</span>
-              <span class="med-tag">📚 Lý thuyết</span>
-            </div>
-          </div>
-
-          <!-- PHOTO CAROUSEL -->
+        <div class="year-detail-box glow-box-3d" id="year-detail">
+          <!-- PHOTO CAROUSEL (10 ẢNH BÊN TRÁI GIỐNG MẪU) -->
           <div class="photo-carousel-wrapper">
             <div class="photo-carousel-track" id="carousel-track">
               <!-- Rendered via JS -->
@@ -248,6 +251,18 @@
             <div class="carousel-dots" id="carousel-dots"></div>
             <!-- Caption -->
             <div class="carousel-caption" id="carousel-caption">Kỷ niệm năm 1</div>
+          </div>
+
+          <!-- TEXT INFO BÊN PHẢI GIỐNG MẪU -->
+          <div class="year-text-info">
+            <h3 id="yd-title">BEGIN: Đặt Chân Vào Cổng Trường Y</h3>
+            <p id="yd-desc">Những bước chân đầu tiên bỡ ngỡ bước vào giảng đường đại học Y Khoa.</p>
+            <!-- Tags -->
+            <div class="year-tags" id="yd-tags">
+              <span class="med-tag">✨ ĐAM MÊ</span>
+              <span class="med-tag">🌟 TƯ DUY</span>
+              <span class="med-tag">🚀 BỨT PHÁ</span>
+            </div>
           </div>
         </div>
       </section>
@@ -408,9 +423,9 @@
   </div>
   
   <audio id="bg-music" loop preload="auto">
-    <source src="die_with_a_smile.mp3" type="audio/mpeg">
-    <source src="https://api.vagalume.com.br/valaudio/die-with-a-smile.mp3" type="audio/mpeg">
     <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <source src="https://cdn.pixabay.com/audio/2022/10/14/audio_9939f792e7.mp3" type="audio/mpeg">
   </audio>
 
   <script src="script.js"></script>
