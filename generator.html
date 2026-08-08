@@ -8,21 +8,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap&subset=vietnamese" rel="stylesheet">
   <style>
     :root {
-      --bg: #07090e;
-      --card: rgba(12,15,26,0.95);
+      --bg: #06080e;
+      --card: rgba(14, 18, 30, 0.48);
       --gold: #d4af37;
-      --gold-light: #f3e5ab;
+      --gold-light: #f5eaaf;
       --gold-glow: rgba(212,175,55,0.3);
-      --border: rgba(212,175,55,0.2);
+      --border: rgba(212,175,55,0.22);
       --border-active: rgba(212,175,55,0.55);
       --text: #e8eaf0;
-      --muted: #94a3b8;
+      --muted: #9faec2;
       --green: #4ade80;
-      --green-bg: rgba(74,222,128,0.08);
+      --green-bg: rgba(74,222,128,0.12);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: radial-gradient(ellipse at 50% 0%, #0d1120 0%, #060810 60%, #030508 100%);
+      background: radial-gradient(ellipse at 50% 0%, #0d1222 0%, #060810 60%, #030408 100%);
       min-height: 100vh; font-family: 'Be Vietnam Pro', sans-serif;
       color: var(--text); padding: 30px 20px 60px;
     }
@@ -36,11 +36,13 @@
     /* ─── MAIN LAYOUT ─── */
     .container { max-width: 820px; margin: 0 auto; }
 
-    /* ─── STEP BOXES ─── */
+    /* ─── STEP BOXES (LUXURY GLASSMORPHISM) ─── */
     .step-box {
       background: var(--card); border: 1px solid var(--border);
-      border-radius: 18px; padding: 26px 28px; margin-bottom: 22px;
-      backdrop-filter: blur(18px);
+      border-radius: 20px; padding: 28px 30px; margin-bottom: 24px;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      box-shadow: 0 16px 45px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.12);
     }
     .step-title {
       font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2.5px;
@@ -76,7 +78,7 @@
     }
     .drive-note {
       display: flex; gap: 10px; background: rgba(212,175,55,0.07);
-      border: 1px solid rgba(212,175,55,0.2); border-radius: 10px;
+      border: 1px solid rgba(212,175,55,0.2); border-radius: 12px;
       padding: 12px 14px; margin-top: 14px; font-size: 0.83rem; color: var(--muted);
       line-height: 1.6;
     }
@@ -88,13 +90,14 @@
     .base-url-row label { font-size: 0.78rem; color: var(--gold); white-space: nowrap; font-weight: 600; }
     .base-url-row input { flex: 1; }
     input, textarea, select {
-      width: 100%; padding: 12px 14px;
-      background: rgba(0,0,0,0.4); border: 1px solid var(--border);
-      border-radius: 10px; color: #fff; font-family: 'Be Vietnam Pro', sans-serif;
-      font-size: 0.88rem; transition: border-color 0.3s, box-shadow 0.3s;
+      width: 100%; padding: 13px 16px;
+      background: rgba(6, 9, 18, 0.5); border: 1px solid var(--border);
+      border-radius: 12px; color: #fff; font-family: 'Be Vietnam Pro', sans-serif;
+      font-size: 0.88rem; backdrop-filter: blur(14px);
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
     input:focus, textarea:focus, select:focus {
-      outline: none; border-color: var(--gold); box-shadow: 0 0 12px var(--gold-glow);
+      outline: none; border-color: var(--gold); box-shadow: 0 0 14px var(--gold-glow);
     }
     .form-grid {
       display: grid; grid-template-columns: 1fr 2fr; gap: 12px; margin-bottom: 14px;
@@ -104,10 +107,10 @@
       display: block; font-size: 0.75rem; color: var(--gold);
       margin-bottom: 6px; letter-spacing: 1px; text-transform: uppercase; font-weight: 600;
     }
-    .salt-row { display: flex; gap: 8px; margin-bottom: 14px; }
+    .salt-row { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
     .salt-btn {
-      flex: 1; padding: 10px; border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.03); border-radius: 8px;
+      flex: 1; min-width: 60px; padding: 10px; border: 1px solid rgba(212,175,55,0.2);
+      background: rgba(255,255,255,0.03); border-radius: 10px;
       color: var(--muted); cursor: pointer; font-size: 0.85rem;
       transition: all 0.25s; font-family: 'Be Vietnam Pro', sans-serif; font-weight: 500;
     }
@@ -121,7 +124,7 @@
     .photo-preview-row { display: flex; gap: 14px; align-items: flex-start; }
     .photo-preview-row input { flex: 1; }
     #photo-preview-img {
-      width: 70px; height: 70px; border-radius: 10px; object-fit: cover;
+      width: 70px; height: 70px; border-radius: 12px; object-fit: cover;
       border: 1px solid var(--border); flex-shrink: 0; background: rgba(0,0,0,0.4);
       display: none;
     }
@@ -129,7 +132,7 @@
 
     /* ─── GENERATE BUTTON ─── */
     .btn-generate {
-      width: 100%; padding: 16px; border: none; border-radius: 12px;
+      width: 100%; padding: 16px; border: none; border-radius: 14px;
       background: linear-gradient(135deg, var(--gold), #99740e);
       color: #000; font-weight: 700; font-size: 0.9rem;
       letter-spacing: 1px; cursor: pointer; transition: all 0.3s;
@@ -141,14 +144,14 @@
     /* ─── RESULT ─── */
     #result-box {
       display: none; margin-top: 22px;
-      background: rgba(0,0,0,0.45); border: 1px solid var(--border-active);
-      border-radius: 14px; padding: 20px 22px;
+      background: rgba(6, 9, 18, 0.6); border: 1px solid var(--border-active);
+      border-radius: 16px; padding: 22px; backdrop-filter: blur(16px);
     }
     #result-box.visible { display: block; }
     .result-title { font-size: 0.75rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; font-weight: 600; }
     .link-display {
-      background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.2);
-      border-radius: 8px; padding: 12px 14px;
+      background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 10px; padding: 14px;
       font-family: monospace; font-size: 0.78rem; color: var(--gold-light);
       word-break: break-all; line-height: 1.6; margin-bottom: 12px;
       cursor: pointer; transition: background 0.2s;
@@ -157,25 +160,25 @@
     .copy-hint { font-size: 0.75rem; color: var(--muted); text-align: center; }
     .btn-copy {
       width: 100%; padding: 13px; border: 1px solid var(--border-active);
-      border-radius: 10px; background: rgba(212,175,55,0.08);
+      border-radius: 12px; background: rgba(212,175,55,0.1);
       color: var(--gold-light); font-weight: 600; font-size: 0.85rem;
       cursor: pointer; transition: all 0.3s; font-family: 'Be Vietnam Pro', sans-serif;
       margin-top: 10px;
     }
-    .btn-copy:hover { background: rgba(212,175,55,0.18); }
+    .btn-copy:hover { background: rgba(212,175,55,0.22); }
     .btn-copy.copied { background: var(--green-bg); border-color: rgba(74,222,128,0.4); color: var(--green); }
 
     /* ─── PREVIEW CARD ─── */
     #preview-card {
-      display: none; background: rgba(10,12,22,0.9);
-      border: 1px solid var(--border-active); border-radius: 14px;
-      padding: 20px; margin-top: 18px;
+      display: none; background: rgba(10,12,22,0.65);
+      border: 1px solid var(--border-active); border-radius: 16px;
+      padding: 22px; margin-top: 18px; backdrop-filter: blur(16px);
     }
     #preview-card.visible { display: block; }
     .preview-label { font-size: 0.7rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; font-weight: 600; }
     .preview-inner { display: flex; gap: 16px; align-items: center; }
     #prev-photo {
-      width: 80px; height: 80px; border-radius: 10px; object-fit: cover;
+      width: 80px; height: 80px; border-radius: 12px; object-fit: cover;
       border: 1px solid var(--gold); flex-shrink: 0;
     }
     .prev-text .prev-name {
@@ -188,7 +191,7 @@
     /* ─── BATCH TABLE ─── */
     .batch-info { font-size: 0.82rem; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
     .copy-all-btn {
-      padding: 10px 20px; border-radius: 8px;
+      padding: 10px 20px; border-radius: 10px;
       background: rgba(212,175,55,0.1); border: 1px solid var(--border-active);
       color: var(--gold-light); font-size: 0.82rem; cursor: pointer;
       font-family: 'Be Vietnam Pro', sans-serif; font-weight: 600;
@@ -199,12 +202,12 @@
     .history-item {
       display: flex; gap: 10px; align-items: center;
       background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 10px; padding: 10px 14px;
+      border-radius: 12px; padding: 10px 14px;
     }
     .history-name { flex: 0 0 120px; font-weight: 600; font-size: 0.85rem; color: var(--text); }
     .history-link { flex: 1; font-family: monospace; font-size: 0.72rem; color: var(--muted); word-break: break-all; }
     .history-copy {
-      padding: 5px 12px; border-radius: 6px;
+      padding: 6px 14px; border-radius: 8px;
       background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3);
       color: var(--gold); font-size: 0.75rem; cursor: pointer; flex-shrink: 0;
       font-family: 'Be Vietnam Pro', sans-serif; font-weight: 600; transition: 0.2s;
@@ -219,7 +222,7 @@
 
   <div class="header">
     <h1>🎓 Công Cụ Tạo Link Thiệp Mời</h1>
-    <p>Nhập thông tin từng khách mời → Nhận link Vercel cá nhân hóa đầy đủ (tên + ảnh + lời nhắn)</p>
+    <p>Nhập thông tin từng khách mời → Nhận link cá nhân hóa đầy đủ (tên + ảnh + lời nhắn)</p>
   </div>
 
   <!-- ════════════════════════════════════════
@@ -246,27 +249,19 @@
         <div>
           <strong>Lấy ID của file ảnh</strong><br>
           Nhấp chuột phải → <strong>"Chia sẻ" → "Sao chép đường liên kết"</strong>. Link sẽ có dạng:<br>
-          <code>https://drive.google.com/file/d/<strong>ID_CỦA_FILE</strong>/view?usp=sharing</code><br>
-          Phần chữ ở giữa hai dấu <code>/d/</code> và <code>/view</code> chính là <strong>ID của file ảnh</strong>.
+          <code>https://drive.google.com/file/d/<strong>ID_CỦA_FILE</strong>/view?usp=sharing</code>
         </div>
       </li>
       <li>
         <div>
-          <strong>Tạo link ảnh trực tiếp (direct link)</strong><br>
-          Dán ID vào mẫu link sau để dùng trực tiếp trong thiệp:<br>
-          <code>https://drive.google.com/uc?export=view&id=<strong>ID_CỦA_FILE</strong></code>
-        </div>
-      </li>
-      <li>
-        <div>
-          <strong>Thử nháp link ảnh</strong><br>
-          Dán link <code>https://drive.google.com/uc?export=view&id=...</code> vào trình duyệt. Nếu ảnh hiện lên là thành công — bạn đã có link ảnh trực tiếp!
+          <strong>Tự động nhận diện ảnh</strong><br>
+          Bạn chỉ cần dán link Drive vào ô bên dưới, hệ thống sẽ <strong>tự động chuyển thành link ảnh hiển thị trực tiếp!</strong>
         </div>
       </li>
     </ol>
 
     <div class="drive-note">
-      💡 <span><strong>Mẹo nhanh</strong>: Bạn cũng có thể dùng link ảnh từ bất kỳ nguồn nào (Google Photos, Imgur, Unsplash...) miễn là link kết thúc bằng đuôi ảnh hoặc trả về ảnh trực tiếp khi mở trên trình duyệt!</span>
+      💡 <span><strong>Mẹo nhanh</strong>: Bạn cũng có thể dùng link ảnh từ bất kỳ nguồn nào (Google Photos, Imgur, Unsplash...)!</span>
     </div>
   </div>
 
@@ -308,7 +303,7 @@
     <div class="form-group">
       <label>Link ảnh kỷ niệm (Google Drive hoặc bất kỳ link ảnh nào)</label>
       <div class="photo-preview-row">
-        <input type="text" id="inp-photo" placeholder="https://drive.google.com/uc?export=view&id=...">
+        <input type="text" id="inp-photo" placeholder="Dán link Google Drive hoặc URL ảnh tại đây...">
         <img id="photo-preview-img" src="" alt="Preview">
       </div>
     </div>
@@ -361,7 +356,6 @@
 let selectedSalt = 'Anh';
 const history = [];
 
-// ─── SALT BUTTONS ───
 document.querySelectorAll('.salt-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.salt-btn').forEach(b => b.classList.remove('active'));
@@ -370,11 +364,11 @@ document.querySelectorAll('.salt-btn').forEach(btn => {
   });
 });
 
-// ─── PHOTO PREVIEW ───
 document.getElementById('inp-photo').addEventListener('input', function() {
   const preview = document.getElementById('photo-preview-img');
-  if (this.value.trim()) {
-    preview.src = this.value.trim();
+  const fixed = fixDriveImageUrl(this.value.trim());
+  if (fixed) {
+    preview.src = fixed;
     preview.classList.add('visible');
     preview.onerror = () => { preview.classList.remove('visible'); };
   } else {
@@ -382,7 +376,6 @@ document.getElementById('inp-photo').addEventListener('input', function() {
   }
 });
 
-// ─── FIX GOOGLE DRIVE IMAGE URL ───
 function fixDriveImageUrl(url) {
   if (!url || !url.trim()) return url;
   const u = url.trim();
@@ -402,12 +395,11 @@ function fixDriveImageUrl(url) {
   return u;
 }
 
-// ─── GENERATE LINK ───
 function generateLink() {
   const base  = (document.getElementById('base-url').value.trim() || 'https://ten-du-an.vercel.app').replace(/\/$/, '');
   const name  = document.getElementById('inp-name').value.trim();
   const rawPhoto = document.getElementById('inp-photo').value.trim();
-  const photo = fixDriveImageUrl(rawPhoto); // tự chuyển Drive link sang thumbnail
+  const photo = fixDriveImageUrl(rawPhoto);
   const msg   = document.getElementById('inp-msg').value.trim();
 
   if (!name) {
@@ -425,11 +417,9 @@ function generateLink() {
 
   const fullLink = `${base}/?${params.toString()}`;
 
-  // Show result
   document.getElementById('generated-link').textContent = fullLink;
   document.getElementById('result-box').classList.add('visible');
 
-  // Show preview
   const prevCard = document.getElementById('preview-card');
   document.getElementById('prev-salt').textContent = selectedSalt;
   document.getElementById('prev-name').textContent = name;
@@ -443,20 +433,16 @@ function generateLink() {
   }
   prevCard.classList.add('visible');
 
-  // Save to history
   history.push({ name: `${selectedSalt} ${name}`, link: fullLink });
   renderHistory();
 
-  // Reset copy button
   const copyBtn = document.getElementById('copy-btn');
   copyBtn.textContent = '📋 Sao Chép Link';
   copyBtn.classList.remove('copied');
 
-  // Scroll to result
   document.getElementById('result-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-// ─── COPY LINK ───
 function copyLink(el) {
   const text = el.textContent.trim();
   navigator.clipboard.writeText(text).then(() => {
@@ -470,7 +456,6 @@ function copyLink(el) {
   });
 }
 
-// ─── RENDER HISTORY ───
 function renderHistory() {
   const container = document.getElementById('history-list');
   if (history.length === 0) {
@@ -486,7 +471,6 @@ function renderHistory() {
   `).reverse().join('');
 }
 
-// ─── COPY ALL ───
 function copyAllLinks() {
   if (history.length === 0) return;
   const text = history.map(item => `${item.name}:\n${item.link}`).join('\n\n');
@@ -497,7 +481,6 @@ function copyAllLinks() {
   });
 }
 
-// Khởi tạo
 renderHistory();
 </script>
 </body>
