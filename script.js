@@ -708,15 +708,38 @@ function playAudioMusic() {
   const toggleBtn = document.getElementById('music-toggle');
   if (!audio) return;
 
-  audio.play().then(() => {
-    audioIsPlaying = true;
-    if (toggleBtn) {
-      toggleBtn.style.transform = 'scale(1.15)';
-      toggleBtn.style.boxShadow = '0 0 35px rgba(212, 175, 55, 0.85)';
-    }
-  }).catch(err => {
-    console.log("Trình duyệt tạm giữ phát nhạc tự động, cần bấm nút 🎵 để phát:", err);
-  });
+  audio.volume = 0.8;
+
+  const playPromise = audio.play();
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      audioIsPlaying = true;
+      if (toggleBtn) {
+        toggleBtn.classList.add('playing');
+        toggleBtn.style.transform = 'scale(1.15)';
+        toggleBtn.style.boxShadow = '0 0 35px rgba(212, 175, 55, 0.9)';
+      }
+    }).catch(err => {
+      console.warn("⚠️ Trình duyệt giữ phát nhạc tự động hoặc link nhạc lỗi. Đang thử lại...", err);
+      audioIsPlaying = false;
+      if (toggleBtn) {
+        toggleBtn.classList.remove('playing');
+        toggleBtn.style.transform = 'scale(1)';
+        toggleBtn.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.35)';
+      }
+
+      // Thử nguồn dự phòng nếu link đầu tiên lỗi
+      const sources = audio.querySelectorAll('source');
+      if (sources.length > 1) {
+        audio.src = sources[1].src;
+        audio.load();
+        audio.play().then(() => {
+          audioIsPlaying = true;
+          if (toggleBtn) toggleBtn.classList.add('playing');
+        }).catch(e => console.log("Cần nhấp vào màn hình để phát nhạc:", e));
+      }
+    });
+  }
 }
 
 function initMusicPlayer() {
@@ -724,11 +747,14 @@ function initMusicPlayer() {
   const toggleBtn = document.getElementById('music-toggle');
   if (!toggleBtn || !audio) return;
 
+  if (toggleBtn) toggleBtn.classList.remove('playing');
+
   toggleBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     if (audioIsPlaying) {
       audio.pause();
       audioIsPlaying = false;
+      toggleBtn.classList.remove('playing');
       toggleBtn.style.transform = 'scale(1)';
       toggleBtn.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.35)';
     } else {
