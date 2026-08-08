@@ -699,81 +699,102 @@ function initCountdown() {
 }
 
 // =========================================================================
-// 9. MUSIC PLAYER & GLOBAL AUDIO UNLOCK (Castle in the Sky - Gentle Piano)
+// 9. MUSIC PLAYER — GITHUB LOCAL MP3
 // =========================================================================
+
 let audioIsPlaying = false;
 
+function updateMusicButton() {
+    const toggleBtn = document.getElementById('music-toggle');
+    if (!toggleBtn) return;
+
+    const disc = toggleBtn.querySelector('.disc');
+
+    toggleBtn.classList.toggle('playing', audioIsPlaying);
+    toggleBtn.setAttribute('aria-pressed', String(audioIsPlaying));
+    toggleBtn.setAttribute(
+        'aria-label',
+        audioIsPlaying ? 'Tắt nhạc' : 'Bật nhạc'
+    );
+
+    if (disc) {
+        disc.textContent = audioIsPlaying ? '🔊' : '🎵';
+    }
+}
+
 function playAudioMusic() {
-  const audio = document.getElementById('bg-music');
-  const toggleBtn = document.getElementById('music-toggle');
-  if (!audio) return;
+    const audio = document.getElementById('bg-music');
 
-  audio.volume = 0.8;
+    if (!audio) {
+        console.warn('Không tìm thấy #bg-music');
+        return;
+    }
 
-  const playPromise = audio.play();
-  if (playPromise !== undefined) {
-    playPromise.then(() => {
-      audioIsPlaying = true;
-      if (toggleBtn) {
-        toggleBtn.classList.add('playing');
-        toggleBtn.style.transform = 'scale(1.15)';
-        toggleBtn.style.boxShadow = '0 0 35px rgba(212, 175, 55, 0.9)';
-      }
-    }).catch(err => {
-      console.warn("⚠️ Trình duyệt giữ phát nhạc tự động hoặc link nhạc lỗi. Đang thử lại...", err);
-      audioIsPlaying = false;
-      if (toggleBtn) {
-        toggleBtn.classList.remove('playing');
-        toggleBtn.style.transform = 'scale(1)';
-        toggleBtn.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.35)';
-      }
+    audio.volume = 0.8;
 
-      // Thử nguồn dự phòng nếu link đầu tiên lỗi
-      const sources = audio.querySelectorAll('source');
-      if (sources.length > 1) {
-        audio.src = sources[1].src;
-        audio.load();
-        audio.play().then(() => {
-          audioIsPlaying = true;
-          if (toggleBtn) toggleBtn.classList.add('playing');
-        }).catch(e => console.log("Cần nhấp vào màn hình để phát nhạc:", e));
-      }
-    });
-  }
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+        playPromise
+            .then(() => {
+                audioIsPlaying = true;
+                updateMusicButton();
+            })
+            .catch((error) => {
+                console.warn('Trình duyệt chưa cho phép phát nhạc:', error);
+                audioIsPlaying = false;
+                updateMusicButton();
+            });
+    }
+}
+
+function pauseAudioMusic() {
+    const audio = document.getElementById('bg-music');
+
+    if (!audio) return;
+
+    audio.pause();
+    audioIsPlaying = false;
+
+    updateMusicButton();
 }
 
 function initMusicPlayer() {
-  const audio = document.getElementById('bg-music');
-  const toggleBtn = document.getElementById('music-toggle');
-  if (!toggleBtn || !audio) return;
+    const audio = document.getElementById('bg-music');
+    const toggleBtn = document.getElementById('music-toggle');
 
-  if (toggleBtn) toggleBtn.classList.remove('playing');
+    if (!audio || !toggleBtn) return;
 
-  toggleBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (audioIsPlaying) {
-      audio.pause();
-      audioIsPlaying = false;
-      toggleBtn.classList.remove('playing');
-      toggleBtn.style.transform = 'scale(1)';
-      toggleBtn.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.35)';
-    } else {
-      playAudioMusic();
-    }
-  });
+    updateMusicButton();
 
-  const unlockAudioOnFirstTouch = () => {
-    if (!audioIsPlaying) {
-      playAudioMusic();
-    }
-    document.removeEventListener('click', unlockAudioOnFirstTouch);
-    document.removeEventListener('touchstart', unlockAudioOnFirstTouch);
-  };
+    // Báo lỗi nếu GitHub không tìm thấy file MP3
+    audio.addEventListener('error', () => {
+        console.error(
+            '❌ Không tải được nhac_cuatui.mp3. ' +
+            'Hãy kiểm tra tên file và vị trí trên GitHub.'
+        );
 
-  document.addEventListener('click', unlockAudioOnFirstTouch, { once: true });
-  document.addEventListener('touchstart', unlockAudioOnFirstTouch, { once: true });
+        audioIsPlaying = false;
+        updateMusicButton();
+    });
+
+    // Khi nhạc kết thúc
+    audio.addEventListener('ended', () => {
+        audioIsPlaying = false;
+        updateMusicButton();
+    });
+
+    // Nút 🎵 bật / tắt nhạc
+    toggleBtn.addEventListener('click', (event) => {
+        event.stopPropagation();
+
+        if (audio.paused) {
+            playAudioMusic();
+        } else {
+            pauseAudioMusic();
+        }
+    });
 }
-
 // =========================================================================
 // 10. RSVP FORM → GOOGLE APPS SCRIPT
 // =========================================================================
