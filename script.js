@@ -7,7 +7,7 @@ const APP_STATE = {
   personalMessage: "",
   guestPhoto: "",
   // ⚡ URL DEPLOY GOOGLE APPS SCRIPT CỦA CAO VIỆT ⚡
-  webhookUrl: "https://script.google.com/macros/s/AKfycbxUF23Thu13cNUf1dXlPU00ZhpeA6bMkk45qyGkSm0nVoDDO6sov8Ozo--4jTf2GBmV/exec",
+  webhookUrl: "https://script.google.com/macros/s/AKfycbzA-cNXSBbDr5mvTN0H-Lwk3xXXpUVpiPuQlmDMbC7-WUY7srJJHCSe-1SKR6mb2PY/exec",
 
   chaptersData: {
     "ch1": {
@@ -235,7 +235,7 @@ function initSpaceCanvas() {
       let p = stardustParticles[i];
       p.x += p.vx;
       p.y += p.vy;
-      p.vy -= 0.012; // Nhẹ nhàng bay lên như làn khói ánh kim
+      p.vy -= 0.012;
       p.alpha -= p.decay;
 
       if (p.alpha <= 0) {
@@ -278,11 +278,15 @@ function triggerGrandFireworks() {
 
 // =========================================================================
 // HELPER: Chuyển link Google Drive bất kỳ sang URL ảnh trực tiếp (bypass CORS)
+// Hỗ trợ cả lh3.googleusercontent.com/d/ID và thumbnail API
 // =========================================================================
 function fixDriveImageUrl(url) {
-  if (!url || !url.trim()) return url;
+  if (!url || typeof url !== 'string' || !url.trim()) return url;
   const u = url.trim();
-  if (!u.includes('drive.google.com')) return u;
+
+  // Đã là CDN googleusercontent hoặc ảnh trực tiếp -> giữ nguyên
+  if (u.includes('googleusercontent.com/d/')) return u;
+  if (!u.includes('drive.google.com') && !u.includes('googleusercontent.com')) return u;
 
   let fileId = null;
   const patterns = [
@@ -297,7 +301,8 @@ function fixDriveImageUrl(url) {
   }
 
   if (fileId) {
-    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`;
+    // Dùng lh3 CDN trực tiếp từ Google, tương thích 100% trình duyệt
+    return `https://lh3.googleusercontent.com/d/${fileId}`;
   }
   return u;
 }
@@ -350,22 +355,11 @@ async function checkUrlPersonalParameters() {
     if (personalView) personalView.classList.remove('hidden');
     if (defaultView)  defaultView.classList.add('hidden');
 
-    const cacheKey = `guest_${guestId}`;
-    const cached   = sessionStorage.getItem(cacheKey);
-    if (cached) {
-      try {
-        const guest = JSON.parse(cached);
-        applyGuestData(guest, salutationElem, guestNameElem, msgElem, photoElem);
-        return;
-      } catch (_) {}
-    }
-
     try {
-      const res = await fetch(`${APP_STATE.webhookUrl}?action=getGuest&id=${encodeURIComponent(guestId)}`);
+      const res = await fetch(`${APP_STATE.webhookUrl}?action=getGuest&id=${encodeURIComponent(guestId)}&_t=${Date.now()}`);
       if (res.ok) {
         const data = await res.json();
         if (data.status === "success" && data.guest) {
-          sessionStorage.setItem(cacheKey, JSON.stringify(data.guest));
           applyGuestData(data.guest, salutationElem, guestNameElem, msgElem, photoElem);
         }
       }
@@ -428,7 +422,6 @@ function initSalutation() {
     const lockedContent = document.getElementById('locked-content');
     if (lockedContent) {
       lockedContent.classList.remove('hidden');
-      // Đảm bảo các phần tử xuất hiện mượt mà
       requestAnimationFrame(() => {
         lockedContent.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('is-visible'));
       });
@@ -439,7 +432,6 @@ function initSalutation() {
     const navbar = document.getElementById('main-navbar');
     if (navbar) navbar.classList.remove('hidden-nav');
 
-    // Chờ 1 frame render để tính chính xác Y coordinate và cuộn mượt
     requestAnimationFrame(() => {
       setTimeout(() => {
         const target = document.getElementById('chapters') || document.getElementById('personalized-greeting');
@@ -452,13 +444,11 @@ function initSalutation() {
   if (continueDefaultBtn) continueDefaultBtn.addEventListener('click', handleUnlock);
 }
 
-// 🌟 HÀM CUỘN TRANG SIÊU MƯỢT VÀ ĐỀU VỚI EASING QUINTIC 60FPS/120FPS
+// 🌟 HÀM CUỘN TRANG SIÊU MƯỢT VÀ ĐỀU VỚI EASING QUARTIC 60FPS/120FPS
 function scrollToElementSlowly(element, duration = 1600) {
-  // Tạm tắt scroll-behavior native của CSS để không xung đột với JS animation frame
   const originalScrollBehavior = document.documentElement.style.scrollBehavior;
   document.documentElement.style.scrollBehavior = 'auto';
 
-  // Tính Y chính xác của target
   const navOffset = 70;
   const targetY = Math.max(0, element.getBoundingClientRect().top + window.pageYOffset - navOffset);
   const startY = window.pageYOffset;
@@ -471,7 +461,6 @@ function scrollToElementSlowly(element, duration = 1600) {
 
   let startTime = null;
 
-  // Quartic Easing function cho cảm giác chuyển động mượt, đằm và đều đặn
   function easeInOutQuart(t) {
     return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
   }
@@ -510,6 +499,9 @@ function buildCarousel(trackEl, dotsEl, captionEl, photos, stateObj) {
     const img = document.createElement('img');
     img.src = photo.url;
     img.alt = photo.caption || '';
+    img.onerror = function() {
+      console.warn("Lỗi tải ảnh:", photo.url);
+    };
     slide.appendChild(img);
     trackEl.appendChild(slide);
 
@@ -800,22 +792,17 @@ function initRSVPForm() {
 }
 
 // =========================================================================
-// 11. FETCH WEB CONFIG TỪ GOOGLE SHEET
+// 11. FETCH WEB CONFIG & ẢNH TỪ GOOGLE SHEET DYNAMICALLY (LUÔN BƠM ẢNH MỚI NHẤT)
 // =========================================================================
 async function fetchWebConfig() {
   if (!APP_STATE.webhookUrl || APP_STATE.webhookUrl.includes("EXAMPLE_REPLACE")) return;
 
-  const configCache = sessionStorage.getItem('web_config');
-  if (configCache) {
-    try { applyWebConfig(JSON.parse(configCache)); return; } catch (_) {}
-  }
-
   try {
-    const res = await fetch(APP_STATE.webhookUrl + "?action=getConfig");
+    // Thêm timestamp để bypass cache trình duyệt hoàn toàn, luôn gọi dữ liệu từ Sheet
+    const res = await fetch(`${APP_STATE.webhookUrl}?action=getConfig&_t=${Date.now()}`);
     if (!res.ok) return;
     const data = await res.json();
     if (data.status === "success" && data.config) {
-      sessionStorage.setItem('web_config', JSON.stringify(data.config));
       applyWebConfig(data.config);
     }
   } catch (err) {
@@ -824,24 +811,116 @@ async function fetchWebConfig() {
 }
 
 function applyWebConfig(cfg) {
+  if (!cfg) return;
+
   const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.innerText = val; };
-  const setSrc = (id, val) => { const el = document.getElementById(id); if (el && val) el.src = fixDriveImageUrl(val); };
+  const setSrc = (id, val) => { 
+    const el = document.getElementById(id); 
+    if (el && val && val.trim()) {
+      el.src = fixDriveImageUrl(val);
+    }
+  };
 
   set("admin-phone",     cfg["SĐT_Admin"]);
   set("event-date-time", cfg["Ngày_Giờ"]);
   set("event-location",  cfg["Địa_Điểm"]);
 
+  // 1. Ảnh bìa chính
   if (cfg["Ảnh_Bìa"]) {
     setSrc("guest-photo-img", cfg["Ảnh_Bìa"]);
   }
+
+  // 2. Lời nhắn mặc định
   if (cfg["Lời_Nhắn_Mặc_Định"]) {
     const msgEl = document.getElementById("personal-message-text");
     if (msgEl && msgEl.innerText.includes("Cảm ơn bạn đã luôn")) {
       msgEl.innerText = cfg["Lời_Nhắn_Mặc_Định"];
     }
   }
+
+  // 3. Tên chủ nhân thiệp
   if (cfg["Tên_Chủ_Nhân"]) {
     const brandEl = document.querySelector('.nav-brand');
     if (brandEl) brandEl.innerHTML = `${cfg["Tên_Chủ_Nhân"]} · <span id="admin-phone">${cfg["SĐT_Admin"] || ""}</span>`;
+  }
+
+  // 4. DYNAMIC IMAGES DÀNH CHO 4 CHƯƠNG KÝ ỨC (ch1, ch2, ch3, ch4)
+  for (let c = 1; c <= 4; c++) {
+    const chKey = `ch${c}`;
+    const coverUrl = cfg[`Anh_Chuong${c}_1`] || cfg[`Ảnh_Chương_${c}_1`] || cfg[`Anh_Chuong${c}`] || cfg[`Ảnh_Chương_${c}`];
+    if (coverUrl) {
+      setSrc(`img-ch${c}`, coverUrl);
+    }
+
+    const newChapterPhotos = [];
+    for (let p = 1; p <= 5; p++) {
+      const pUrl = cfg[`Anh_Chuong${c}_${p}`] || cfg[`Ảnh_Chương_${c}_${p}`];
+      if (pUrl && pUrl.trim()) {
+        newChapterPhotos.push({
+          url: fixDriveImageUrl(pUrl),
+          caption: cfg[`Mo_Ta_Chuong${c}_${p}`] || `Kỷ niệm Chương ${c} (${p})`
+        });
+      }
+    }
+
+    const csvUrls = cfg[`Anh_Chuong${c}`] || cfg[`Ảnh_Chương_${c}`];
+    if (csvUrls && csvUrls.includes(',')) {
+      csvUrls.split(',').forEach((u, idx) => {
+        if (u.trim()) {
+          newChapterPhotos.push({
+            url: fixDriveImageUrl(u.trim()),
+            caption: `Kỷ niệm Chương ${c} (${idx + 1})`
+          });
+        }
+      });
+    }
+
+    if (newChapterPhotos.length > 0 && APP_STATE.chaptersData[chKey]) {
+      APP_STATE.chaptersData[chKey].photos = newChapterPhotos;
+    }
+  }
+
+  // 5. DYNAMIC IMAGES DÀNH CHO TIMELINE 6 NĂM + GRAD (1..6, grad)
+  const yearKeys = ["1", "2", "3", "4", "5", "6", "grad"];
+  yearKeys.forEach((yKey) => {
+    const sheetPrefix = yKey === "grad" ? "Grad" : `Nam${yKey}`;
+    const sheetPrefixVi = yKey === "grad" ? "Grad" : `Năm_${yKey}`;
+    const newYearPhotos = [];
+
+    for (let p = 1; p <= 5; p++) {
+      const pUrl = cfg[`Anh_${sheetPrefix}_${p}`] || cfg[`Ảnh_${sheetPrefixVi}_${p}`];
+      if (pUrl && pUrl.trim()) {
+        newYearPhotos.push({
+          url: fixDriveImageUrl(pUrl),
+          caption: cfg[`Mo_Ta_${sheetPrefix}_${p}`] || `Kỷ niệm Năm ${yKey} (${p})`
+        });
+      }
+    }
+
+    const csvUrls = cfg[`Anh_${sheetPrefix}`] || cfg[`Ảnh_${sheetPrefixVi}`];
+    if (csvUrls && csvUrls.includes(',')) {
+      csvUrls.split(',').forEach((u, idx) => {
+        if (u.trim()) {
+          newYearPhotos.push({
+            url: fixDriveImageUrl(u.trim()),
+            caption: `Kỷ niệm ${yKey} (${idx + 1})`
+          });
+        }
+      });
+    }
+
+    if (newYearPhotos.length > 0 && APP_STATE.yearsData[yKey]) {
+      APP_STATE.yearsData[yKey].photos = newYearPhotos;
+    }
+  });
+
+  // Tải lại carousel năm đang hiển thị trên giao diện
+  if (typeof currentYear !== 'undefined') {
+    const trackEl = document.getElementById('carousel-track');
+    const dotsEl = document.getElementById('carousel-dots');
+    const captionEl = document.getElementById('carousel-caption');
+    if (trackEl && APP_STATE.yearsData[currentYear]) {
+      buildCarousel(trackEl, dotsEl, captionEl, APP_STATE.yearsData[currentYear].photos, carouselState);
+    }
   }
 }
