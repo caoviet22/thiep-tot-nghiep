@@ -641,3 +641,35 @@ input[type="text"]:focus, textarea:focus, select:focus {
 .hidden { display: none !important; }
 form .form-group { margin-bottom: 16px; }
 form label { display: block; font-size: 0.78rem; color: var(--gold); margin-bottom: 6px; font-family: var(--font-sans); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+
+/* ========================================
+   CINEMATIC SPACE BACKGROUND
+======================================== */
+
+#space-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: auto;
+
+    background:
+        radial-gradient(
+            circle at 70% 35%,
+            rgba(111, 91, 45, 0.12),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 25% 70%,
+            rgba(30, 42, 70, 0.12),
+            transparent 40%
+        ),
+        #050609;
+}
+
+/* Nội dung thiệp nằm trên background */
+body > *:not(#space-canvas) {
+    position: relative;
+    z-index: 1;
+}
