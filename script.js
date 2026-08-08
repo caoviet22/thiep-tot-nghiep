@@ -1,14 +1,13 @@
-/**
- * GRADUATION INVITATION SYSTEM JS
- * Bác sĩ Cao Việt - Graduation 2026
- */
-
+// =========================================================================
+// DATA & CONFIGURATION — BÁC SĨ CAO VIỆT · Y KHOA 2026
+// =========================================================================
 const APP_STATE = {
   salutation: "Anh",
   guestName: "Khách Mời",
   personalMessage: "",
   guestPhoto: "",
-  webhookUrl: "https://script.google.com/macros/s/AKfycbw68P2n9HLXFDchJRNHVP-hiQ8m1KPQxMlCqhjZ74IB_X1Lf5JWTvNx6oo76XS-RZgS/exec",
+  // ⚡ URL DEPLOY GOOGLE APPS SCRIPT CỦA CAO VIỆT ⚡
+  webhookUrl: "https://script.google.com/macros/s/AKfycbzA-cNXSBbDr5mvTN0H-Lwk3xXXpUVpiPuQlmDMbC7-WUY7srJJHCSe-1SKR6mb2PY/exec",
 
   chaptersData: {
     "ch1": {
@@ -55,122 +54,73 @@ const APP_STATE = {
 
   yearsData: {
     "1": {
-      title: "BEGIN: Đặt Chân Vào Cổng Trường Y",
-      desc: "Những bước chân đầu tiên bỡ ngỡ bước vào giảng đường đại học. Bắt đầu làm quen với Giải phẫu học, Sinh hóa và những trang giáo trình dày cộp.",
-      tags: ["✨ ĐAM MÊ", "🌟 TƯ DUY", "🚀 BỨT PHÁ", "🔬 Sinh hóa", "🦴 Giải phẫu"],
+      title: "Năm 1: Đặt Chân Vào Cổng Trường Y",
+      desc: "Bắt đầu làm quen với Giải phẫu học, Sinh hóa và những trang giáo trình dày cộp. Ngọn lửa ước mơ bắt đầu bùng cháy trong chiếc áo Blouse trắng đầu tiên.",
+      tags: ["🔬 Sinh hóa", "🦴 Giải phẫu", "🧬 Tế bào học", "📚 Lý thuyết"],
       photos: [
-        { url: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 1: Ngày đầu tiên tại trường Y ✨" },
-        { url: "https://images.unsplash.com/photo-1606206873764-fd15e242b815?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 1: Thực hành phòng thí nghiệm 🔬" },
-        { url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 1: Những trang sách Y khoa đầu tiên 📖" },
-        { url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 1: Cùng bạn bè giảng đường 🎓" },
-        { url: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 1: Áo Blouse trắng tinh khôi 🩺" },
-        { url: "https://images.unsplash.com/photo-1579684453377-48ec05c6b30a?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 1: Giờ học Sinh hóa 🧪" },
-        { url: "https://images.unsplash.com/photo-1530026405186-ed1f139313f3?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 1: Thư viện đêm muộn 📚" },
-        { url: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 1: Hoạt động ngoại khóa sinh viên 🌟" },
-        { url: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 1: Nhóm học tập Giải phẫu 🦴" },
-        { url: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 1: Khép lại học kỳ đầu tiên 💫" }
+        { url: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=800&q=80", caption: "Ngày đầu tiên tại trường Y ✨" },
+        { url: "https://images.unsplash.com/photo-1606206873764-fd15e242b815?auto=format&fit=crop&w=800&q=80", caption: "Phòng thí nghiệm sinh hóa 🔬" },
+        { url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80", caption: "Những trang sách Y khoa đầu tiên 📖" }
       ]
     },
     "2": {
       title: "Năm 2: Môn Tiền Lâm Sàng",
       desc: "Bắt đầu học Điều dưỡng cơ bản, Dược lý học và cách lắng nghe ống nghe. Những buổi thực tập mannequin thật đáng nhớ!",
-      tags: ["💉 Điều dưỡng", "💊 Dược lý", "🫀 Tim mạch học", "🩺 Kỹ năng khám", "📋 Bệnh học"],
+      tags: ["💉 Điều dưỡng", "💊 Dược lý", "🫀 Tim mạch học", "🩺 Kỹ năng khám"],
       photos: [
-        { url: "https://images.unsplash.com/photo-1579684453377-48ec05c6b30a?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 2: Thực hành điều dưỡng 💉" },
-        { url: "https://images.unsplash.com/photo-1583912267550-d974bd86e787?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 2: Học dược lý lâm sàng 💊" },
-        { url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 2: Tập nghe tim phổi lần đầu 🫀" },
-        { url: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 2: Phòng thực hành kỹ năng 🩺" },
-        { url: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 2: Đội nhóm thực tập tiền lâm sàng 🤝" },
-        { url: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 2: Thảo luận ca bệnh mẫu 📝" },
-        { url: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 2: Ôn thi kỹ năng lâm sàng 🎯" },
-        { url: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 2: Hội thảo y khoa sinh viên 💡" },
-        { url: "https://images.unsplash.com/photo-1606206873764-fd15e242b815?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 2: Thực hành vi sinh y học 🔬" },
-        { url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 2: Chuẩn bị bước sang năm 3 🏥" }
+        { url: "https://images.unsplash.com/photo-1579684453377-48ec05c6b30a?auto=format&fit=crop&w=800&q=80", caption: "Thực hành kỹ năng điều dưỡng 💉" },
+        { url: "https://images.unsplash.com/photo-1583912267550-d974bd86e787?auto=format&fit=crop&w=800&q=80", caption: "Học dược lý với thầy hướng dẫn 💊" },
+        { url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80", caption: "Tập nghe tim phổi lần đầu 🫀" }
       ]
     },
     "3": {
       title: "Năm 3: Chặng Đường Đi Bệnh Viện",
-      desc: "Những buổi học lâm sàng đầu tiên tại bệnh viện, tập khám bệnh nhân thật. Cảm giác mặc Blouse bước vào bệnh viện thật thiêng liêng!",
-      tags: ["🏥 Lâm sàng", "🩻 X-quang", "🔬 Vi sinh", "👨‍⚕️ Nội tổng quát", "🩺 Khám lâm sàng"],
+      desc: "Những buổi học lâm sàng đầu tiên tại bệnh viện, tập khám bệnh nhân thật. Cảm giác mặc Blouse đến bệnh viện thật thiêng liêng!",
+      tags: ["🏥 Lâm sàng", "🩻 X-quang", "🔬 Vi sinh", "👨‍⚕️ Nội tổng quát"],
       photos: [
-        { url: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 3: Ngày đầu thực tập tại bệnh viện 🏥" },
-        { url: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 3: Tập đọc phim X-quang 🩻" },
-        { url: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 3: Khám bệnh nhân đầu tiên 🩺" },
-        { url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 3: Đi giao đợt lâm sàng 📋" },
-        { url: "https://images.unsplash.com/photo-1581594693702-f26b390a3692?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 3: Khoa Nội tổng hợp 💊" },
-        { url: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 3: Đi buồng cùng các bác sĩ đàn anh 👨‍⚕️" },
-        { url: "https://images.unsplash.com/photo-1530026405186-ed1f139313f3?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 3: Học lý thuyết lâm sàng bệnh viện 📖" },
-        { url: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 3: Trải nghiệm khoa Cấp cứu 🚨" },
-        { url: "https://images.unsplash.com/photo-1583912267550-d974bd86e787?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 3: Nhóm bạn trực đêm bệnh viện 🌙" },
-        { url: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 3: Thi kết thúc đợt lâm sàng 🌟" }
+        { url: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80", caption: "Ngày đầu thực tập tại bệnh viện 🏥" },
+        { url: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=800&q=80", caption: "Tập đọc phim X-quang 🩻" },
+        { url: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=800&q=80", caption: "Khám bệnh nhân đầu tiên 🩺" }
       ]
     },
     "4": {
       title: "Năm 4: Trực Bệnh Viện Đêm",
-      desc: "Những đêm trực ròng rã tại khoa Cấp cứu, Ngoại khoa, Nhi khoa. Mỗi ca trực là một bài học cuộc đời sâu sắc không thể quên.",
-      tags: ["🚨 Cấp cứu", "🔪 Ngoại khoa", "👶 Nhi khoa", "🌙 Ca trực đêm", "💪 Bản lĩnh"],
+      desc: "Đêm trực ròng rã tại khoa Cấp cứu, Ngoại khoa, Nhi khoa. Mỗi ca trực là một bài học cuộc đời không thể quên.",
+      tags: ["🚨 Cấp cứu", "🔪 Ngoại khoa", "👶 Nhi khoa", "🌙 Ca trực đêm"],
       photos: [
-        { url: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 4: Ca cấp cứu lúc 3 giờ sáng 🚨" },
-        { url: "https://images.unsplash.com/photo-1530026405186-ed1f139313f3?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 4: Khoa Nhi — những nụ cười trẻ thơ 👶" },
-        { url: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 4: Phụ mổ khoa Ngoại 🔪" },
-        { url: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 4: Đêm trực giao thừa bệnh viện 🌙" },
-        { url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 4: Trao đổi bệnh án cùng Thầy Cô 🩺" },
-        { url: "https://images.unsplash.com/photo-1581594693702-f26b390a3692?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 4: Học chuyên khoa Sản Nhi 🤰" },
-        { url: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 4: Đội hình trực đêm kiên cường 💪" },
-        { url: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 4: Bình bệnh án giao ban sáng ☀️" },
-        { url: "https://images.unsplash.com/photo-1579684453377-48ec05c6b30a?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 4: Giây phút nghỉ ngơi sau ca trực ☕" },
-        { url: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 4: Vững bước sang năm 5 Y khoa ✨" }
+        { url: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=800&q=80", caption: "Ca cấp cứu lúc 3 giờ sáng 🚨" },
+        { url: "https://images.unsplash.com/photo-1530026405186-ed1f139313f3?auto=format&fit=crop&w=800&q=80", caption: "Khoa Nhi — những thiên thần nhỏ 👶" },
+        { url: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=800&q=80", caption: "Sau một đêm trực dài 💪" }
       ]
     },
     "5": {
-      title: "Năm 5: Thực Tập Chuyên Khoa sâu",
-      desc: "Đi qua đủ các chuyên khoa lẻ — Tim mạch, Thần kinh, Sản phụ khoa, Nhãn khoa. Mỗi khoa là một thế giới y học kỳ diệu.",
-      tags: ["🫀 Tim mạch", "🧠 Thần kinh", "🤰 Sản phụ khoa", "👁️ Nhãn khoa", "🏥 Chuyên khoa"],
+      title: "Năm 5: Thực Tập Chuyên Khoa",
+      desc: "Đi qua đủ các chuyên khoa lẻ — Tim mạch, Thần kinh, Sản phụ khoa, Nhãn khoa. Mỗi khoa là một thế giới riêng.",
+      tags: ["🫀 Tim mạch", "🧠 Thần kinh", "🤰 Sản phụ khoa", "👁️ Nhãn khoa"],
       photos: [
-        { url: "https://images.unsplash.com/photo-1581594693702-f26b390a3692?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 5: Thực tập tại khoa Tim mạch 🫀" },
-        { url: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 5: Khám Thần kinh học 🧠" },
-        { url: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 5: Cùng đồng đội chuyên khoa sản 🤰" },
-        { url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 5: Thực hành soi đáy mắt Nhãn khoa 👁️" },
-        { url: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 5: Phòng điều trị tích cực ICU 🏥" },
-        { url: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 5: Đọc điện tâm đồ ECG phức tạp 📈" },
-        { url: "https://images.unsplash.com/photo-1530026405186-ed1f139313f3?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 5: Thực tập Răng Hàm Mặt & Tai Mũi Họng 🩺" },
-        { url: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 5: Nghiên cứu đề tài khoa học sinh viên 📊" },
-        { url: "https://images.unsplash.com/photo-1579684453377-48ec05c6b30a?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 5: Những chuyến đi thực tế cộng đồng 🚑" },
-        { url: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 5: Sẵn sàng cho chặng đích năm 6 🏁" }
+        { url: "https://images.unsplash.com/photo-1581594693702-f26b390a3692?auto=format&fit=crop&w=800&q=80", caption: "Thực tập tại khoa Tim mạch 🫀" },
+        { url: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=800&q=80", caption: "Khám Thần kinh học với GS hướng dẫn 🧠" },
+        { url: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80", caption: "Cùng đồng đội năm cuối chuyên khoa 💪" }
       ]
     },
     "6": {
-      title: "Năm 6: Thi Tốt Nghiệp & Khóa Luận",
-      desc: "Áp lực thi tốt nghiệp lý thuyết và lâm sàng, viết khóa luận tốt nghiệp. Đây là năm nhiều thử thách nhất nhưng cũng vinh quang nhất!",
-      tags: ["📋 Khóa luận", "🎯 Ôn thi", "🏆 Lâm sàng cuối", "✍️ Luận văn", "🩺 Bác sĩ tương lai"],
+      title: "Năm 6: Thi Tốt Nghiệp Bác Sĩ",
+      desc: "Áp lực thi tốt nghiệp lý thuyết và lâm sàng, viết khóa luận tốt nghiệp. Đây là năm khó khăn nhất nhưng cũng đáng nhớ nhất!",
+      tags: ["📋 Khóa luận", "🎯 Ôn thi", "🏆 Lâm sàng cuối", "✍️ Luận văn"],
       photos: [
-        { url: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 6: Những đêm thức bảo vệ đề tài 📚" },
-        { url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 6: Hoàn thành khóa luận tốt nghiệp ✍️" },
-        { url: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 6: Ngày thi lâm sàng quốc gia 🎯" },
-        { url: "https://images.unsplash.com/photo-1627556704283-8e7dd77abf48?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 6: Chụp ảnh kỷ yếu cùng tập thể 🎓" },
-        { url: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 6: Nụ cười nhẹ nhõm sau môn thi cuối 😊" },
-        { url: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 6: Tri ân Thầy Cô hướng dẫn ❤️" },
-        { url: "https://images.unsplash.com/photo-1581594693702-f26b390a3692?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 6: Cùng nhóm bạn thân 6 năm gắn bó 🤝" },
-        { url: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 6: Buổi giao ban lâm sàng cuối cùng 🏥" },
-        { url: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 6: Chuẩn bị trang phục Lễ Tốt Nghiệp 👔" },
-        { url: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Năm 6: Giờ phút lịch sử đang đến ⏳" }
+        { url: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80", caption: "Những đêm thức ôn thi cuối kỳ 📚" },
+        { url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80", caption: "Viết khóa luận tốt nghiệp ✍️" },
+        { url: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80", caption: "Ngày thi vấn đáp lâm sàng cuối cùng 🎯" }
       ]
     },
     "grad": {
       title: "2026: TỐT NGHIỆP BÁC SĨ Y KHOA!",
-      desc: "Chính thức khoác lên mình tấm bằng Bác Sĩ Y Khoa và đọc lời thề Hippocrates linh thiêng. 6 năm rực rỡ đã đơm hoa kết trái!",
-      tags: ["🎓 Tốt nghiệp", "🩺 Bác sĩ Y Khoa", "✚ Hippocratic Oath", "⭐ Class of 2026", "💖 Tự hào"],
+      desc: "Chính thức khoác lên mình tấm bằng tốt nghiệp Bác Sĩ và lời thề Hippocrates linh thiêng. Hành trình 6 năm đã chạm tới vì sao!",
+      tags: ["🎓 Tốt nghiệp", "🩺 Bác sĩ Y Khoa", "✚ Hippocratic Oath", "⭐ Class of 2026"],
       photos: [
-        { url: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Grad: Lễ nhận bằng Bác Sĩ 2026 🎓" },
-        { url: "https://images.unsplash.com/photo-1627556704283-8e7dd77abf48?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Grad: Vui mừng cùng gia đình & người thân ❤️" },
-        { url: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Grad: Bác sĩ Cao Việt — Chạm tới vì sao ⭐" },
-        { url: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Grad: Tung mũ tốt nghiệp rực rỡ 🎩" },
-        { url: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Grad: Ôm thắm thiết bạn bè đồng khóa 🤝" },
-        { url: "https://images.unsplash.com/photo-1581594693702-f26b390a3692?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Grad: Những bó hoa tươi thắm mến tặng 💐" },
-        { url: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Grad: Đọc lời thề Hippocrates trang trọng ✚" },
-        { url: "https://images.unsplash.com/photo-1530026405186-ed1f139313f3?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Grad: Chụp hình kỷ niệm tại Nguyễn Văn Đạo 📸" },
-        { url: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Grad: Nụ cười mãn nguyện của Bác Sĩ Cao Việt 😊" },
-        { url: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=800&q=80", caption: "Kỷ niệm Grad: Mở ra tương lai bác sĩ rực rỡ 🚀" }
+        { url: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80", caption: "Lễ nhận bằng Bác Sĩ 2026 🎓" },
+        { url: "https://images.unsplash.com/photo-1627556704283-8e7dd77abf48?auto=format&fit=crop&w=800&q=80", caption: "Khoảnh khắc cùng gia đình ❤️" },
+        { url: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80", caption: "Bác sĩ Cao Việt — Chạm tới vì sao ⭐" }
       ]
     }
   }
@@ -181,7 +131,6 @@ const modalCarouselState = { current: 0, total: 0 };
 
 document.addEventListener("DOMContentLoaded", () => {
   initSpaceCanvas();
-  init3DTilt();
   checkUrlPersonalParameters();
   initSalutation();
   initYearStepper();
@@ -194,16 +143,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // =========================================================================
-// 1. CANVAS BẦU TRỜI SAO 3D DEEP & HẠT LẤP LÁNH SANG TRỌNG (3D PARALLAX STARDUST)
+// 1. CANVAS BẦU TRỜI SAO & HẠT KIM CƯƠNG LẤP LÁNH NHẸ NHÀNG (CELESTIAL STARDUST)
 // =========================================================================
 let stardustParticles = [];
-let mouseX = 0, mouseY = 0;
-let targetMouseX = 0, targetMouseY = 0;
-
-document.addEventListener('mousemove', (e) => {
-  targetMouseX = (e.clientX - window.innerWidth / 2) * 0.04;
-  targetMouseY = (e.clientY - window.innerHeight / 2) * 0.04;
-});
 
 function initSpaceCanvas() {
   const canvas = document.getElementById('space-canvas');
@@ -220,16 +162,15 @@ function initSpaceCanvas() {
 
   const starColors = ["#ffffff", "#f8fafc", "#e2e8f0", "#d4af37", "#fef08a", "#cbd5e1"];
   const stars = [];
-  const starCount = Math.min(Math.floor((width * height) / 1800), 450);
+  const starCount = Math.min(Math.floor((width * height) / 2200), 380);
 
   for (let i = 0; i < starCount; i++) {
     stars.push({
       x: Math.random() * width,
       y: Math.random() * height,
-      z: Math.random() * 2.5 + 0.2,
-      size: Math.random() * 1.8 + 0.3,
+      size: Math.random() * 1.6 + 0.3,
       alpha: Math.random(),
-      speed: Math.random() * 0.012 + 0.003,
+      speed: Math.random() * 0.01 + 0.003,
       color: starColors[Math.floor(Math.random() * starColors.length)]
     });
   }
@@ -239,38 +180,33 @@ function initSpaceCanvas() {
     shootingStar = {
       x: Math.random() * width * 0.8,
       y: Math.random() * height * 0.4,
-      length: Math.random() * 120 + 60,
-      speed: Math.random() * 9 + 6,
+      length: Math.random() * 100 + 50,
+      speed: Math.random() * 8 + 5,
       angle: Math.PI / 4,
       alpha: 1
     };
   }
 
   setInterval(() => {
-    if (!shootingStar && Math.random() > 0.3) resetShootingStar();
-  }, 3500);
+    if (!shootingStar && Math.random() > 0.35) resetShootingStar();
+  }, 4000);
 
   function render() {
     ctx.clearRect(0, 0, width, height);
 
-    mouseX += (targetMouseX - mouseX) * 0.05;
-    mouseY += (targetMouseY - mouseY) * 0.05;
-
+    // Stars
     for (let s of stars) {
       s.alpha += s.speed;
-      if (s.alpha > 1 || s.alpha < 0.1) s.speed = -s.speed;
-      
-      const renderX = s.x + mouseX * s.z;
-      const renderY = s.y + mouseY * s.z;
-
+      if (s.alpha > 1 || s.alpha < 0.12) s.speed = -s.speed;
       ctx.fillStyle = s.color;
       ctx.globalAlpha = s.alpha;
       ctx.beginPath();
-      ctx.arc(renderX, renderY, s.size * s.z * 0.8, 0, Math.PI * 2);
+      ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.globalAlpha = 1;
 
+    // Shooting star
     if (shootingStar) {
       const grad = ctx.createLinearGradient(
         shootingStar.x - Math.cos(shootingStar.angle) * shootingStar.length,
@@ -294,12 +230,55 @@ function initSpaceCanvas() {
       if (shootingStar.alpha <= 0) shootingStar = null;
     }
 
+    // 🌟 CELESTIAL STARDUST PARTICLES (Hiệu ứng tinh vân nhẹ nhàng sang trọng)
+    for (let i = stardustParticles.length - 1; i >= 0; i--) {
+      let p = stardustParticles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy -= 0.012; // Nhẹ nhàng bay lên như làn khói ánh kim
+      p.alpha -= p.decay;
+
+      if (p.alpha <= 0) {
+        stardustParticles.splice(i, 1);
+        continue;
+      }
+
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.alpha;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
     requestAnimationFrame(render);
   }
-
   render();
 }
 
+// 🌟 HIỆU ỨNG ÁNH KIM THIÊN HÀ NHẸ NHÀNG (CELESTIAL CELEBRATION SHIMMER)
+function triggerGrandFireworks() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  for (let i = 0; i < 70; i++) {
+    const colors = ["#d4af37", "#fef08a", "#ffffff", "#f3e5ab", "#cbd5e1"];
+    stardustParticles.push({
+      x: Math.random() * width,
+      y: height * 0.6 + Math.random() * (height * 0.3),
+      vx: (Math.random() - 0.5) * 1.8,
+      vy: -Math.random() * 2.5 - 1.2,
+      size: Math.random() * 3 + 1,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: 1,
+      decay: Math.random() * 0.008 + 0.005
+    });
+  }
+}
+
+// =========================================================================
+// HELPER: Chuyển link Google Drive bất kỳ sang URL ảnh trực tiếp (bypass CORS)
+// =========================================================================
 function fixDriveImageUrl(url) {
   if (!url || !url.trim()) return url;
   const u = url.trim();
@@ -323,6 +302,9 @@ function fixDriveImageUrl(url) {
   return u;
 }
 
+// =========================================================================
+// 2. ĐỌC THÔNG TIN KHÁCH MỜI TỪ GOOGLE SHEET HOẶC URL
+// =========================================================================
 async function checkUrlPersonalParameters() {
   const urlParams = new URLSearchParams(window.location.search);
 
@@ -405,6 +387,9 @@ function applyGuestData(guest, salutationElem, guestNameElem, msgElem, photoElem
   if (guest.photo    && photoElem) photoElem.src     = fixDriveImageUrl(guest.photo);
 }
 
+// =========================================================================
+// 3. SALUTATION & UNLOCK HÀNH TRÌNH VỚI HIỆU ỨNG LUỚT SIÊU MƯỢT VÀ ĐỀU
+// =========================================================================
 function initSalutation() {
   const btns = document.querySelectorAll('.salt-btn');
   btns.forEach(btn => {
@@ -443,7 +428,10 @@ function initSalutation() {
     const lockedContent = document.getElementById('locked-content');
     if (lockedContent) {
       lockedContent.classList.remove('hidden');
-      lockedContent.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('is-visible'));
+      // Đảm bảo các phần tử xuất hiện mượt mà
+      requestAnimationFrame(() => {
+        lockedContent.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('is-visible'));
+      });
     }
 
     playAudioMusic();
@@ -451,93 +439,65 @@ function initSalutation() {
     const navbar = document.getElementById('main-navbar');
     if (navbar) navbar.classList.remove('hidden-nav');
 
-    setTimeout(() => {
-      const target = document.getElementById('chapters') || document.getElementById('personalized-greeting');
-      if (target) scrollToElementSlowly(target, 1800);
-    }, 450);
+    // Chờ 1 frame render để tính chính xác Y coordinate và cuộn mượt
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const target = document.getElementById('chapters') || document.getElementById('personalized-greeting');
+        if (target) scrollToElementSlowly(target, 1600);
+      }, 150);
+    });
   };
 
   if (continueBtn) continueBtn.addEventListener('click', handleUnlock);
   if (continueDefaultBtn) continueDefaultBtn.addEventListener('click', handleUnlock);
 }
 
-function scrollToElementSlowly(element, duration = 1800) {
-  const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - 75;
-  const startPosition = window.pageYOffset;
-  const distance = targetPosition - startPosition;
-  let startTime = null;
+// 🌟 HÀM CUỘN TRANG SIÊU MƯỢT VÀ ĐỀU VỚI EASING QUINTIC 60FPS/120FPS
+function scrollToElementSlowly(element, duration = 1600) {
+  // Tạm tắt scroll-behavior native của CSS để không xung đột với JS animation frame
+  const originalScrollBehavior = document.documentElement.style.scrollBehavior;
+  document.documentElement.style.scrollBehavior = 'auto';
 
-  function easeInOutCubic(t) {
-    return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+  // Tính Y chính xác của target
+  const navOffset = 70;
+  const targetY = Math.max(0, element.getBoundingClientRect().top + window.pageYOffset - navOffset);
+  const startY = window.pageYOffset;
+  const distance = targetY - startY;
+
+  if (Math.abs(distance) < 5) {
+    document.documentElement.style.scrollBehavior = originalScrollBehavior;
+    return;
   }
 
-  function animation(currentTime) {
+  let startTime = null;
+
+  // Quartic Easing function cho cảm giác chuyển động mượt, đằm và đều đặn
+  function easeInOutQuart(t) {
+    return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+  }
+
+  function step(currentTime) {
     if (startTime === null) startTime = currentTime;
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / duration, 1);
+    const easedProgress = easeInOutQuart(progress);
 
-    window.scrollTo(0, startPosition + distance * easeInOutCubic(progress));
+    window.scrollTo(0, startY + distance * easedProgress);
 
     if (elapsed < duration) {
-      requestAnimationFrame(animation);
+      requestAnimationFrame(step);
+    } else {
+      window.scrollTo(0, targetY);
+      document.documentElement.style.scrollBehavior = originalScrollBehavior;
     }
   }
 
-  requestAnimationFrame(animation);
+  requestAnimationFrame(step);
 }
 
-function initYearStepper() {
-  const nodes = document.querySelectorAll('.year-node');
-  nodes.forEach(node => {
-    node.addEventListener('click', () => {
-      nodes.forEach(n => n.classList.remove('active'));
-      node.classList.add('active');
-      const yearKey = node.dataset.year;
-      updateYearContent(yearKey);
-    });
-  });
-  updateYearContent("1");
-}
-
-function updateYearContent(yearKey) {
-  const data = APP_STATE.yearsData[yearKey];
-  if (!data) return;
-
-  const titleEl = document.getElementById('yd-title');
-  const descEl  = document.getElementById('yd-desc');
-  const tagsEl  = document.getElementById('yd-tags');
-
-  if (titleEl) titleEl.innerText = data.title;
-  if (descEl)  descEl.innerText  = data.desc;
-
-  if (tagsEl) {
-    tagsEl.innerHTML = data.tags.map(t => `<span class="med-tag">${t}</span>`).join('');
-  }
-
-  const trackEl   = document.getElementById('carousel-track');
-  const dotsEl    = document.getElementById('carousel-dots');
-  const captionEl = document.getElementById('carousel-caption');
-  const prevBtn   = document.getElementById('carousel-prev');
-  const nextBtn   = document.getElementById('carousel-next');
-
-  if (trackEl) {
-    buildCarousel(trackEl, dotsEl, captionEl, data.photos, carouselState);
-
-    const newPrevBtn = prevBtn.cloneNode(true);
-    const newNextBtn = nextBtn.cloneNode(true);
-    prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
-    nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
-
-    newPrevBtn.addEventListener('click', () => prevSlide(trackEl, dotsEl, captionEl, data.photos, carouselState));
-    newNextBtn.addEventListener('click', () => nextSlide(trackEl, dotsEl, captionEl, data.photos, carouselState));
-
-    initSwipe(trackEl.parentNode,
-      () => nextSlide(trackEl, dotsEl, captionEl, data.photos, carouselState),
-      () => prevSlide(trackEl, dotsEl, captionEl, data.photos, carouselState)
-    );
-  }
-}
-
+// =========================================================================
+// 4. PHOTO CAROUSEL LOGIC
+// =========================================================================
 function buildCarousel(trackEl, dotsEl, captionEl, photos, stateObj) {
   trackEl.innerHTML = '';
   if (dotsEl) dotsEl.innerHTML = '';
@@ -592,34 +552,109 @@ function initSwipe(wrapper, onNext, onPrev) {
   wrapper.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
   wrapper.addEventListener('touchend', e => {
     if (startX === null) return;
-    const diff = startX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) {
-      if (diff > 0) onNext(); else onPrev();
-    }
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 35) { dx < 0 ? onNext() : onPrev(); }
     startX = null;
   }, { passive: true });
 }
 
+// =========================================================================
+// 5. YEAR STEPPER + CAROUSEL
+// =========================================================================
+function initYearStepper() {
+  const trackEl = document.getElementById('carousel-track');
+  const dotsEl = document.getElementById('carousel-dots');
+  const captionEl = document.getElementById('carousel-caption');
+  const prevBtn = document.getElementById('carousel-prev');
+  const nextBtn = document.getElementById('carousel-next');
+
+  loadYearData('1', trackEl, dotsEl, captionEl);
+
+  if (prevBtn) prevBtn.addEventListener('click', () => {
+    prevSlide(trackEl, dotsEl, captionEl, APP_STATE.yearsData[currentYear].photos, carouselState);
+  });
+  if (nextBtn) nextBtn.addEventListener('click', () => {
+    nextSlide(trackEl, dotsEl, captionEl, APP_STATE.yearsData[currentYear].photos, carouselState);
+  });
+
+  const wrapper = document.querySelector('.photo-carousel-wrapper');
+  if (wrapper) {
+    initSwipe(wrapper,
+      () => nextSlide(trackEl, dotsEl, captionEl, APP_STATE.yearsData[currentYear].photos, carouselState),
+      () => prevSlide(trackEl, dotsEl, captionEl, APP_STATE.yearsData[currentYear].photos, carouselState)
+    );
+  }
+
+  const nodes = document.querySelectorAll('.year-node');
+  nodes.forEach(node => {
+    node.addEventListener('click', () => {
+      nodes.forEach(n => n.classList.remove('active'));
+      node.classList.add('active');
+      loadYearData(node.dataset.year, trackEl, dotsEl, captionEl);
+    });
+  });
+}
+
+let currentYear = '1';
+function loadYearData(yr, trackEl, dotsEl, captionEl) {
+  const data = APP_STATE.yearsData[yr];
+  if (!data) return;
+  currentYear = yr;
+
+  const titleEl = document.getElementById('yd-title');
+  const descEl = document.getElementById('yd-desc');
+  const tagsEl = document.getElementById('yd-tags');
+
+  if (titleEl) { titleEl.style.opacity = '0'; titleEl.style.transform = 'translateY(6px)'; }
+  if (descEl) { descEl.style.opacity = '0'; }
+
+  setTimeout(() => {
+    if (titleEl) {
+      titleEl.innerText = data.title;
+      titleEl.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      titleEl.style.opacity = '1'; titleEl.style.transform = 'translateY(0)';
+    }
+    if (descEl) {
+      descEl.innerText = data.desc;
+      descEl.style.transition = 'opacity 0.4s ease';
+      descEl.style.opacity = '1';
+    }
+    if (tagsEl && data.tags) {
+      tagsEl.innerHTML = data.tags.map(t => `<span class="med-tag">${t}</span>`).join('');
+    }
+  }, 160);
+
+  buildCarousel(trackEl, dotsEl, captionEl, data.photos, carouselState);
+}
+
+// =========================================================================
+// 6. CHAPTER MODAL
+// =========================================================================
 function initChapterModal() {
   const modal = document.getElementById('chapter-modal');
   const closeBtn = document.getElementById('modal-close');
+  const cards = document.querySelectorAll('.click-reveal-card');
   const modalTrack = document.getElementById('modal-carousel-track');
   const modalDots = document.getElementById('modal-dots');
   const modalPrev = document.getElementById('modal-prev');
   const modalNext = document.getElementById('modal-next');
 
-  document.querySelectorAll('.click-reveal-card').forEach(card => {
+  if (!modal) return;
+
+  cards.forEach(card => {
     card.addEventListener('click', () => {
       const chKey = card.dataset.chapter;
       const data = APP_STATE.chaptersData[chKey];
-      if (!data || !modal) return;
+      if (!data) return;
 
       document.getElementById('modal-badge').innerText = data.badge;
       document.getElementById('modal-title').innerText = data.title;
-      document.getElementById('modal-desc').innerText  = data.desc;
+      document.getElementById('modal-desc').innerText = data.desc;
 
       buildCarousel(modalTrack, modalDots, null, data.photos, modalCarouselState);
+
       modal.classList.remove('hidden');
+      triggerGrandFireworks();
     });
   });
 
@@ -642,6 +677,9 @@ function initChapterModal() {
   modal.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
 }
 
+// =========================================================================
+// 7. SCROLL OBSERVER
+// =========================================================================
 function initScrollObserver() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -651,6 +689,9 @@ function initScrollObserver() {
   document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 }
 
+// =========================================================================
+// 8. COUNTDOWN (28/08/2026 11:30 AM)
+// =========================================================================
 function initCountdown() {
   const eventDate = new Date("August 28, 2026 11:30:00").getTime();
   setInterval(() => {
@@ -665,6 +706,9 @@ function initCountdown() {
   }, 1000);
 }
 
+// =========================================================================
+// 9. MUSIC PLAYER & GLOBAL AUDIO UNLOCK (Castle in the Sky - Gentle Piano)
+// =========================================================================
 let audioIsPlaying = false;
 
 function playAudioMusic() {
@@ -672,20 +716,14 @@ function playAudioMusic() {
   const toggleBtn = document.getElementById('music-toggle');
   if (!audio) return;
 
-  audio.onerror = function() {
-    console.log("Audio link error, trying backup stream...");
-    audio.src = "https://cdn.pixabay.com/audio/2022/10/14/audio_9939f792e7.mp3";
-    audio.play().catch(e => console.log("Backup audio error:", e));
-  };
-
   audio.play().then(() => {
     audioIsPlaying = true;
     if (toggleBtn) {
       toggleBtn.style.transform = 'scale(1.15)';
-      toggleBtn.style.boxShadow = '0 0 35px rgba(212, 175, 55, 0.8)';
+      toggleBtn.style.boxShadow = '0 0 35px rgba(212, 175, 55, 0.85)';
     }
   }).catch(err => {
-    console.log("Trình duyệt chờ người dùng chạm màn hình để phát nhạc:", err);
+    console.log("Trình duyệt tạm giữ phát nhạc tự động, cần bấm nút 🎵 để phát:", err);
   });
 }
 
@@ -710,30 +748,17 @@ function initMusicPlayer() {
     if (!audioIsPlaying) {
       playAudioMusic();
     }
+    document.removeEventListener('click', unlockAudioOnFirstTouch);
+    document.removeEventListener('touchstart', unlockAudioOnFirstTouch);
   };
 
   document.addEventListener('click', unlockAudioOnFirstTouch, { once: true });
   document.addEventListener('touchstart', unlockAudioOnFirstTouch, { once: true });
 }
 
-function triggerGrandFireworks() {
-  if (typeof confetti !== 'function') return;
-  const count = 200;
-  const defaults = { origin: { y: 0.7 } };
-
-  function fire(particleRatio, opts) {
-    confetti(Object.assign({}, defaults, opts, {
-      particleCount: Math.floor(count * particleRatio)
-    }));
-  }
-
-  fire(0.25, { spread: 26, startVelocity: 55, colors: ['#d4af37', '#ffffff'] });
-  fire(0.2, { spread: 60, colors: ['#4ade80', '#60a5fa'] });
-  fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-  fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, colors: ['#f43f5e', '#d4af37'] });
-  fire(0.1, { spread: 120, startVelocity: 45 });
-}
-
+// =========================================================================
+// 10. RSVP FORM → GOOGLE APPS SCRIPT
+// =========================================================================
 function initRSVPForm() {
   const form = document.getElementById('rsvp-form');
   if (!form) return;
@@ -759,6 +784,7 @@ function initRSVPForm() {
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
       });
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
       triggerGrandFireworks();
       document.getElementById('thanks-name').innerText = `${APP_STATE.salutation} ${APP_STATE.guestName}`;
@@ -773,6 +799,9 @@ function initRSVPForm() {
   });
 }
 
+// =========================================================================
+// 11. FETCH WEB CONFIG TỪ GOOGLE SHEET
+// =========================================================================
 async function fetchWebConfig() {
   if (!APP_STATE.webhookUrl || APP_STATE.webhookUrl.includes("EXAMPLE_REPLACE")) return;
 
@@ -813,25 +842,6 @@ function applyWebConfig(cfg) {
   }
   if (cfg["Tên_Chủ_Nhân"]) {
     const brandEl = document.querySelector('.nav-brand');
-    if (brandEl) brandEl.innerHTML = `${cfg["Tên_Chủ_Nhân"]} - <span id="admin-phone">${cfg["SĐT_Admin"] || ""}</span>`;
+    if (brandEl) brandEl.innerHTML = `${cfg["Tên_Chủ_Nhân"]} · <span id="admin-phone">${cfg["SĐT_Admin"] || ""}</span>`;
   }
-}
-
-function init3DTilt() {
-  const tiltElements = document.querySelectorAll('.chapter-photo-frame, .invitation-banner-card, .year-detail-box, .welcome-card');
-  tiltElements.forEach(el => {
-    el.addEventListener('mousemove', (e) => {
-      const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const rotateX = ((y - centerY) / centerY) * -7;
-      const rotateY = ((x - centerX) / centerX) * 7;
-      el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-    });
-    el.addEventListener('mouseleave', () => {
-      el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-    });
-  });
 }
