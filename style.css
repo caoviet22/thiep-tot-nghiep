@@ -625,7 +625,8 @@ input[type="text"]:focus, textarea:focus, select:focus {
   transition: transform 0.3s, box-shadow 0.3s;
 }
 .music-player:hover { transform: scale(1.15); box-shadow: 0 0 35px rgba(212,175,55,0.7); }
-.disc { font-size: 1.35rem; animation: discSpin 4s linear infinite; }
+.disc { font-size: 1.35rem; animation: discSpin 4s linear infinite; animation-play-state: paused; }
+.music-player.playing .disc { animation-play-state: running; }
 @keyframes discSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
 /* ===================== SPINNER ===================== */
