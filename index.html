@@ -7,14 +7,14 @@
   <meta name="description" content="Thiệp mời tốt nghiệp Bác Sĩ Y Khoa 2026 của Cao Việt – Hội trường Nguyễn Văn Đạo, ĐHQGHN.">
   <link rel="stylesheet" href="style.css">
   
-  <!-- High Quality Luxury Fonts -->
+  <!-- High Quality Luxury Fonts with 100% Full Vietnamese Accent Support -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600&display=swap&subset=vietnamese" rel="stylesheet">
 </head>
 <body class="dark-celestial-body">
 
-  <!-- CANVAS BẦU TRỜI SAO 3D DEEP & HẠT TÂM LINH LẤP LÁNH HIỆN ĐẠI -->
+  <!-- CANVAS BẦU TRỜI SAO & HẠT TÂM LINH LẤP LÁNH HIỆN ĐẠI -->
   <canvas id="space-canvas"></canvas>
 
   <!-- MODERN NEON 3D ECG PULSE MONITOR (SÓNG TIM HOLOGRAPHIC) -->
@@ -37,8 +37,10 @@
           </feMerge>
         </filter>
       </defs>
+      <!-- Background static faint line -->
       <path class="ecg-bg-line" d="M 0 35 L 200 35 L 215 35 L 222 15 L 230 55 L 238 35 L 255 35 L 450 35 L 465 35 L 472 10 L 480 60 L 488 35 L 505 35 L 700 35 L 715 35 L 722 15 L 730 55 L 738 35 L 755 35 L 1000 35"
             fill="none" stroke="rgba(212,175,55,0.15)" stroke-width="1.5" />
+      <!-- Animated glowing neon pulse line -->
       <path class="ecg-pulse-line" filter="url(#neonGlow)" d="M 0 35 L 200 35 L 215 35 L 222 15 L 230 55 L 238 35 L 255 35 L 450 35 L 465 35 L 472 10 L 480 60 L 488 35 L 505 35 L 700 35 L 715 35 L 722 15 L 730 55 L 738 35 L 755 35 L 1000 35"
             fill="none" stroke="url(#ecgGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
@@ -46,12 +48,13 @@
 
   <!-- NAVIGATION BAR -->
   <nav class="navbar hidden-nav" id="main-navbar">
-    <div class="nav-brand">VIỆT - <span id="admin-phone">0886 356 222</span></div>
+    <div class="nav-brand">VIỆT · <span id="admin-phone">0886 356 222</span></div>
     <div class="nav-links">
-      <a href="#chapters">HÀNH TRÌNH</a>
-      <a href="#timeline">DẤU ẤN</a>
-      <a href="#event">SỰ KIỆN</a>
-      <a href="#rsvp" class="btn-nav">THAM DỰ</a>
+      <a href="#chapters">Hành trình</a>
+      <a href="#timeline">Năm học</a>
+      <a href="#parking">Gửi xe</a>
+      <a href="#event">Sự kiện</a>
+      <a href="#rsvp" class="btn-nav">Tham dự</a>
     </div>
   </nav>
 
@@ -65,7 +68,7 @@
       
       <!-- HERO TITLE -->
       <section id="hero" class="hero-section">
-        <div class="doctor-badge">
+        <div class="doctor-badge glass-pill">
           <span class="heartbeat-dot"></span>
           <span class="badge-icon">🩺</span> BÁC SĨ Y KHOA · CLASS OF 2026
         </div>
@@ -77,7 +80,7 @@
         <p class="subtitle">Xin chào, Việt rất mong được gặp bạn trong ngày tốt nghiệp đặc biệt này.</p>
 
         <!-- MEDICAL OATH QUOTE -->
-        <div class="medical-quote">
+        <div class="medical-quote glass-box">
           <span class="quote-mark">“</span>
           Ở đâu nghệ thuật Y Học được trân trọng, ở đó tình yêu Thương Con Người cũng tỏa sáng.
           <span class="quote-attr">— Lời thề Hippocrates</span>
@@ -85,11 +88,11 @@
       </section>
 
       <!-- THIỆP CÁ NHÂN HÓA RIÊNG CHO TỪNG KHÁCH MỜI -->
-      <section id="personal-card" class="welcome-card card glow-border">
+      <section id="personal-card" class="welcome-card card luxury-glass-card">
         <div id="personalized-view" class="personal-grid">
           <!-- Khung ảnh riêng bên trái -->
           <div class="guest-photo-wrapper">
-            <div class="photo-frame glow-border">
+            <div class="photo-frame luxury-glass-border">
               <img id="guest-photo-img" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80" alt="Ảnh kỷ niệm">
             </div>
             <div class="photo-caption">Kỷ niệm cùng Việt ✨</div>
@@ -99,7 +102,7 @@
           <div class="personal-text-content">
             <span class="step-tag">✦ LỜI NHẮN TỪ BÁC SĨ CAO VIỆT ✦</span>
             <h2 class="personal-heading">Thân gửi <span id="personal-salutation" class="gold-text">Anh</span> <span id="personal-guest-name" class="gold-text">Khách Mời</span>,</h2>
-            <div class="personal-msg-box">
+            <div class="personal-msg-box glass-inner-box">
               <p id="personal-message-text">Cảm ơn bạn đã luôn đồng hành, chia sẻ và cổ vũ Việt trong suốt hành trình 6 năm học Y Khoa đầy thử thách này. Sự hiện diện của bạn trong ngày tốt nghiệp là món quà tuyệt vời nhất đối với Việt!</p>
             </div>
             <div class="signature-line">— Bác sĩ Cao Việt —</div>
@@ -138,7 +141,7 @@
     </div>
 
     <!-- DYNAMIC GREETING DISPLAY -->
-    <div id="personalized-greeting" class="personalized-box hidden glow-box">
+    <div id="personalized-greeting" class="personalized-box hidden luxury-glass-card">
       <span class="sparkle-icon">✨</span> Chào mừng <span id="disp-salutation">Anh</span> <span id="disp-name">Khách Mời</span> đến với Hành Trình Y Khoa của Cao Việt!
     </div>
 
@@ -147,86 +150,68 @@
     <!-- ============================================================================== -->
     <div id="locked-content" class="locked-content hidden">
 
-      <!-- CHAPTERS SECTION (THIẾT KẾ GIỐNG MẪU 100%) -->
+      <!-- CHAPTERS SECTION -->
       <section id="chapters" class="chapters-section reveal-on-scroll">
-        
-        <!-- CHAPTER 1: AWAKEN -->
-        <div class="chapter-block chapter-left" data-chapter="ch1">
-          <div class="chapter-media">
-            <div class="chapter-photo-frame glow-border-3d">
-              <img id="img-ch1" src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=800&q=80" alt="Chương 1 AWAKEN">
+        <div class="section-title-box">
+          <span class="step-tag">✦ CHẶNG ĐƯỜNG KỶ NIỆM ✦</span>
+          <h2 class="gold-heading">4 Chương Ký Ức Y Khoa</h2>
+          <p class="section-desc">Bấm vào từng chương để mở chi tiết kỷ niệm đẹp nhất:</p>
+        </div>
+
+        <div class="chapters-grid">
+          <!-- Chapter 1 -->
+          <article class="chapter-card card luxury-glass-card click-reveal-card" data-chapter="ch1">
+            <div class="chapter-badge">Chương 1</div>
+            <h3 class="chapter-title">AWAKEN</h3>
+            <p class="chapter-sub">Khởi đầu với chiếc áo Blouse trắng & Giấc mơ Y Khoa</p>
+            <div class="img-wrapper">
+              <img id="img-ch1" src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=800&q=80" alt="Y Khoa Awaken">
+              <div class="img-overlay"><span>BẤM XEM KỶ NIỆM ✨</span></div>
             </div>
-          </div>
-          <div class="chapter-info">
-            <span class="chapter-sub-badge">✦ Chương 1 ✦</span>
-            <h2 class="chapter-big-title">AWAKEN</h2>
-            <p class="chapter-quote">“Mọi hành trình đều bắt đầu từ một giấc mơ.”</p>
-            <div class="chapter-divider"></div>
-            <p class="chapter-text">Trước khi bước vào giảng đường, mỗi chúng ta chỉ mang theo một điều rất nhỏ: sự tò mò và những ước mơ chưa định hình. Đó là lúc hành trình bắt đầu — khi ta bước vào một vũ trụ mới mang tên Y Khoa.</p>
-          </div>
-        </div>
+          </article>
 
-        <!-- CHAPTER 2: EXPLORE -->
-        <div class="chapter-block chapter-right" data-chapter="ch2">
-          <div class="chapter-info">
-            <span class="chapter-sub-badge">✦ Chương 2 ✦</span>
-            <h2 class="chapter-big-title">EXPLORE</h2>
-            <p class="chapter-quote">“Cả một vũ trụ đang chờ được khám phá.”</p>
-            <div class="chapter-divider"></div>
-            <p class="chapter-text">Hành trình lớn lên là chuỗi những trải nghiệm mới.. Chúng ta bước ra khỏi vùng an toàn, gặp gỡ những con người khác nhau, và bắt đầu khám phá thế giới Y Học theo cách của riêng mình.</p>
-          </div>
-          <div class="chapter-media">
-            <div class="chapter-photo-frame glow-border-3d">
-              <img id="img-ch2" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80" alt="Chương 2 EXPLORE">
+          <!-- Chapter 2 -->
+          <article class="chapter-card card luxury-glass-card click-reveal-card" data-chapter="ch2">
+            <div class="chapter-badge">Chương 2</div>
+            <h3 class="chapter-title">EXPLORE</h3>
+            <p class="chapter-sub">Những đêm trực miệt mài & Những bài học lâm sàng</p>
+            <div class="img-wrapper">
+              <img id="img-ch2" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80" alt="Y Khoa Explore">
+              <div class="img-overlay"><span>BẤM XEM KỶ NIỆM ✨</span></div>
             </div>
-          </div>
-        </div>
+          </article>
 
-        <!-- CHAPTER 3: IGNITE -->
-        <div class="chapter-block chapter-left" data-chapter="ch3">
-          <div class="chapter-media">
-            <div class="chapter-photo-frame glow-border-3d">
-              <img id="img-ch3" src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=800&q=80" alt="Chương 3 IGNITE">
+          <!-- Chapter 3 -->
+          <article class="chapter-card card luxury-glass-card click-reveal-card" data-chapter="ch3">
+            <div class="chapter-badge">Chương 3</div>
+            <h3 class="chapter-title">IGNITE</h3>
+            <p class="chapter-sub">Bứt phá giới hạn, rèn luyện bản lĩnh Bác sĩ</p>
+            <div class="img-wrapper">
+              <img id="img-ch3" src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=800&q=80" alt="Y Khoa Ignite">
+              <div class="img-overlay"><span>BẤM XEM KỶ NIỆM ✨</span></div>
             </div>
-          </div>
-          <div class="chapter-info">
-            <span class="chapter-sub-badge">✦ Chương 3 ✦</span>
-            <h2 class="chapter-big-title">IGNITE</h2>
-            <p class="chapter-quote">“Bứt phá giới hạn, rèn luyện bản lĩnh Bác sĩ.”</p>
-            <div class="chapter-divider"></div>
-            <p class="chapter-text">Vượt qua thử thách, tích lũy kiến thức qua từng ca lâm sàng thực tế, tôi luyện bản lĩnh và y đức của người thầy thuốc tương lai.</p>
-          </div>
+          </article>
+
+          <!-- Chapter 4 -->
+          <article class="chapter-card card luxury-glass-card highlight-card click-reveal-card" data-chapter="ch4">
+            <div class="chapter-badge">Chương Cuối</div>
+            <h3 class="chapter-title">AMONG THE STARS</h3>
+            <p class="chapter-sub">Lễ Tốt Nghiệp Bác Sĩ Y Khoa 2026</p>
+            <div class="img-wrapper">
+              <img id="img-ch4" src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80" alt="Graduation Among Stars">
+              <div class="img-overlay"><span>BẤM XEM KỶ NIỆM ✨</span></div>
+            </div>
+          </article>
         </div>
-
-        <!-- CHAPTER 4: AMONG THE STARS -->
-        <div class="chapter-block chapter-center" data-chapter="ch4">
-          <div class="chapter-header-center">
-            <span class="chapter-sub-badge">✦ Chương cuối ✦</span>
-            <h2 class="chapter-huge-title">AMONG THE STARS</h2>
-            <p class="chapter-quote-center">“Mọi hành trình đều khởi đầu từ một tia sáng nhỏ. Còn hành trình này, được dẫn lối đến những vì sao.”</p>
-          </div>
-          
-          <div class="chapter-divider-center"></div>
-          <p class="chapter-text-center">Hôm nay, chúng ta cùng nhau ăn mừng khoảnh khắc này. Điểm kết thúc của một hành trình tuyệt đẹp và là điểm khởi đầu cho vô vàn những cuộc phiêu lưu mới giữa các vì sao.</p>
-
-          <!-- KHUNG THIỆP MỜI MẪU CHÚC MỪNG TÂN CỬ NHÂN / BÁC SĨ (GIỐNG ẢNH 1) -->
-          <div class="invitation-banner-card glow-border-3d">
-            <img id="img-ch4" src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80" alt="Thiệp Mời Bác Sĩ Cao Việt">
-            <div class="banner-caption">✦ Khung Thiệp Mời Chính Thức của Bác Sĩ Cao Việt ✦</div>
-          </div>
-        </div>
-
       </section>
 
-      <!-- TIMELINE SECTION (6 NĂM HÀNH TRÌNH TRƯỞNG THÀNH GIỐNG ẢNH 5) -->
-      <section id="timeline" class="timeline-section card reveal-on-scroll glow-border-3d">
-        <div class="timeline-header-center">
-          <span class="space-time-orbit-badge">SPACE-TIME ORBIT</span>
-          <h2 class="orbit-main-heading">6 Năm, Một Hành Trình Trưởng Thành</h2>
-          <p class="orbit-sub-desc">Kéo thanh trượt để nhìn lại những vòng quay thời gian của Việt cùng bạn nhé.</p>
-        </div>
+      <!-- TIMELINE SECTION WITH MULTI-PHOTO CAROUSEL -->
+      <section id="timeline" class="timeline-section card luxury-glass-card reveal-on-scroll">
+        <span class="step-tag">✦ 6 NĂM MIỆT MÀI Y KHOA ✦</span>
+        <h2 class="luxury-heading">Hành Trình Trưởng Thành</h2>
+        <p class="section-desc">Bấm chọn từng năm học — vuốt hoặc bấm mũi tên để xem kỷ niệm:</p>
 
-        <!-- YEAR STEPPER NODES (6 NĂM + GRADUATION) -->
+        <!-- YEAR STEPPER NODES -->
         <div class="year-stepper">
           <button class="year-node active" data-year="1">Năm 1</button>
           <button class="year-node" data-year="2">Năm 2</button>
@@ -238,9 +223,21 @@
         </div>
 
         <!-- YEAR DETAIL CARD WITH PHOTO CAROUSEL -->
-        <div class="year-detail-box glow-box-3d" id="year-detail">
-          <!-- PHOTO CAROUSEL (10 ẢNH BÊN TRÁI GIỐNG MẪU) -->
-          <div class="photo-carousel-wrapper">
+        <div class="year-detail-box glass-inner-box" id="year-detail">
+          <!-- Text info -->
+          <div class="year-text-info">
+            <h4 id="yd-title">Năm 1: Đặt Chân Vào Cổng Trường Y</h4>
+            <p id="yd-desc">Bắt đầu làm quen với Giải phẫu, Sinh hóa và những trang giáo trình dày cộp. Ngọn lửa ước mơ bắt đầu bùng cháy.</p>
+            <!-- Medical tags -->
+            <div class="year-tags" id="yd-tags">
+              <span class="med-tag">🔬 Sinh hóa</span>
+              <span class="med-tag">🦴 Giải phẫu</span>
+              <span class="med-tag">📚 Lý thuyết</span>
+            </div>
+          </div>
+
+          <!-- PHOTO CAROUSEL -->
+          <div class="photo-carousel-wrapper glass-inner-box">
             <div class="photo-carousel-track" id="carousel-track">
               <!-- Rendered via JS -->
             </div>
@@ -252,23 +249,11 @@
             <!-- Caption -->
             <div class="carousel-caption" id="carousel-caption">Kỷ niệm năm 1</div>
           </div>
-
-          <!-- TEXT INFO BÊN PHẢI GIỐNG MẪU -->
-          <div class="year-text-info">
-            <h3 id="yd-title">BEGIN: Đặt Chân Vào Cổng Trường Y</h3>
-            <p id="yd-desc">Những bước chân đầu tiên bỡ ngỡ bước vào giảng đường đại học Y Khoa.</p>
-            <!-- Tags -->
-            <div class="year-tags" id="yd-tags">
-              <span class="med-tag">✨ ĐAM MÊ</span>
-              <span class="med-tag">🌟 TƯ DUY</span>
-              <span class="med-tag">🚀 BỨT PHÁ</span>
-            </div>
-          </div>
         </div>
       </section>
 
       <!-- 🅿️ THÔNG TIN GỬI XE -->
-      <section id="parking" class="parking-section card reveal-on-scroll glow-border">
+      <section id="parking" class="parking-section card luxury-glass-card reveal-on-scroll">
         <div class="parking-header">
           <span class="step-tag">✦ THÔNG TIN THỰC TIỄN ✦</span>
           <h2 class="luxury-heading">Thông Tin Quan Trọng</h2>
@@ -276,7 +261,7 @@
         </div>
 
         <!-- PARKING CARD -->
-        <div class="info-block parking-block glow-box">
+        <div class="info-block parking-block glass-inner-box">
           <div class="info-block-header">
             <div class="parking-icon-circle">🅿️</div>
             <div>
@@ -317,7 +302,7 @@
             </li>
           </ul>
 
-          <div class="parking-note-box">
+          <div class="parking-note-box glass-pill">
             <span>⏰</span>
             <p>Việt rất mong bạn có thể đến trước <strong>11:00 AM</strong> để thong thả gửi xe và cùng nhau chụp thật nhiều ảnh kỷ niệm đẹp trước khi lễ bắt đầu nhé!</p>
           </div>
@@ -325,12 +310,12 @@
       </section>
 
       <!-- COUNTDOWN & EVENT INFO -->
-      <section id="event" class="event-section card reveal-on-scroll">
+      <section id="event" class="event-section card luxury-glass-card reveal-on-scroll">
         <span class="step-tag">✦ THỜI GIAN & ĐỊA ĐIỂM ✦</span>
         <h2 class="gold-heading shimmer-text">GRAD. CEREMONY OF VIỆT</h2>
 
         <!-- Hippocratic Banner -->
-        <div class="oath-banner">
+        <div class="oath-banner glass-pill">
           <span class="oath-cross">✚</span>
           <span>Primum non nocere — Trước tiên, không gây hại</span>
           <span class="oath-cross">✚</span>
@@ -338,32 +323,32 @@
 
         <!-- Clock -->
         <div class="timer-grid">
-          <div class="time-box glow-box"><span id="days">00</span><label>Ngày</label></div>
-          <div class="time-box glow-box"><span id="hours">00</span><label>Giờ</label></div>
-          <div class="time-box glow-box"><span id="minutes">00</span><label>Phút</label></div>
-          <div class="time-box glow-box"><span id="seconds">00</span><label>Giây</label></div>
+          <div class="time-box glass-inner-box"><span id="days">00</span><label>Ngày</label></div>
+          <div class="time-box glass-inner-box"><span id="hours">00</span><label>Giờ</label></div>
+          <div class="time-box glass-inner-box"><span id="minutes">00</span><label>Phút</label></div>
+          <div class="time-box glass-inner-box"><span id="seconds">00</span><label>Giây</label></div>
         </div>
 
         <div class="event-details-grid">
-          <div class="info-card">
+          <div class="info-card glass-inner-box">
             <span class="icon">📅</span>
             <h4>Ngày & Giờ</h4>
             <p id="event-date-time">11:30 AM - Ngày 28/08/2026</p>
           </div>
-          <div class="info-card">
+          <div class="info-card glass-inner-box">
             <span class="icon">📍</span>
             <h4>Địa Điểm</h4>
             <p id="event-location">Hội trường Nguyễn Văn Đạo - Đại học Quốc gia Hà Nội</p>
           </div>
         </div>
 
-        <div class="map-container glow-border">
+        <div class="map-container luxury-glass-border">
           <iframe id="google-map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8639811020087!2d105.78013231533227!3d21.03712779283416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab3b5c3e76ad%3A0xe54d86a4f132e4d0!2zSOG7mWkgdHHLGsOG7nW5nIE5ndXnhu4VuIFbEg24gxJDhuqFvIC0gxJDhuqFpIGjhu41jIFF14buRYyBnaWEgSMOgIE7hu5lp!5e0!3m2!1svi!2s!4v1710000000000!5m2!1svi!2s" width="100%" height="260" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy"></iframe>
         </div>
       </section>
 
       <!-- RSVP & WISHES FORM -->
-      <section id="rsvp" class="rsvp-section card reveal-on-scroll glow-border">
+      <section id="rsvp" class="rsvp-section card luxury-glass-card reveal-on-scroll">
         <span class="step-tag">✦ XÁC NHẬN THAM DỰ ✦</span>
         <h2 class="shimmer-text">Gửi Lời Chúc Mừng ✨</h2>
         <p class="section-desc">Sự hiện diện và lời chúc của bạn là niềm vinh hạnh lớn đối với Việt!</p>
@@ -389,7 +374,7 @@
         </form>
 
         <!-- Success Screen -->
-        <div id="rsvp-success" class="success-box hidden glow-box">
+        <div id="rsvp-success" class="success-box hidden glass-inner-box">
           <h3>Cảm ơn <span id="thanks-name">bạn</span> rất nhiều! ❤️</h3>
           <p>Lời chúc của bạn đã được ghi nhận trong hành trình của Bác sĩ Cao Việt.</p>
         </div>
@@ -401,7 +386,7 @@
 
   <!-- CHAPTER LIGHTBOX MODAL -->
   <div id="chapter-modal" class="modal-overlay hidden">
-    <div class="modal-card glow-border">
+    <div class="modal-card luxury-glass-card">
       <button id="modal-close" class="modal-close-btn">&times;</button>
       <span id="modal-badge" class="chapter-badge">Chương 1</span>
       <h3 id="modal-title" class="chapter-title">AWAKEN</h3>
@@ -417,15 +402,15 @@
     </div>
   </div>
 
-  <!-- FLOATING MUSIC PLAYER WITH RELIABLE FALLBACK -->
-  <div class="music-player shimmer-glow" id="music-toggle" title="🎵 Bật / Tắt Nhạc: Die With A Smile - Bruno Mars & Lady Gaga">
+  <!-- FLOATING MUSIC PLAYER WITH RELIABLE FALLBACK (Castle in the Sky - Gentle Piano) -->
+  <div class="music-player shimmer-glow" id="music-toggle" title="🎵 Bật / Tắt Nhạc: Castle in the Sky (Carrying You) - Gentle Piano Theme">
     <div class="disc">🎵</div>
   </div>
   
   <audio id="bg-music" loop preload="auto">
+    <!-- Gentle Piano Castle in the Sky / Laputa / Royalty Free Soft Piano Fallbacks -->
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3" type="audio/mpeg">
     <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    <source src="https://cdn.pixabay.com/audio/2022/10/14/audio_9939f792e7.mp3" type="audio/mpeg">
   </audio>
 
   <script src="script.js"></script>
