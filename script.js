@@ -147,437 +147,135 @@ document.addEventListener("DOMContentLoaded", () => {
 // =========================================================================
 let stardustParticles = [];
 
-/* ==========================================
-   CINEMATIC SPACE / STARFIELD BACKGROUND
-========================================== */
+function initSpaceCanvas() {
+  const canvas = document.getElementById('space-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
 
-const canvas = document.getElementById("space-canvas");
-const ctx = canvas.getContext("2d");
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
 
-let W = 0;
-let H = 0;
-let DPR = Math.min(window.devicePixelRatio || 1, 2);
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
 
-const stars = [];
+  const starColors = ["#ffffff", "#f8fafc", "#e2e8f0", "#d4af37", "#fef08a", "#cbd5e1"];
+  const stars = [];
+  const starCount = Math.min(Math.floor((width * height) / 2200), 380);
 
-const STAR_COUNT = 260;
+  for (let i = 0; i < starCount; i++) {
+    stars.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: Math.random() * 1.6 + 0.3,
+      alpha: Math.random(),
+      speed: Math.random() * 0.01 + 0.003,
+      color: starColors[Math.floor(Math.random() * starColors.length)]
+    });
+  }
 
-const pointer = {
-    x: 0,
-    y: 0,
-    targetX: 0,
-    targetY: 0,
-    active: false
-};
+  let shootingStar = null;
+  function resetShootingStar() {
+    shootingStar = {
+      x: Math.random() * width * 0.8,
+      y: Math.random() * height * 0.4,
+      length: Math.random() * 100 + 50,
+      speed: Math.random() * 8 + 5,
+      angle: Math.PI / 4,
+      alpha: 1
+    };
+  }
 
+  setInterval(() => {
+    if (!shootingStar && Math.random() > 0.35) resetShootingStar();
+  }, 4000);
 
-/* ==========================================
-   RESIZE
-========================================== */
+  function render() {
+    ctx.clearRect(0, 0, width, height);
 
-function resizeSpace() {
+    // Stars
+    for (let s of stars) {
+      s.alpha += s.speed;
+      if (s.alpha > 1 || s.alpha < 0.12) s.speed = -s.speed;
+      ctx.fillStyle = s.color;
+      ctx.globalAlpha = s.alpha;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
 
-    W = window.innerWidth;
-    H = window.innerHeight;
+    // Shooting star
+    if (shootingStar) {
+      const grad = ctx.createLinearGradient(
+        shootingStar.x - Math.cos(shootingStar.angle) * shootingStar.length,
+        shootingStar.y - Math.sin(shootingStar.angle) * shootingStar.length,
+        shootingStar.x, shootingStar.y
+      );
+      grad.addColorStop(0, `rgba(255,248,220,0)`);
+      grad.addColorStop(1, `rgba(255,248,220,${shootingStar.alpha})`);
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(shootingStar.x, shootingStar.y);
+      ctx.lineTo(
+        shootingStar.x - Math.cos(shootingStar.angle) * shootingStar.length,
+        shootingStar.y - Math.sin(shootingStar.angle) * shootingStar.length
+      );
+      ctx.stroke();
+      shootingStar.x += Math.cos(shootingStar.angle) * shootingStar.speed;
+      shootingStar.y += Math.sin(shootingStar.angle) * shootingStar.speed;
+      shootingStar.alpha -= 0.014;
+      if (shootingStar.alpha <= 0) shootingStar = null;
+    }
 
-    DPR = Math.min(
-        window.devicePixelRatio || 1,
-        2
-    );
+    // 🌟 CELESTIAL STARDUST PARTICLES (Hiệu ứng tinh vân nhẹ nhàng sang trọng)
+    for (let i = stardustParticles.length - 1; i >= 0; i--) {
+      let p = stardustParticles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy -= 0.012;
+      p.alpha -= p.decay;
 
-    canvas.width = W * DPR;
-    canvas.height = H * DPR;
+      if (p.alpha <= 0) {
+        stardustParticles.splice(i, 1);
+        continue;
+      }
 
-    canvas.style.width = W + "px";
-    canvas.style.height = H + "px";
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.alpha;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
 
-    ctx.setTransform(
-        DPR,
-        0,
-        0,
-        DPR,
-        0,
-        0
-    );
-
-    pointer.x = W / 2;
-    pointer.y = H / 2;
-
-    pointer.targetX = W / 2;
-    pointer.targetY = H / 2;
-
-    createStars();
+    requestAnimationFrame(render);
+  }
+  render();
 }
 
+// 🌟 HIỆU ỨNG ÁNH KIM THIÊN HÀ NHẸ NHÀNG (CELESTIAL CELEBRATION SHIMMER)
+function triggerGrandFireworks() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
-/* ==========================================
-   CREATE STARS
-========================================== */
-
-function createStars() {
-
-    stars.length = 0;
-
-    for (let i = 0; i < STAR_COUNT; i++) {
-
-        stars.push({
-
-            x: Math.random() * W,
-
-            y: Math.random() * H,
-
-            z: Math.random(),
-
-            speed:
-                0.05 +
-                Math.random() * 0.25,
-
-            size:
-                Math.random() * 1.5 +
-                0.3,
-
-            opacity:
-                Math.random() * 0.65 +
-                0.25,
-
-            twinkle:
-                Math.random() * Math.PI * 2,
-
-            twinkleSpeed:
-                Math.random() * 0.025 +
-                0.008,
-
-            warm:
-                Math.random() > 0.78
-        });
-    }
+  for (let i = 0; i < 70; i++) {
+    const colors = ["#d4af37", "#fef08a", "#ffffff", "#f3e5ab", "#cbd5e1"];
+    stardustParticles.push({
+      x: Math.random() * width,
+      y: height * 0.6 + Math.random() * (height * 0.3),
+      vx: (Math.random() - 0.5) * 1.8,
+      vy: -Math.random() * 2.5 - 1.2,
+      size: Math.random() * 3 + 1,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: 1,
+      decay: Math.random() * 0.008 + 0.005
+    });
+  }
 }
 
-
-/* ==========================================
-   MOUSE
-========================================== */
-
-window.addEventListener(
-    "mousemove",
-    function (e) {
-
-        pointer.targetX = e.clientX;
-        pointer.targetY = e.clientY;
-
-        pointer.active = true;
-    }
-);
-
-
-/* ==========================================
-   TOUCH
-========================================== */
-
-window.addEventListener(
-    "touchstart",
-    function (e) {
-
-        const touch = e.touches[0];
-
-        pointer.targetX = touch.clientX;
-        pointer.targetY = touch.clientY;
-
-        pointer.active = true;
-
-    },
-    { passive: true }
-);
-
-
-window.addEventListener(
-    "touchmove",
-    function (e) {
-
-        const touch = e.touches[0];
-
-        pointer.targetX = touch.clientX;
-        pointer.targetY = touch.clientY;
-
-        pointer.active = true;
-
-    },
-    { passive: true }
-);
-
-
-/* ==========================================
-   DRAW STAR
-========================================== */
-
-function drawStar(star) {
-
-    const centerX = W / 2;
-    const centerY = H / 2;
-
-    const depth = star.z;
-
-    let x =
-        star.x +
-        (pointer.x - centerX) *
-        depth *
-        0.025;
-
-    let y =
-        star.y +
-        (pointer.y - centerY) *
-        depth *
-        0.025;
-
-
-    /* Sao bị kéo theo hướng chạm */
-
-    x +=
-        (pointer.x - centerX) *
-        depth *
-        0.002;
-
-    y +=
-        (pointer.y - centerY) *
-        depth *
-        0.002;
-
-
-    /* Đưa sao quay lại màn hình */
-
-    if (x < -20) x = W + 20;
-
-    if (x > W + 20) x = -20;
-
-    if (y < -20) y = H + 20;
-
-    if (y > H + 20) y = -20;
-
-
-    /* ======================================
-       TWINKLE
-    ====================================== */
-
-    star.twinkle += star.twinkleSpeed;
-
-    const twinkle =
-        0.65 +
-        Math.sin(star.twinkle) * 0.35;
-
-    const alpha =
-        star.opacity * twinkle;
-
-
-    /* Kích thước sao */
-
-    const size =
-        star.size +
-        depth * 1.2;
-
-
-    /* ======================================
-       GLOW
-    ====================================== */
-
-    ctx.beginPath();
-
-    ctx.arc(
-        x,
-        y,
-        size,
-        0,
-        Math.PI * 2
-    );
-
-
-    if (star.warm) {
-
-        ctx.fillStyle =
-            `rgba(255,225,150,${alpha})`;
-
-        ctx.shadowColor =
-            "rgba(255,215,120,0.8)";
-
-    } else {
-
-        ctx.fillStyle =
-            `rgba(220,230,255,${alpha})`;
-
-        ctx.shadowColor =
-            "rgba(180,200,255,0.7)";
-    }
-
-
-    ctx.shadowBlur =
-        depth > 0.7 ? 8 : 3;
-
-    ctx.fill();
-
-    ctx.shadowBlur = 0;
-
-
-    /* ======================================
-       SAO SÁNG
-    ====================================== */
-
-    if (size > 1.8) {
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            x - size * 3,
-            y
-        );
-
-        ctx.lineTo(
-            x + size * 3,
-            y
-        );
-
-        ctx.moveTo(
-            x,
-            y - size * 3
-        );
-
-        ctx.lineTo(
-            x,
-            y + size * 3
-        );
-
-        ctx.strokeStyle =
-            `rgba(255,255,255,${alpha * 0.35})`;
-
-        ctx.lineWidth = 0.5;
-
-        ctx.stroke();
-    }
-}
-
-
-/* ==========================================
-   ANIMATION
-========================================== */
-
-function animateSpace() {
-
-    ctx.clearRect(
-        0,
-        0,
-        W,
-        H
-    );
-
-
-    /* ======================================
-       ÁNH SÁNG NỀN
-    ====================================== */
-
-    const gradient =
-        ctx.createRadialGradient(
-            W * 0.68,
-            H * 0.38,
-            0,
-            W * 0.68,
-            H * 0.38,
-            Math.max(W, H) * 0.8
-        );
-
-
-    gradient.addColorStop(
-        0,
-        "rgba(80,65,35,0.10)"
-    );
-
-    gradient.addColorStop(
-        0.45,
-        "rgba(25,30,45,0.05)"
-    );
-
-    gradient.addColorStop(
-        1,
-        "rgba(0,0,0,0)"
-    );
-
-
-    ctx.fillStyle = gradient;
-
-    ctx.fillRect(
-        0,
-        0,
-        W,
-        H
-    );
-
-
-    /* ======================================
-       SMOOTH MOVEMENT
-    ====================================== */
-
-    pointer.x +=
-        (pointer.targetX - pointer.x) *
-        0.08;
-
-    pointer.y +=
-        (pointer.targetY - pointer.y) *
-        0.08;
-
-
-    /* ======================================
-       DI CHUYỂN SAO
-    ====================================== */
-
-    for (const star of stars) {
-
-        const dx =
-            pointer.x - W / 2;
-
-        const dy =
-            pointer.y - H / 2;
-
-
-        star.x +=
-            dx *
-            star.z *
-            0.0008;
-
-        star.y +=
-            dy *
-            star.z *
-            0.0008;
-
-
-        /* Wrap */
-
-        if (star.x > W + 50)
-            star.x = -50;
-
-        if (star.x < -50)
-            star.x = W + 50;
-
-        if (star.y > H + 50)
-            star.y = -50;
-
-        if (star.y < -50)
-            star.y = H + 50;
-
-
-        drawStar(star);
-    }
-
-
-    requestAnimationFrame(
-        animateSpace
-    );
-}
-
-
-/* ==========================================
-   START
-========================================== */
-
-resizeSpace();
-
-animateSpace();
 // =========================================================================
 // HELPER: Chuyển link Google Drive bất kỳ sang URL ảnh trực tiếp (bypass CORS)
 // Hỗ trợ cả lh3.googleusercontent.com/d/ID và thumbnail API
@@ -1001,102 +699,81 @@ function initCountdown() {
 }
 
 // =========================================================================
-// 9. MUSIC PLAYER — GITHUB LOCAL MP3
+// 9. MUSIC PLAYER & GLOBAL AUDIO UNLOCK (Castle in the Sky - Gentle Piano)
 // =========================================================================
-
 let audioIsPlaying = false;
 
-function updateMusicButton() {
-    const toggleBtn = document.getElementById('music-toggle');
-    if (!toggleBtn) return;
-
-    const disc = toggleBtn.querySelector('.disc');
-
-    toggleBtn.classList.toggle('playing', audioIsPlaying);
-    toggleBtn.setAttribute('aria-pressed', String(audioIsPlaying));
-    toggleBtn.setAttribute(
-        'aria-label',
-        audioIsPlaying ? 'Tắt nhạc' : 'Bật nhạc'
-    );
-
-    if (disc) {
-        disc.textContent = audioIsPlaying ? '🔊' : '🎵';
-    }
-}
-
 function playAudioMusic() {
-    const audio = document.getElementById('bg-music');
+  const audio = document.getElementById('bg-music');
+  const toggleBtn = document.getElementById('music-toggle');
+  if (!audio) return;
 
-    if (!audio) {
-        console.warn('Không tìm thấy #bg-music');
-        return;
-    }
+  audio.volume = 0.8;
 
-    audio.volume = 0.8;
+  const playPromise = audio.play();
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      audioIsPlaying = true;
+      if (toggleBtn) {
+        toggleBtn.classList.add('playing');
+        toggleBtn.style.transform = 'scale(1.15)';
+        toggleBtn.style.boxShadow = '0 0 35px rgba(212, 175, 55, 0.9)';
+      }
+    }).catch(err => {
+      console.warn("⚠️ Trình duyệt giữ phát nhạc tự động hoặc link nhạc lỗi. Đang thử lại...", err);
+      audioIsPlaying = false;
+      if (toggleBtn) {
+        toggleBtn.classList.remove('playing');
+        toggleBtn.style.transform = 'scale(1)';
+        toggleBtn.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.35)';
+      }
 
-    const playPromise = audio.play();
-
-    if (playPromise !== undefined) {
-        playPromise
-            .then(() => {
-                audioIsPlaying = true;
-                updateMusicButton();
-            })
-            .catch((error) => {
-                console.warn('Trình duyệt chưa cho phép phát nhạc:', error);
-                audioIsPlaying = false;
-                updateMusicButton();
-            });
-    }
-}
-
-function pauseAudioMusic() {
-    const audio = document.getElementById('bg-music');
-
-    if (!audio) return;
-
-    audio.pause();
-    audioIsPlaying = false;
-
-    updateMusicButton();
+      // Thử nguồn dự phòng nếu link đầu tiên lỗi
+      const sources = audio.querySelectorAll('source');
+      if (sources.length > 1) {
+        audio.src = sources[1].src;
+        audio.load();
+        audio.play().then(() => {
+          audioIsPlaying = true;
+          if (toggleBtn) toggleBtn.classList.add('playing');
+        }).catch(e => console.log("Cần nhấp vào màn hình để phát nhạc:", e));
+      }
+    });
+  }
 }
 
 function initMusicPlayer() {
-    const audio = document.getElementById('bg-music');
-    const toggleBtn = document.getElementById('music-toggle');
+  const audio = document.getElementById('bg-music');
+  const toggleBtn = document.getElementById('music-toggle');
+  if (!toggleBtn || !audio) return;
 
-    if (!audio || !toggleBtn) return;
+  if (toggleBtn) toggleBtn.classList.remove('playing');
 
-    updateMusicButton();
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (audioIsPlaying) {
+      audio.pause();
+      audioIsPlaying = false;
+      toggleBtn.classList.remove('playing');
+      toggleBtn.style.transform = 'scale(1)';
+      toggleBtn.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.35)';
+    } else {
+      playAudioMusic();
+    }
+  });
 
-    // Báo lỗi nếu GitHub không tìm thấy file MP3
-    audio.addEventListener('error', () => {
-        console.error(
-            '❌ Không tải được nhac_cuatui.mp3. ' +
-            'Hãy kiểm tra tên file và vị trí trên GitHub.'
-        );
+  const unlockAudioOnFirstTouch = () => {
+    if (!audioIsPlaying) {
+      playAudioMusic();
+    }
+    document.removeEventListener('click', unlockAudioOnFirstTouch);
+    document.removeEventListener('touchstart', unlockAudioOnFirstTouch);
+  };
 
-        audioIsPlaying = false;
-        updateMusicButton();
-    });
-
-    // Khi nhạc kết thúc
-    audio.addEventListener('ended', () => {
-        audioIsPlaying = false;
-        updateMusicButton();
-    });
-
-    // Nút 🎵 bật / tắt nhạc
-    toggleBtn.addEventListener('click', (event) => {
-        event.stopPropagation();
-
-        if (audio.paused) {
-            playAudioMusic();
-        } else {
-            pauseAudioMusic();
-        }
-    });
+  document.addEventListener('click', unlockAudioOnFirstTouch, { once: true });
+  document.addEventListener('touchstart', unlockAudioOnFirstTouch, { once: true });
 }
+
 // =========================================================================
 // 10. RSVP FORM → GOOGLE APPS SCRIPT
 // =========================================================================
