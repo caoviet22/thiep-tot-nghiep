@@ -36,7 +36,7 @@
     /* ─── MAIN LAYOUT ─── */
     .container { max-width: 820px; margin: 0 auto; }
 
-    /* ─── STEP BOXES (LUXURY GLASSMORPHISM) ─── */
+    /* ─── STEP BOXES ─── */
     .step-box {
       background: var(--card); border: 1px solid var(--border);
       border-radius: 20px; padding: 28px 30px; margin-bottom: 24px;
@@ -98,9 +98,6 @@
     }
     input:focus, textarea:focus, select:focus {
       outline: none; border-color: var(--gold); box-shadow: 0 0 14px var(--gold-glow);
-    }
-    .form-grid {
-      display: grid; grid-template-columns: 1fr 2fr; gap: 12px; margin-bottom: 14px;
     }
     .form-group { margin-bottom: 14px; }
     .form-group label {
@@ -225,9 +222,7 @@
     <p>Nhập thông tin từng khách mời → Nhận link cá nhân hóa đầy đủ (tên + ảnh + lời nhắn)</p>
   </div>
 
-  <!-- ════════════════════════════════════════
-       BƯỚC 1: HƯỚNG DẪN UPLOAD ẢNH GOOGLE DRIVE
-  ════════════════════════════════════════ -->
+  <!-- BƯỚC 1 -->
   <div class="step-box">
     <div class="step-title">✦ BƯỚC 1 ✦</div>
     <h2>📷 Cách Lấy Link Ảnh Trực Tiếp Từ Google Drive</h2>
@@ -236,38 +231,31 @@
       <li>
         <div>
           <strong>Upload ảnh lên Google Drive</strong><br>
-          Vào <strong>drive.google.com</strong> → Bấm <strong>"+ Mới" → "Tải tệp lên"</strong> → Chọn ảnh kỷ niệm của bạn với khách đó.
+          Vào <strong>drive.google.com</strong> → Bấm <strong>"+ Mới" → "Tải tệp lên"</strong>.
         </div>
       </li>
       <li>
         <div>
           <strong>Đổi quyền chia sẻ thành "Mọi người có link"</strong><br>
-          Nhấp chuột phải vào ảnh vừa upload → <strong>"Chia sẻ" → "Thay đổi thành Bất kỳ ai có đường liên kết"</strong> → Bấm <strong>"Xong"</strong>.
+          Nhấp chuột phải vào ảnh → <strong>"Chia sẻ" → "Thay đổi thành Bất kỳ ai có đường liên kết"</strong>.
         </div>
       </li>
       <li>
         <div>
           <strong>Lấy ID của file ảnh</strong><br>
-          Nhấp chuột phải → <strong>"Chia sẻ" → "Sao chép đường liên kết"</strong>. Link sẽ có dạng:<br>
-          <code>https://drive.google.com/file/d/<strong>ID_CỦA_FILE</strong>/view?usp=sharing</code>
+          Sao chép đường liên kết dạng: <code>https://drive.google.com/file/d/<strong>ID_FILE</strong>/view</code>
         </div>
       </li>
       <li>
         <div>
           <strong>Tự động nhận diện ảnh</strong><br>
-          Bạn chỉ cần dán link Drive vào ô bên dưới, hệ thống sẽ <strong>tự động chuyển thành link ảnh hiển thị trực tiếp!</strong>
+          Dán link Drive vào ô bên dưới, hệ thống sẽ tự đổi thành link hiển thị!
         </div>
       </li>
     </ol>
-
-    <div class="drive-note">
-      💡 <span><strong>Mẹo nhanh</strong>: Bạn cũng có thể dùng link ảnh từ bất kỳ nguồn nào (Google Photos, Imgur, Unsplash...)!</span>
-    </div>
   </div>
 
-  <!-- ════════════════════════════════════════
-       BƯỚC 2: NHẬP THÔNG TIN KHÁCH MỜI
-  ════════════════════════════════════════ -->
+  <!-- BƯỚC 2 -->
   <div class="step-box">
     <div class="step-title">✦ BƯỚC 2 ✦</div>
     <h2>✍️ Nhập Thông Tin Từng Khách Mời</h2>
@@ -301,7 +289,7 @@
 
     <!-- Link ảnh -->
     <div class="form-group">
-      <label>Link ảnh kỷ niệm (Google Drive hoặc bất kỳ link ảnh nào)</label>
+      <label>Link ảnh kỷ niệm (Google Drive hoặc URL ảnh bất kỳ)</label>
       <div class="photo-preview-row">
         <input type="text" id="inp-photo" placeholder="Dán link Google Drive hoặc URL ảnh tại đây...">
         <img id="photo-preview-img" src="" alt="Preview">
@@ -311,7 +299,7 @@
     <!-- Lời nhắn -->
     <div class="form-group">
       <label>Lời nhắn nhủ riêng tới khách này</label>
-      <textarea id="inp-msg" rows="3" placeholder="Ví dụ: Cảm ơn anh Minh Tú đã luôn đồng hành và cổ vũ Việt trong suốt 6 năm Y Khoa! Rất mong gặp anh trong ngày đặc biệt này."></textarea>
+      <textarea id="inp-msg" rows="3" placeholder="Ví dụ: Cảm ơn bạn đã luôn đồng hành cùng Việt!"></textarea>
     </div>
 
     <button class="btn-generate" onclick="generateLink()">⚡ TẠO LINK THIỆP MỜI CÁ NHÂN</button>
@@ -337,13 +325,11 @@
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════
-       BƯỚC 3: DANH SÁCH LINK ĐÃ TẠO
-  ════════════════════════════════════════ -->
+  <!-- BƯỚC 3 -->
   <div class="step-box">
     <div class="step-title">✦ BƯỚC 3 ✦</div>
     <h2>📋 Danh Sách Link Đã Tạo</h2>
-    <p class="batch-info">Mỗi lần bấm "Tạo Link", link mới sẽ được lưu vào đây. Copy từng link gửi trực tiếp qua Zalo / Messenger cho từng khách mời!</p>
+    <p class="batch-info">Mỗi lần bấm "Tạo Link", link mới sẽ được lưu vào đây để sao chép tiện lợi.</p>
     <button class="copy-all-btn" onclick="copyAllLinks()">📋 Sao Chép Tất Cả Link</button>
     <div id="history-list">
       <div class="empty-msg">Chưa có link nào. Hãy tạo link cho khách mời đầu tiên phía trên! 👆</div>
@@ -356,6 +342,7 @@
 let selectedSalt = 'Anh';
 const history = [];
 
+// Bắt sự kiện chọn danh xưng
 document.querySelectorAll('.salt-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.salt-btn').forEach(b => b.classList.remove('active'));
@@ -410,7 +397,12 @@ function generateLink() {
   }
 
   const params = new URLSearchParams();
+  
+  // SỬA TẠI ĐÂY: Truyền cả 2 tham số 'title' và 'salt' để đảm bảo web thiệp kiểu gì cũng nhận đúng!
+  params.set('title', selectedSalt);
   params.set('salt', selectedSalt);
+  params.set('salutation', selectedSalt);
+  
   params.set('name', name);
   if (msg) params.set('msg', msg);
   if (photo) params.set('img', photo);
@@ -485,3 +477,4 @@ renderHistory();
 </script>
 </body>
 </html>
+
